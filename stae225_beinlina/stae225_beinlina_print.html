@@ -160,9 +160,54 @@
   /* each <li> prints its own number, so suppress the list marker */
   .solutions ol{list-style:none;padding-left:.2rem}
   section.exercise{margin-top:1rem}
+
+  /* ---- formúlublað: slide-in sidebar (iPad) ---- */
+  .fx-open-btn{background:var(--accent)!important;color:#fff!important}
+  .fx-open-btn:hover{background:#a00d24!important}
+  .fx-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.3);opacity:0;
+    pointer-events:none;transition:opacity .25s ease;z-index:55}
+  .fx-backdrop.open{opacity:1;pointer-events:auto}
+  .fx-panel{position:fixed;top:0;right:0;height:100%;width:min(430px,92vw);
+    background:#fff;border-left:3px solid var(--accent);
+    box-shadow:-5px 0 22px rgba(0,0,0,.16);
+    transform:translateX(calc(100% + 30px));transition:transform .28s ease;
+    z-index:60;overflow-y:auto;overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    padding:0 1.15rem calc(3rem + env(safe-area-inset-bottom,0px))}
+  .fx-panel.open{transform:translateX(0)}
+  .fx-head{position:sticky;top:0;background:#fff;z-index:2;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:calc(.8rem + env(safe-area-inset-top,0px)) 0 .6rem;
+    border-bottom:2px solid var(--accent-soft);margin-bottom:.4rem}
+  .fx-head strong{color:var(--accent);font-size:1.15rem}
+  .fx-close{background:none;border:none;color:var(--accent);font-size:1.9rem;
+    line-height:1;cursor:pointer;padding:0 .2rem}
+  .fx-g{border-left:3px solid var(--accent-soft);padding:.1rem 0 .1rem .8rem;
+    margin:1rem 0}
+  .fx-g h3{color:var(--accent);margin:.2rem 0 .4rem;font-size:1rem;border:none;padding:0}
+  .fx-g p{margin:.35rem 0}
+  .fx-sec{display:inline-block;background:var(--accent-soft);color:#4a4400;
+    font-size:.72rem;font-weight:700;border-radius:3px;padding:.05rem .35rem;
+    margin-right:.45rem;vertical-align:.1em}
+  .fx-eq{text-align:center;margin:.55rem 0}
+  .fx-note{color:#666;font-size:.87rem;font-style:italic}
+  .fx-list{margin:.4rem 0 .2rem 1.1rem;padding:0}
+  .fx-list li{margin:.2rem 0}
+  .fx-x{border-left-color:#bbb}
+  .fx-x h3{color:#555}
+  table.fx-tbl{border-collapse:collapse;margin:.3rem 0}
+  table.fx-tbl th,table.fx-tbl td{border:1px solid var(--line);padding:.18rem .6rem;
+    text-align:center;font-size:.92rem}
+  table.fx-tbl th{background:#faf8ee;font-weight:700}
+  @media print{.fx-panel,.fx-backdrop,.fx-open-btn{display:none!important}}
+  /* ---- formúlublað: printed page ---- */
+  .formulasheet{page-break-after:always}
+  .formulasheet .fx-cols{column-count:2;column-gap:1.6rem}
+  .formulasheet .fx-g{break-inside:avoid;page-break-inside:avoid}
   @media (max-width:640px){
     .subgrid,.subgrid.three{grid-template-columns:1fr}
     .figrow{justify-content:center}
+    .formulasheet .fx-cols{column-count:1}
   }
 </style>
 
@@ -174,6 +219,51 @@
 
 <p class="note">Nafn: ______________________________ &nbsp;&nbsp; Dags.: ______________</p>
 
+<section class="formulasheet"><h2>Formúlublað</h2><div class="fx-cols"><section class="fx-g"><h3><span class="fx-sec">1.2</span>Fjórðungar hnitakerfisins</h3>
+<table class="fx-tbl">
+  <tr><th>Fjórðungur</th><th>$x$-hnit</th><th>$y$-hnit</th></tr>
+  <tr><td>I</td><td>$+$</td><td>$+$</td></tr>
+  <tr><td>II</td><td>$-$</td><td>$+$</td></tr>
+  <tr><td>III</td><td>$-$</td><td>$-$</td></tr>
+  <tr><td>IV</td><td>$+$</td><td>$-$</td></tr>
+</table>
+<p class="fx-note">Punktur á $x$-ás er $(a,0)$ og punktur á $y$-ás er $(0,b)$.</p></section><section class="fx-g"><h3><span class="fx-sec">1.3</span>Fjarlægðarformúlan</h3>
+<p>Fjarlægðin milli tveggja punkta með hnitin $(x_1,y_1)$ og $(x_2,y_2)$ er</p>
+<p class="fx-eq">$d=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$</p></section><section class="fx-g"><h3><span class="fx-sec">1.4</span>Hallatala línu</h3>
+<p>Hallatala línu mælir hvað $y$-hnit punkts breytist um margar einingar þegar
+$x$-hnitið vex um 1 einingu.</p></section><section class="fx-g"><h3><span class="fx-sec">1.4</span>Hallatöluformúlan</h3>
+<p>Hallatala línu í gegnum punktana $(x_1,y_1)$ og $(x_2,y_2)$, $x_1 \neq x_2$, er</p>
+<p class="fx-eq">$h=\dfrac{y_2-y_1}{x_2-x_1}$</p>
+<p>Ef $x_1 = x_2$ (lóðrétt lína) þá er hallatalan óskilgreind.</p>
+<ol class="fx-list">
+  <li>Ef $h = 0$ þá er línan lárétt (samsíða $x$-ás).</li>
+  <li>Ef $h > 0$ þá hækkar línan til hægri.</li>
+  <li>Ef $h < 0$ þá lækkar línan til hægri.</li>
+  <li>Ef $h$ er óskilgreind stærð þá er línan lóðrétt (samsíða $y$-ás).</li>
+</ol></section><section class="fx-g"><h3><span class="fx-sec">1.5</span>Punkthallajafna línu</h3>
+<p>Jafna línu með hallatölu $h$ sem liggur í gegnum þekktan punkt með hnitin
+$(x_1,y_1)$ er</p>
+<p class="fx-eq">$y-y_1 = h(x-x_1)$</p></section><section class="fx-g"><h3><span class="fx-sec">1.6</span>Láréttar og lóðréttar línur</h3>
+<p>Jafna láréttu línunnar í gegnum punktinn $(a,b)$ er</p>
+<p class="fx-eq">$y = b$</p>
+<p>Jafna lóðréttrar línu í gegnum punktinn $(a,b)$ er</p>
+<p class="fx-eq">$x = a$</p></section><section class="fx-g"><h3><span class="fx-sec">1.7</span>Skurðhallajafna línu</h3>
+<p class="fx-eq">$y = hx + k$</p>
+<p>Stuðullinn við $x$ er hallatala línunnar og fastinn $k$ er $y$-hnit
+skurðpunktsins við $y$-ás.</p></section><section class="fx-g"><h3><span class="fx-sec">1.8</span>Almenn jafna línu</h3>
+<p>Ef jafna línu er $Ax + By + C = 0$ þá gildir eftirfarandi:</p>
+<p class="fx-eq">Hallatalan er $h = -\dfrac{A}{B}$</p>
+<p class="fx-eq">Skurðp. við $y$-ás er $\left(0,-\dfrac{C}{B}\right)$</p>
+<p class="fx-eq">Skurðp. við $x$-ás er $\left(-\dfrac{C}{A},0\right)$</p></section><section class="fx-g"><h3><span class="fx-sec">1.10</span>Samsíða línur</h3>
+<p>Tvær línur eru samsíða ef og aðeins ef þær hafa sömu hallatölu eða báðar hafa
+óskilgreinda hallatölu (lóðréttar línur).</p></section><section class="fx-g"><h3><span class="fx-sec">1.11</span>Hornréttar línur</h3>
+<p>Ef tvær hornréttar línur hafa hallatölurnar $h_1$ annars vegar og $h_2$ hins
+vegar þá gildir að</p>
+<p class="fx-eq">$h_1 \cdot h_2 = -1$</p>
+<p class="fx-note">Reglan á ekki við um lárétta og lóðrétta línu. Þær eru vissulega
+hornréttar, en hallatala lóðréttrar línu er ekki skilgreind.</p></section><section class="fx-g fx-x"><h3>Fjarlægð punkts frá línu</h3>
+<p>Fjarlægð punktsins $(x_0,y_0)$ frá línunni $Ax + By + C = 0$ er</p>
+<p class="fx-eq">$d=\dfrac{|Ax_0+By_0+C|}{\sqrt{A^2+B^2}}$</p><p class="fx-note">Þessi formúla er ekki í formúlurömmum kaflans, en hana þarf í upprifjunardæmi 6.</p></section></div></section>
 <section class="exercise" id="e13"><h2>Æfing 1.3 – Fjarlægð milli tveggja punkta</h2>
 <div class="question" id="e13-1">
 <div class="prompt"><span class="q-num">1.</span> Hvaða eiginleika hafa talnapör sem svara til punkta á $x$-ás? En á $y$-ás?</div>
