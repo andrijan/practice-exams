@@ -121,12 +121,13 @@
   section.exercise{margin-top:1rem}
 
   /* ---- formúlublað: slide-in sidebar (iPad) ---- */
+  :root{--fx-w:min(430px,92vw)}
   .fx-open-btn{background:var(--accent)!important;color:#fff!important}
   .fx-open-btn:hover{background:#a00d24!important}
   .fx-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.3);opacity:0;
     pointer-events:none;transition:opacity .25s ease;z-index:55}
   .fx-backdrop.open{opacity:1;pointer-events:auto}
-  .fx-panel{position:fixed;top:0;right:0;height:100%;width:min(430px,92vw);
+  .fx-panel{position:fixed;top:0;right:0;height:100%;width:var(--fx-w);
     background:#fff;border-left:3px solid var(--accent);
     box-shadow:-5px 0 22px rgba(0,0,0,.16);
     transform:translateX(calc(100% + 30px));transition:transform .28s ease;
@@ -158,6 +159,13 @@
   table.fx-tbl th,table.fx-tbl td{border:1px solid var(--line);padding:.18rem .6rem;
     text-align:center;font-size:.92rem}
   table.fx-tbl th{background:#faf8ee;font-weight:700}
+  @media (min-width:760px){
+    :root{--fx-w:min(420px,40vw)}
+    body{transition:margin-right .28s ease,max-width .28s ease}
+    body.fx-shift{margin-right:calc(var(--fx-w) + 2rem);
+      max-width:min(880px,calc(100vw - var(--fx-w) - 5rem))}
+    .fx-backdrop{display:none}
+  }
   @media print{.fx-panel,.fx-backdrop,.fx-open-btn{display:none!important}}
   /* ---- formúlublað: printed page ---- */
   .formulasheet{page-break-after:always}
@@ -181,7 +189,7 @@
 <div class="controls">
   <button onclick="document.querySelectorAll('.answer').forEach(a=>a.classList.add('show'));document.querySelectorAll('button.toggle').forEach(b=>b.textContent='Fela svar')">Sýna öll svör</button>
   <button onclick="document.querySelectorAll('.answer').forEach(a=>a.classList.remove('show'));document.querySelectorAll('button.toggle').forEach(b=>b.textContent='Sýna svar')">Fela öll svör</button>
-  <button class="fx-open-btn" onclick="fxToggle(true)">Formúlur</button>
+  <button class="fx-open-btn" id="fx-btn" onclick="fxToggle()">Formúlur</button>
 </div>
 
 <section class="exercise" id="e13"><h2>Æfing 1.3 – Fjarlægð milli tveggja punkta</h2>
@@ -1080,7 +1088,11 @@ function fxToggle(open) {
   if (open === undefined) open = !p.classList.contains('open');
   p.classList.toggle('open', open);
   b.classList.toggle('open', open);
+  // wide screens move the exam across so it stays readable; narrow ones overlay it
+  document.body.classList.toggle('fx-shift', open);
   p.setAttribute('aria-hidden', open ? 'false' : 'true');
+  const btn = document.getElementById('fx-btn');
+  if (btn) btn.textContent = open ? 'Fela formúlur' : 'Formúlur';
   if (open) p.scrollTop = 0;
 }
 document.addEventListener('keydown', function (e) {
