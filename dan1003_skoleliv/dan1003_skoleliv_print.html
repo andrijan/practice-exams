@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="UTF-8">
+<title>DANSKA – Lota 1: Skoleliv</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 16mm;
+  }
+  :root {
+    --ink: #000;
+    --paper: #fff;
+    --rule: #000;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 12pt;
+    line-height: 1.45;
+  }
+  body {
+    max-width: 170mm;
+    margin: 0 auto;
+    padding: 0;
+  }
+  h1 {
+    text-align: center;
+    font-size: 18pt;
+    margin: 0 0 0.3rem;
+    font-weight: 700;
+  }
+  .subtitle {
+    text-align: center;
+    font-style: italic;
+    margin: 0 0 1.5rem;
+    font-size: 11pt;
+  }
+  h2 {
+    font-size: 14pt;
+    margin: 1.4rem 0 0.6rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1.5px solid var(--rule);
+  }
+  h3 {
+    font-size: 12pt;
+    margin: 1rem 0 0.4rem;
+    font-style: italic;
+  }
+  .question {
+    margin: 0.8rem 0;
+    padding: 0.4rem 0 0.4rem 0.6rem;
+    border-left: 1.5px solid var(--rule);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .q-num { font-weight: 700; margin-right: 0.3rem; }
+  .prompt { margin-bottom: 0.4rem; }
+  .subq { margin: 0.3rem 0 0.3rem 1.2rem; }
+  .subq-label { font-weight: 700; margin-right: 0.3rem; }
+  .figure {
+    margin: 0.4rem 0 0.6rem;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .figure svg {
+    max-width: 360px;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+  }
+  .figure svg text {
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 11pt;
+    fill: #000;
+  }
+  .figure svg .stroke { fill: none; stroke: #000; stroke-width: 1.2; stroke-linejoin: round; }
+  .figure svg .dashed { fill: none; stroke: #000; stroke-width: 1; stroke-dasharray: 3 2; }
+  .figure svg .fill-light { fill: #f0f0f0; stroke: #000; stroke-width: 1.2; }
+  .figure svg .arc { fill: none; stroke: #000; stroke-width: 1.5; }
+  .figure svg .red { fill: #000; }
+  .figure svg .pt { fill: #000; }
+
+  .note { font-style: italic; font-size: 10.5pt; }
+  hr { border: none; border-top: 1px solid var(--rule); margin: 1.2rem 0; }
+
+  .answerline {
+    margin-top: 0.6rem;
+    border-top: 1px dotted #000;
+    padding-top: 0.4rem;
+    font-size: 11pt;
+  }
+  .answerline-blank {
+    margin-top: 0.4rem;
+    border-bottom: 1px solid #000;
+    height: 1.2rem;
+  }
+
+  .solutions {
+    page-break-before: always;
+    break-before: page;
+  }
+  .solutions h2 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 16pt;
+  }
+  .solutions ol { padding-left: 1.4rem; }
+  .solutions li {
+    margin: 0.3rem 0;
+    page-break-inside: avoid;
+  }
+  .solutions .working {
+    color: #000;
+    font-size: 10.5pt;
+    font-style: italic;
+    margin-left: 0.4rem;
+  }
+
+  /* hide anything explicitly marked as on-screen-only */
+  .screen-only { display: none !important; }
+
+  @media screen {
+    body {
+      max-width: 800px;
+      padding: 2rem 1rem 4rem;
+      background: #fafaf7;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>DANSKA – Lota 1: Skoleliv</h1>
+<p class="subtitle">Æfingapróf fyrir prófið 7. október · orðaforði, sagnir, tímahugtök, greinir, lille/små og lesskilningur</p>
+
+<p class="note">Nafn: ______________________________</p>
+
+<style>
+  table.grid { border-collapse: collapse; width: 100%; margin: .4rem 0; font-size: .95rem; }
+  table.grid th, table.grid td { border: 1px solid #bbb; padding: .3rem .45rem; text-align: left; }
+  table.grid th { background: #f4f1e6; }
+  .diary { margin: .6rem 0; padding: .5rem .8rem; border-left: 3px solid #ddd; font-style: italic; }
+  .diary b { font-style: normal; }
+  .cols { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+  ol.items { margin: .3rem 0 .3rem 1.2rem; padding: 0; }
+  ol.items li { margin: .25rem 0; }
+  @media print { table.grid th { background: #fff; } .diary { border-left: 1.5px solid #000; } }
+</style>
+<h2>1. Orðaforði</h2><p>Þýddu orðin á íslensku.</p>
+<div class="question"><div class="prompt"><ol class="items" start="1"><li><b>en begyndelse</b> = ________</li><li><b>at forvente</b> = ________</li><li><b>en elev</b> = ________</li><li><b>lektier</b> = ________</li><li><b>et frikvarter</b> = ________</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><ol class="items" start="6"><li><b>ordblind</b> = ________</li><li><b>en vikar</b> = ________</li><li><b>heldigvis</b> = ________</li><li><b>forfærdeligt</b> = ________</li><li><b>kedelig</b> = ________</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><ol class="items" start="11"><li><b>en fejl</b> = ________</li><li><b>at stræbe efter</b> = ________</li><li><b>en uddannelse</b> = ________</li><li><b>skønt</b> = ________</li></ol></div>
+</div>
+<h2>2. Námsgreinar</h2><p>Skrifaðu námsgreinarnar á dönsku.</p>
+<div class="question"><div class="prompt"><ol class="items" start="1"><li>enska = ________</li><li>þýska = ________</li><li>saga = ________</li><li>stærðfræði = ________</li><li>landafræði = ________</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><ol class="items" start="6"><li>heimilisfræði = ________</li><li>smíði = ________</li><li>myndmennt = ________</li><li>sund = ________</li><li>samfélagsfræði = ________</li></ol></div>
+</div>
+<h2>3. Sagnbeyging</h2><p>Fylltu út töfluna: nútíð, þátíð, lýsingarháttur þátíðar og íslensk merking.</p>
+<div class="question"><div class="prompt"><table class="grid"><tr><th>Nafnháttur (at …)</th><th>Nútíð (i dag)</th><th>Þátíð (i går)</th><th>Lh. þt. (har …)</th><th>Íslensk merking</th></tr><tr><td>at begynde</td><td></td><td></td><td></td><td></td></tr><tr><td>at spise</td><td></td><td></td><td></td><td></td></tr><tr><td>at låne</td><td></td><td></td><td></td><td></td></tr><tr><td>at tænke</td><td></td><td></td><td></td><td></td></tr><tr><td>at snakke</td><td></td><td></td><td></td><td></td></tr><tr><td>at kræve</td><td></td><td></td><td></td><td></td></tr><tr><td>at gå</td><td></td><td></td><td></td><td></td></tr><tr><td>at gøre</td><td></td><td></td><td></td><td></td></tr><tr><td>at vide</td><td></td><td></td><td></td><td></td></tr><tr><td>at være</td><td></td><td></td><td></td><td></td></tr></table></div>
+</div>
+<h2>4. Sagnir í setningum</h2><p>Settu sögnina í sviganum í rétta mynd. Tímahugtakið segir þér hvort það á að vera nútíð eða þátíð.</p>
+<div class="question"><div class="prompt"><ol class="items" start="1"><li>(at læse) I går ________ jeg en lang bog om Danmark.</li><li>(at spise) Hver dag ________ Ýmir sin madpakke i spisefrikvarteret.</li><li>(at komme) I forgårs ________ vores vikar for sent.</li><li>(at tale) Om morgenen ________ min mor altid i telefon.</li><li>(at gå) I mandags ________ Haukur til tandlæge.</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><ol class="items" start="6"><li>(at købe) I aftes ________ jeg en ny bærbar.</li><li>(at have) I fjor ________ vi tysk tre gange om ugen.</li><li>(at være) I dag ________ Ásgeir syg.</li><li>(at vide) I går ________ Grétar ikke, at vi havde eksamen.</li><li>(at tabe) I lørdags ________ vores hold kampen.</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><ol class="items" start="11"><li>(at kunne) I fjor ________ jeg ikke tale dansk.</li><li>(at forvente) I fjor ________ læreren meget af os.</li><li>(at gøre) Hvad ________ du i går?</li><li>(at låne) Jeg har ________ en bog på biblioteket.</li><li>(at smile) Hun har ________ hele dagen.</li></ol></div>
+</div>
+<h2>5. Tímahugtök</h2><p>Skrifaðu tímahugtökin á dönsku.</p>
+<div class="question"><div class="prompt"><ol class="items" start="1"><li>í gær = ________</li><li>í fyrradag = ________</li><li>í morgun (liðið) = ________</li><li>á morgun = ________</li><li>í gærkvöldi = ________</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><ol class="items" start="6"><li>í kvöld = ________</li><li>á mánudaginn var = ________</li><li>á mánudögum = ________</li><li>um helgina = ________</li><li>eftir viku = ________</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><ol class="items" start="11"><li>í haust (ókomið) = ________</li><li>ekki á morgun heldur hinn = ________</li></ol></div>
+</div>
+<h2>6. Þýðing</h2><p>Þýddu á dönsku. Mundu: þegar setningin byrjar á tímahugtaki kemur sögnin strax á eftir (I går <u>kom</u> jeg …).</p>
+<div class="question"><div class="prompt"><ol class="items" start="1"><li>Í gær kom ég of seint í skólann.<br>________________________________________</li><li>Á mánudögum hef ég leikfimi.<br>________________________________________</li><li>Í fyrra fékk ég góðar einkunnir.<br>________________________________________</li><li>Á morgun ætla ég að lesa dönsku.<br>________________________________________</li><li>Í gærkvöldi borðaði ég fisk.<br>________________________________________</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><ol class="items" start="6"><li>Ýmir ætlar í menntaskóla í haust.<br>________________________________________</li></ol></div>
+</div>
+<h2>7. Greinir og kyn</h2><p>Skrifaðu nafnorðið með óákveðnum greini (en/et) og með ákveðnum greini.</p>
+<div class="question"><div class="prompt"><ol class="items" start="1"><li>elev: ________ &nbsp; / &nbsp; ________</li><li>fag: ________ &nbsp; / &nbsp; ________</li><li>lærer: ________ &nbsp; / &nbsp; ________</li><li>frikvarter: ________ &nbsp; / &nbsp; ________</li><li>opgave: ________ &nbsp; / &nbsp; ________</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><ol class="items" start="6"><li>skoleår: ________ &nbsp; / &nbsp; ________</li><li>fejl: ________ &nbsp; / &nbsp; ________</li><li>uddannelse: ________ &nbsp; / &nbsp; ________</li><li>vikar: ________ &nbsp; / &nbsp; ________</li><li>år: ________ &nbsp; / &nbsp; ________</li></ol></div>
+</div>
+<h2>8. Fleirtala</h2><p>Skrifaðu nafnorðin í fleirtölu (mange …).</p>
+<div class="question"><div class="prompt"><ol class="items" start="1"><li>en opgave → mange ________</li><li>en karakter → mange ________</li><li>en vikar → mange ________</li><li>en klasse → mange ________</li><li>en stol → mange ________</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><ol class="items" start="6"><li>et skoleår → mange ________</li><li>et fag → mange ________</li></ol></div>
+</div>
+<h2>9. lille eða små</h2><p>Fylltu í eyðurnar með <b>lille</b> (eintala) eða <b>små</b> (fleirtala).</p>
+<div class="question"><div class="prompt"><ol class="items" start="1"><li>Haukur har en ________ hund.</li><li>I klassen er der mange ________ borde.</li><li>Vi bor i et ________ hus.</li><li>Mine ________ søskende går i grundskolen.</li><li>Hun skrev en ________ opgave om forurening.</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><ol class="items" start="6"><li>Der er to ________ fejl i din diktat.</li><li>Det ________ frikvarter er kun ti minutter.</li><li>De ________ elever leger i skolegården.</li></ol></div>
+</div>
+<h2>10. Kære dagbog …</h2><p>Lestu dagbókarfærslurnar fjórar. Hver á við hverja fullyrðingu? Skrifaðu nafnið.</p>
+<div class="question"><div class="prompt"><div class="diary"><b>Ýmir:</b> Kære dagbog … I dag havde vi en vikar i matematik, fordi vores lærer var syg. Vikaren var lidt kedelig, men heldigvis fik vi fri i den sidste time. Da jeg kom hjem, skyndte jeg mig at lave lektier. Bagefter spillede jeg fodbold med mine venner.</div><div class="diary"><b>Haukur:</b> Kære dagbog … I morges kom jeg for sent til gymnastik, og jeg blev skældt ud foran hele klassen. Det var forfærdeligt! Men i biologi skulle vi undersøge en fisk, og det var spændende. Biologi er mit yndlingsfag.</div><div class="diary"><b>Ásgeir:</b> Kære dagbog … Efter spisefrikvarteret havde vi dansk diktat. Jeg er ordblind, så jeg måtte skrive på min bærbare med et retskrivningsprogram. Jeg fik kun én fejl. Skønt! I morgen får vi karakterbog, og det glæder jeg mig til.</div><div class="diary"><b>Grétar:</b> Kære dagbog … Jeg forventer meget af det nye skoleår. Jeg vil gerne have bedre karakterer i fysik og kemi, for de fag er svære for mig. Til gengæld er jeg god til engelsk og tysk. Næste år skal jeg på højskole i Danmark.</div><ol class="items" start="1"><li>Var með afleysingakennara í einum tíma. → ________</li><li>Fékk skammir fyrir framan bekkinn. → ________</li><li>Er lesblindur. → ________</li><li>Finnst eðlisfræði og efnafræði erfið. → ________</li><li>Flýtti sér að læra heima. → ________</li><li>Fékk aðeins eina villu. → ________</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><p class="note">Sömu dagbókarfærslur og að ofan.</p><ol class="items" start="7"><li>Rannsakaði fisk í líffræði. → ________</li><li>Er góður í tungumálum. → ________</li><li>Hlakkar til að fá einkunnabókina. → ________</li><li>Ætlar í lýðháskóla. → ________</li><li>Spilaði fótbolta eftir skóla. → ________</li><li>Uppáhaldsfagið er líffræði. → ________</li></ol></div>
+</div>
+<h2>11. Andheiti</h2><p>Paraðu saman orð með andstæða merkingu. Skrifaðu bókstafinn við hvert orð.</p>
+<div class="question"><div class="prompt"><div class="cols"><div><ol class="items" start="1"><li>en begyndelse ___</li><li>spændende ___</li><li>heldigvis ___</li><li>glad ___</li><li>svært ___</li><li>altid ___</li><li>god ___</li></ol></div><div><ol class='items' type='a'><li>aldrig</li><li>trist</li><li>en afslutning</li><li>kedelig</li><li>dårlig</li><li>let</li><li>desværre</li></ol></div></div></div>
+</div>
+<h2>12. Orðasambönd</h2><p>Þýddu orðasamböndin úr dagbókarfærslunum á íslensku.</p>
+<div class="question"><div class="prompt"><ol class="items" start="1"><li><b>at skynde sig</b> = ________</li><li><b>at gå i gang med</b> = ________</li><li><b>at finde ud af</b> = ________</li><li><b>at være god til</b> = ________</li><li><b>at være dårlig til</b> = ________</li></ol></div>
+</div>
+<div class="question"><div class="prompt"><ol class="items" start="6"><li><b>at glæde sig til</b> = ________</li><li><b>at komme for sent</b> = ________</li><li><b>at blive skældt ud</b> = ________</li></ol></div>
+</div>
+
+<section class="solutions"><h2>Lausnir</h2>
+<h3>1. Orðaforði</h3><ol>
+<li>upphaf</li>
+<li>að vænta</li>
+<li>nemandi</li>
+<li>heimanám</li>
+<li>frímínútur</li>
+<li>lesblind(ur)</li>
+<li>afleysingakennari</li>
+<li>sem betur fer</li>
+<li>hræðilegt</li>
+<li>leiðinlegur</li>
+<li>villa</li>
+<li>að sækjast eftir</li>
+<li>menntun</li>
+<li>frábært</li>
+</ol>
+<h3>2. Námsgreinar</h3><ol>
+<li>engelsk</li>
+<li>tysk</li>
+<li>historie</li>
+<li>matematik</li>
+<li>geografi</li>
+<li>hjemkundskab</li>
+<li>sløjd</li>
+<li>billedkunst</li>
+<li>svømning</li>
+<li>samfundsfag</li>
+</ol>
+<h3>3. Sagnbeyging</h3><ol>
+<li>at begynde: begynder, begyndte, begyndt (byrja)</li>
+<li>at spise: spiser, spiste, spist (borða)</li>
+<li>at låne: låner, lånte, lånt (lána)</li>
+<li>at tænke: tænker, tænkte, tænkt (hugsa)</li>
+<li>at snakke: snakker, snakkede, snakket (tala)</li>
+<li>at kræve: kræver, krævede, krævet (krefjast)</li>
+<li>at gå: går, gik, gået (ganga/fara)</li>
+<li>at gøre: gør, gjorde, gjort (gera)</li>
+<li>at vide: ved, vidste, vidst (vita)</li>
+<li>at være: er, var, været (vera)</li>
+</ol>
+<h3>4. Sagnir í setningum</h3><ol>
+<li><b>læste</b> <span class='working'>(þátíð)</span></li>
+<li><b>spiser</b> <span class='working'>(nútíð)</span></li>
+<li><b>kom</b> <span class='working'>(þátíð)</span></li>
+<li><b>taler</b> <span class='working'>(nútíð)</span></li>
+<li><b>gik</b> <span class='working'>(þátíð)</span></li>
+<li><b>købte</b> <span class='working'>(þátíð)</span></li>
+<li><b>havde</b> <span class='working'>(þátíð)</span></li>
+<li><b>er</b> <span class='working'>(nútíð)</span></li>
+<li><b>vidste</b> <span class='working'>(þátíð)</span></li>
+<li><b>tabte</b> <span class='working'>(þátíð)</span></li>
+<li><b>kunne</b> <span class='working'>(þátíð)</span></li>
+<li><b>forventede</b> <span class='working'>(þátíð)</span></li>
+<li><b>gjorde</b> <span class='working'>(þátíð)</span></li>
+<li><b>lånt</b> <span class='working'>(lh. þátíðar)</span></li>
+<li><b>smilet</b> <span class='working'>(lh. þátíðar)</span></li>
+</ol>
+<h3>5. Tímahugtök</h3><ol>
+<li>i går</li>
+<li>i forgårs</li>
+<li>i morges</li>
+<li>i morgen</li>
+<li>i aftes</li>
+<li>i aften</li>
+<li>i mandags</li>
+<li>om mandagen</li>
+<li>i weekenden</li>
+<li>om en uge</li>
+<li>til efteråret</li>
+<li>i overmorgen</li>
+</ol>
+<h3>6. Þýðing</h3><ol>
+<li>I går kom jeg for sent i skole.</li>
+<li>Om mandagen har jeg gymnastik.</li>
+<li>I fjor fik jeg gode karakterer.</li>
+<li>I morgen skal jeg læse dansk.</li>
+<li>I aftes spiste jeg fisk.</li>
+<li>Ýmir skal i gymnasium til efteråret.</li>
+</ol>
+<h3>7. Greinir og kyn</h3><ol>
+<li>en elev / eleven</li>
+<li>et fag / faget</li>
+<li>en lærer / læreren</li>
+<li>et frikvarter / frikvarteret</li>
+<li>en opgave / opgaven</li>
+<li>et skoleår / skoleåret</li>
+<li>en fejl / fejlen</li>
+<li>en uddannelse / uddannelsen</li>
+<li>en vikar / vikaren</li>
+<li>et år / året</li>
+</ol>
+<h3>8. Fleirtala</h3><ol>
+<li>mange opgaver <span class='working'>(regla 2)</span></li>
+<li>mange karakterer <span class='working'>(regla 3)</span></li>
+<li>mange vikarer <span class='working'>(regla 3)</span></li>
+<li>mange klasser <span class='working'>(regla 2)</span></li>
+<li>mange stole <span class='working'>(regla 1)</span></li>
+<li>mange skoleår <span class='working'>(regla 4)</span></li>
+<li>mange fag <span class='working'>(regla 4)</span></li>
+</ol>
+<h3>9. lille eða små</h3><ol>
+<li>lille</li>
+<li>små</li>
+<li>lille</li>
+<li>små</li>
+<li>lille</li>
+<li>små</li>
+<li>lille</li>
+<li>små</li>
+</ol>
+<h3>10. Kære dagbog …</h3><ol>
+<li>Ýmir</li>
+<li>Haukur</li>
+<li>Ásgeir</li>
+<li>Grétar</li>
+<li>Ýmir</li>
+<li>Ásgeir</li>
+<li>Haukur</li>
+<li>Grétar</li>
+<li>Ásgeir</li>
+<li>Grétar</li>
+<li>Ýmir</li>
+<li>Haukur</li>
+</ol>
+<h3>11. Andheiti</h3><ol>
+<li>en begyndelse – c) en afslutning</li>
+<li>spændende – d) kedelig</li>
+<li>heldigvis – g) desværre</li>
+<li>glad – b) trist</li>
+<li>svært – f) let</li>
+<li>altid – a) aldrig</li>
+<li>god – e) dårlig</li>
+</ol>
+<h3>12. Orðasambönd</h3><ol>
+<li>að flýta sér</li>
+<li>að byrja á</li>
+<li>að komast að, finna út úr</li>
+<li>að vera góður í</li>
+<li>að vera lélegur í</li>
+<li>að hlakka til</li>
+<li>að koma of seint</li>
+<li>að fá skammir</li>
+</ol></section>
+
+</body>
+</html>
