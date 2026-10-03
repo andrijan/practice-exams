@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Danska Orðaspjöld</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #F1F4F8;
+    --surface: #FFFFFF;
+    --surface-2: #E4EAF2;
+    --ink: #16202C;
+    --muted: #5F6C7D;
+    --line: #CDD6E1;
+    --en: #1E3F8A;
+    --en-soft: #E2E9F9;
+    --is: #C2233A;
+    --is-soft: #FBE3E7;
+    --def: #6B7686;
+    --ok: #24744F;
+    --ok-ink: #FFFFFF;
+    --ok-soft: #DDF0E6;
+    --again: #A0620F;
+    --again-soft: #FBEBD2;
+    --focus: #1E3F8A;
+    --shadow: 0 12px 32px rgba(22, 32, 44, .10), 0 1px 3px rgba(22, 32, 44, .08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #0F151E;
+      --surface: #1A2331;
+      --surface-2: #232E3F;
+      --ink: #E9EEF5;
+      --muted: #9AA7B8;
+      --line: #34405280;
+      --en: #9DB4F5;
+      --en-soft: #22304F;
+      --is: #F28B99;
+      --is-soft: #4A2029;
+      --def: #A7B2C2;
+      --ok: #6FCB9A;
+      --ok-ink: #0F151E;
+      --ok-soft: #1E3A2D;
+      --again: #E4B15C;
+      --again-soft: #3F2F16;
+      --focus: #9DB4F5;
+      --shadow: 0 12px 32px rgba(0, 0, 0, .45), 0 1px 3px rgba(0, 0, 0, .4);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0F151E;
+    --surface: #1A2331;
+    --surface-2: #232E3F;
+    --ink: #E9EEF5;
+    --muted: #9AA7B8;
+    --line: #34405280;
+    --en: #9DB4F5;
+    --en-soft: #22304F;
+    --is: #F28B99;
+    --is-soft: #4A2029;
+    --def: #A7B2C2;
+    --ok: #6FCB9A;
+    --ok-ink: #0F151E;
+    --ok-soft: #1E3A2D;
+    --again: #E4B15C;
+    --again-soft: #3F2F16;
+    --focus: #9DB4F5;
+    --shadow: 0 12px 32px rgba(0, 0, 0, .45), 0 1px 3px rgba(0, 0, 0, .4);
+  }
+
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Atkinson Hyperlegible", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.45;
+    min-height: 100vh;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  button:focus-visible, [tabindex]:focus-visible, input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  .app {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 1rem 1rem calc(1.5rem + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+  }
+
+  /* header */
+  .top { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
+  .eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-family: "Fraunces", Georgia, "Times New Roman", serif; font-weight: 600; font-size: 1.7rem; line-height: 1.05; margin: .1rem 0 0; letter-spacing: -.01em; }
+  .ghost {
+    background: var(--surface); border: 1.5px solid var(--line); color: var(--ink);
+    padding: .5rem .95rem; border-radius: 10px; font-weight: 700; font-size: .92rem; white-space: nowrap;
+  }
+  .ghost:hover { border-color: var(--muted); }
+
+  /* segmented controls */
+  .controls { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .seg { display: inline-flex; background: var(--surface-2); border-radius: 12px; padding: 3px; gap: 2px; }
+  .seg button {
+    border: 0; background: transparent; color: var(--muted);
+    padding: .5rem .85rem; border-radius: 9px; font-weight: 700; font-size: .92rem; white-space: nowrap;
+  }
+  .seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.14); }
+  #deckSeg { flex-wrap: wrap; }
+  .seg .en { color: var(--en); }
+  .seg .is { color: var(--is); }
+  .seg button:not([aria-pressed="true"]) .en, .seg button:not([aria-pressed="true"]) .is { color: inherit; }
+
+  /* progress */
+  .progress { display: flex; flex-direction: column; gap: .35rem; }
+  .bar { height: 6px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+  .fill { height: 100%; width: 0; background: var(--ok); border-radius: 999px; transition: width .3s ease; }
+  .counts { display: flex; justify-content: space-between; font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .counts b { color: var(--ink); font-weight: 700; }
+
+  /* card */
+  .scene { perspective: 1400px; }
+  .card {
+    position: relative;
+    height: clamp(300px, 52vh, 540px);
+    cursor: pointer;
+    touch-action: pan-y;
+    user-select: none; -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .22s ease, opacity .22s ease;
+    outline: none;
+  }
+  .card:focus-visible .face { box-shadow: var(--shadow), 0 0 0 3px var(--focus); }
+  .inner { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .45s cubic-bezier(.2, .7, .2, 1); }
+  .card.flipped .inner { transform: rotateY(180deg); }
+  .face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    background: var(--surface); border-radius: 18px; box-shadow: var(--shadow);
+    padding: 1rem 1.3rem 1rem; display: flex; flex-direction: column; overflow: hidden;
+  }
+  .face::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--edge, var(--line)); }
+  .face.en { --edge: var(--en); }
+  .face.is { --edge: var(--is); }
+  .face.def { --edge: var(--def); }
+  .back { transform: rotateY(180deg); }
+  .card.leave-right { transform: translateX(110px) rotate(4deg); opacity: 0; }
+  .card.leave-left { transform: translateX(-110px) rotate(-4deg); opacity: 0; }
+  .card.enter { transform: translateY(14px); opacity: 0; }
+  .card.no-anim, .card.no-anim .inner { transition: none !important; }
+
+  .meta { display: flex; justify-content: space-between; align-items: baseline; gap: .8rem; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: var(--muted); }
+  .meta .lang { white-space: nowrap; }
+  .meta .lang.en { color: var(--en); }
+  .meta .lang.is { color: var(--is); }
+  .meta .lang.def { color: var(--def); }
+  .meta .tab { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .body { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: .55rem; overflow: auto; padding: .4rem 0; }
+  .word {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-weight: 500; font-size: clamp(2rem, 7vw, 3.4rem); line-height: 1.1; letter-spacing: -.01em;
+    text-wrap: balance; max-width: 16ch; color: var(--ink);
+  }
+  .word.en { color: var(--en); }
+  .word.is { color: var(--is); }
+  .word.def { font-style: italic; font-weight: 400; font-size: clamp(1.25rem, 3.6vw, 1.7rem); line-height: 1.35; max-width: 30ch; color: var(--ink); }
+  .alt { font-style: italic; color: var(--muted); font-size: .98rem; }
+  .rule { width: min(60%, 260px); height: 0; border: 0; border-top: 1px solid var(--line); margin: .4rem 0; }
+  .gloss { color: var(--ink); font-size: 1.05rem; line-height: 1.45; max-width: 36ch; text-wrap: pretty; }
+  .gloss .k { color: var(--muted); font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-right: .35rem; }
+  .gloss .is { color: var(--is); font-weight: 700; }
+  .gloss .en { color: var(--en); font-weight: 700; }
+  .tip { text-align: center; font-size: .8rem; color: var(--muted); }
+  .back .tip { visibility: hidden; }
+
+  /* actions */
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+  .btn { border: 0; border-radius: 14px; min-height: 58px; padding: .7rem 1rem; font-weight: 700; font-size: 1.05rem; display: inline-flex; align-items: center; justify-content: center; gap: .5rem; transition: transform .08s ease, filter .15s ease; }
+  .btn:active { transform: scale(.985); }
+  .btn.ok { background: var(--ok); color: var(--ok-ink); }
+  .btn.ok:hover { filter: brightness(1.06); }
+  .btn.again { background: var(--again-soft); color: var(--again); border: 1.5px solid var(--again); }
+  .btn.again:hover { filter: brightness(.98); }
+  .btn svg { width: 1.1em; height: 1.1em; }
+  .hint { margin: 0; text-align: center; font-size: .82rem; color: var(--muted); }
+  .hint .kbd { display: none; }
+  @media (hover: hover) and (pointer: fine) { .hint .touch { display: none; } .hint .kbd { display: inline; } }
+  kbd { font: inherit; font-size: .78rem; background: var(--surface-2); padding: .05rem .4rem; border-radius: 5px; border: 1px solid var(--line); }
+  .foot { text-align: center; }
+  .linkish { background: none; border: 0; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; font-size: .88rem; padding: .3rem .5rem; }
+  .linkish:hover { color: var(--ink); }
+
+  /* round summary */
+  .done { background: var(--surface); border-radius: 18px; box-shadow: var(--shadow); padding: 1.4rem 1.4rem 1.3rem; position: relative; overflow: hidden; }
+  .done::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--ok); }
+  .done .big { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: clamp(2.4rem, 8vw, 3.6rem); line-height: 1; color: var(--ok); font-variant-numeric: tabular-nums; margin: .3rem 0 .2rem; }
+  .done p { margin: .2rem 0; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .9rem; }
+  .chip { background: var(--again-soft); color: var(--ink); border-radius: 999px; padding: .3rem .75rem; font-size: .9rem; }
+  .chip .is { color: var(--is); font-weight: 700; }
+
+  /* list view */
+  #search { width: 100%; padding: .7rem .95rem; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; }
+  #search::placeholder { color: var(--muted); }
+  .group { margin-top: 1.1rem; }
+  .group h2 { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.25rem; margin: 0 0 .5rem; }
+  .group h2 small { font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 400; color: var(--muted); font-size: .85rem; margin-left: .5rem; }
+  .tablewrap { overflow-x: auto; background: var(--surface); border-radius: 14px; box-shadow: var(--shadow); }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: .6rem .8rem; vertical-align: top; border-top: 1px solid var(--line); }
+  th { border-top: 0; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  td.w { font-weight: 700; color: var(--en); width: 24%; }
+  td.d { color: var(--ink); }
+  td.i { width: 26%; }
+  td.i .is { color: var(--is); font-weight: 700; }
+  td.i .alt { display: block; font-size: .85rem; }
+  .empty { color: var(--muted); padding: 1rem; text-align: center; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card, .inner, .fill, .btn { transition: none !important; }
+  }
+  @media (max-width: 420px) {
+    .seg button { padding: .45rem .6rem; font-size: .85rem; }
+    .face { padding: .85rem 1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <div class="eyebrow">Danska · DAN1003</div>
+      <h1>Orðaspjöld</h1>
+    </div>
+    <button class="ghost" id="listToggle" type="button" aria-pressed="false">Orðalisti</button>
+  </header>
+
+  <div class="controls">
+    <div class="seg" id="deckSeg" role="group" aria-label="Kafli">
+      <button type="button" data-deck="ord" aria-pressed="false">Lota 1</button>
+      <button type="button" data-deck="fag" aria-pressed="false">Námsgreinar</button>
+      <button type="button" data-deck="sagnir" aria-pressed="false">Sagnir</button>
+      <button type="button" data-deck="skolear" aria-pressed="false">Det nye skoleår</button>
+      <button type="button" data-deck="dagbog" aria-pressed="false">Kære dagbog</button>
+      <button type="button" data-deck="tid" aria-pressed="false">Tímahugtök</button>
+      <button type="button" data-deck="udtryk" aria-pressed="false">Orðasambönd</button>
+      <button type="button" data-deck="all" aria-pressed="false">Allt</button>
+    </div>
+    <div class="seg" id="modeSeg" role="group" aria-label="Átt">
+      <button type="button" data-mode="en-is" aria-pressed="false"><span class="en">DA</span> → <span class="is">ÍS</span></button>
+      <button type="button" data-mode="is-en" aria-pressed="false"><span class="is">ÍS</span> → <span class="en">DA</span></button>
+    </div>
+  </div>
+
+  <section id="study">
+    <div class="progress">
+      <div class="bar" aria-hidden="true"><div class="fill" id="fill"></div></div>
+      <div class="counts" aria-live="polite"><span id="countKnown"></span><span id="countLeft"></span></div>
+    </div>
+
+    <div class="scene" style="margin-top:.9rem">
+      <div class="card" id="card" role="button" tabindex="0" aria-label="Spjald. Bankaðu til að snúa.">
+        <div class="inner">
+          <div class="face front" id="front"></div>
+          <div class="face back" id="back"></div>
+        </div>
+      </div>
+      <div class="done" id="done" hidden></div>
+    </div>
+
+    <div class="actions" id="actions" style="margin-top:.9rem">
+      <button type="button" class="btn again" id="btnAgain">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+        Æfa aftur
+      </button>
+      <button type="button" class="btn ok" id="btnKnow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        Kunni það
+      </button>
+    </div>
+    <div class="actions" id="doneActions" hidden style="margin-top:.9rem">
+      <button type="button" class="btn again" id="btnMissed"></button>
+      <button type="button" class="btn ok" id="btnAll">Öll orð aftur</button>
+    </div>
+
+    <p class="hint" style="margin-top:.8rem">
+      <span class="touch">Bankaðu á spjaldið til að snúa því · strjúktu til hægri = kunni, til vinstri = æfa aftur</span>
+      <span class="kbd"><kbd>Bil</kbd> snúa · <kbd>→</kbd> kunni · <kbd>←</kbd> æfa aftur</span>
+    </p>
+    <div class="foot"><button class="linkish" id="btnReset" type="button">Stokka og byrja upp á nýtt</button></div>
+  </section>
+
+  <section id="list" hidden>
+    <input id="search" type="search" placeholder="Leita að orði…" autocomplete="off" aria-label="Leita í orðalista">
+    <div id="listBody"></div>
+  </section>
+</div>
+
+<script>
+(function () {
+  const DATA = {"chapters":[{"id":"ord","label":"Lota 1","title":"Orðalisti úr gátlista"},{"id":"fag","label":"Námsgreinar","title":"Skólafög á dönsku"},{"id":"sagnir","label":"Sagnir","title":"Sagnirnar til prófs"},{"id":"skolear","label":"Det nye skoleår","title":"Orðalisti úr vinnuhefti"},{"id":"dagbog","label":"Kære dagbog","title":"Orðalisti úr vinnuhefti"},{"id":"tid","label":"Tímahugtök","title":"Málfræðihefti bls. 12"},{"id":"udtryk","label":"Orðasambönd","title":"Úr dagbókarfærslunum"}],"words":[{"ch":"ord","da":"forskellige","is":"mismunandi"},{"ch":"ord","da":"enten … eller","is":"annað hvort … eða"},{"ch":"ord","da":"en højskole","is":"lýðháskóli"},{"ch":"ord","da":"fornuftig","is":"skynsamur"},{"ch":"ord","da":"kunst","is":"list"},{"ch":"ord","da":"en begyndelse","is":"upphaf"},{"ch":"ord","da":"en afslutning","is":"endir"},{"ch":"ord","da":"spændende","is":"spennandi"},{"ch":"ord","da":"en elev","is":"nemandi"},{"ch":"ord","da":"at forvente","is":"að vænta"},{"ch":"ord","da":"forventninger","is":"væntingar"},{"ch":"ord","da":"krav","is":"kröfur"},{"ch":"ord","da":"at kræve","is":"að krefjast"},{"ch":"ord","da":"at fortsætte","is":"að halda áfram"},{"ch":"ord","da":"karakterer","is":"einkunnir"},{"ch":"ord","da":"en folkeskole","is":"grunnskóli"},{"ch":"ord","da":"en grundskole","is":"grunnskóli"},{"ch":"ord","da":"selvfølgelig","is":"að sjálfsögðu"},{"ch":"ord","da":"at stræbe efter","is":"að sækjast eftir","alt":"að keppast við"},{"ch":"ord","da":"lektier","is":"heimanám"},{"ch":"ord","da":"en eksamen","is":"próf"},{"ch":"ord","da":"at snakke","is":"að tala","alt":"að spjalla"},{"ch":"ord","da":"med hensyn til","is":"með tilliti til"},{"ch":"ord","da":"en uddannelse","is":"menntun"},{"ch":"ord","da":"overstået","is":"lokið"},{"ch":"ord","da":"bagefter","is":"á eftir"},{"ch":"ord","da":"forurening","is":"mengun"},{"ch":"ord","da":"et frikvarter","is":"frímínútur"},{"ch":"ord","da":"et spisefrikvarter","is":"matarfrímínútur"},{"ch":"ord","da":"datid","is":"þátíð"},{"ch":"ord","da":"at vente","is":"að bíða"},{"ch":"ord","da":"svært","is":"erfitt"},{"ch":"ord","da":"at skrive","is":"að skrifa"},{"ch":"ord","da":"ordblind","is":"lesblindur"},{"ch":"ord","da":"et fag","is":"námsgrein"},{"ch":"ord","da":"dårlig","is":"slæmur","alt":"slæm, slæmt (dårligt)"},{"ch":"ord","da":"en bærbar","is":"fartölva"},{"ch":"ord","da":"en vikar","is":"afleysingakennari"},{"ch":"ord","da":"at undersøge","is":"að rannsaka"},{"ch":"ord","da":"trist","is":"sorglegt"},{"ch":"ord","da":"kedelig","is":"leiðinlegur","alt":"leiðinleg, leiðinlegt (kedeligt)"},{"ch":"ord","da":"en karakterbog","is":"einkunnabók"},{"ch":"ord","da":"en skældud","is":"skammir"},{"ch":"ord","da":"heldigvis","is":"sem betur fer"},{"ch":"ord","da":"en opgave","is":"verkefni"},{"ch":"ord","da":"forfærdeligt","is":"hræðilegt"},{"ch":"ord","da":"en fejl","is":"villa"},{"ch":"ord","da":"et yndlingsfag","is":"uppáhaldsfag"},{"ch":"ord","da":"skønt","is":"frábært"},{"ch":"fag","da":"engelsk","is":"enska"},{"ch":"fag","da":"spansk","is":"spænska"},{"ch":"fag","da":"dansk","is":"danska"},{"ch":"fag","da":"fransk","is":"franska"},{"ch":"fag","da":"islandsk","is":"íslenska"},{"ch":"fag","da":"tysk","is":"þýska"},{"ch":"fag","da":"grammatik","is":"málfræði"},{"ch":"fag","da":"litteratur","is":"bókmenntir"},{"ch":"fag","da":"diktat","is":"stafsetningarupplestur","alt":"stíll"},{"ch":"fag","da":"sprog","is":"tungumál"},{"ch":"fag","da":"retskrivning","is":"stafsetning"},{"ch":"fag","da":"naturfag","is":"náttúrufræði"},{"ch":"fag","da":"historie","is":"saga"},{"ch":"fag","da":"astronomi","is":"stjörnufræði"},{"ch":"fag","da":"biologi","is":"líffræði"},{"ch":"fag","da":"samfundsfag","is":"samfélagsfræði"},{"ch":"fag","da":"filosofi","is":"heimspeki"},{"ch":"fag","da":"matematik","is":"stærðfræði"},{"ch":"fag","da":"fysik","is":"eðlisfræði"},{"ch":"fag","da":"geografi","is":"landafræði"},{"ch":"fag","da":"kemi","is":"efnafræði"},{"ch":"fag","da":"psykologi","is":"sálfræði"},{"ch":"fag","da":"sløjd","is":"smíði"},{"ch":"fag","da":"svømning","is":"sund"},{"ch":"fag","da":"musik","is":"tónmennt"},{"ch":"fag","da":"hjemkundskab","is":"heimilisfræði"},{"ch":"fag","da":"håndarbejde","is":"textíl"},{"ch":"fag","da":"billedkunst","is":"myndmennt"},{"ch":"fag","da":"gymnastik / idræt","is":"íþróttir"},{"ch":"fag","da":"afspænding","is":"slökun"},{"ch":"fag","da":"design","is":"hönnun"},{"ch":"fag","da":"pause","is":"eyða"},{"ch":"fag","da":"klassens time","is":"umsjón"},{"ch":"fag","da":"edb","is":"upplýsingatækni","alt":"tölvutími"},{"ch":"sagnir","da":"at begynde","def":"begynder · begyndte · (har) begyndt","is":"að byrja"},{"ch":"sagnir","da":"at tale","def":"taler · talte · (har) talt","is":"að tala"},{"ch":"sagnir","da":"at læse","def":"læser · læste · (har) læst","is":"að lesa"},{"ch":"sagnir","da":"at købe","def":"køber · købte · (har) købt","is":"að kaupa"},{"ch":"sagnir","da":"at spise","def":"spiser · spiste · (har) spist","is":"að borða"},{"ch":"sagnir","da":"at tabe","def":"taber · tabte · (har) tabt","is":"að tapa"},{"ch":"sagnir","da":"at låne","def":"låner · lånte · (har) lånt","is":"að lána"},{"ch":"sagnir","da":"at tænke","def":"tænker · tænkte · (har) tænkt","is":"að hugsa"},{"ch":"sagnir","da":"at forvente","def":"forventer · forventede · (har) forventet","is":"að vænta"},{"ch":"sagnir","da":"at smile","def":"smiler · smilede · (har) smilet","is":"að brosa"},{"ch":"sagnir","da":"at snakke","def":"snakker · snakkede · (har) snakket","is":"að tala","alt":"spjalla"},{"ch":"sagnir","da":"at kræve","def":"kræver · krævede · (har) krævet","is":"að krefjast"},{"ch":"sagnir","da":"at komme","def":"kommer · kom · (har) kommet","is":"að koma"},{"ch":"sagnir","da":"at gå","def":"går · gik · (har) gået","is":"að ganga","alt":"fara"},{"ch":"sagnir","da":"at gøre","def":"gør · gjorde · (har) gjort","is":"að gera"},{"ch":"sagnir","da":"at have","def":"har · havde · (har) haft","is":"að hafa"},{"ch":"sagnir","da":"at vide","def":"ved · vidste · (har) vidst","is":"að vita"},{"ch":"sagnir","da":"at være","def":"er · var · (har) været","is":"að vera"},{"ch":"sagnir","da":"at skulle","def":"skal · skulle · (har) skullet","is":"að skulu","alt":"ætla, eiga að"},{"ch":"sagnir","da":"at ville","def":"vil · ville · (har) villet","is":"að vilja","alt":"ætla, munu"},{"ch":"sagnir","da":"at måtte","def":"må · måtte · (har) måttet","is":"að mega","alt":"verða að"},{"ch":"sagnir","da":"at burde","def":"bør · burde · (har) burdet","is":"að eiga að"},{"ch":"sagnir","da":"at turde","def":"tør · turde · (har) turdet","is":"að þora"},{"ch":"sagnir","da":"at kunne","def":"kan · kunne · (har) kunnet","is":"að kunna","alt":"geta"},{"ch":"skolear","da":"at begynde","is":"byrja"},{"ch":"skolear","da":"en begyndelse","is":"byrjun"},{"ch":"skolear","da":"en afslutning","is":"lok"},{"ch":"skolear","da":"en grundskole","is":"grunnskóli"},{"ch":"skolear","da":"en elev","is":"nemandi"},{"ch":"skolear","da":"lidt","is":"dálítið"},{"ch":"skolear","da":"at forvente","is":"vænta","alt":"vonast eftir"},{"ch":"skolear","da":"et skoleår","is":"skólaár"},{"ch":"skolear","da":"at stille krav","is":"gera kröfur"},{"ch":"skolear","da":"en advokat","is":"lögmaður"},{"ch":"skolear","da":"at tro","is":"halda"},{"ch":"skolear","da":"at tænke sig","is":"hugsa sér"},{"ch":"skolear","da":"en karakter","is":"einkunn"},{"ch":"skolear","da":"udmærket","is":"frábært","alt":"mjög gott"},{"ch":"skolear","da":"at fortsætte","is":"halda áfram"},{"ch":"skolear","da":"en måde","is":"háttur","alt":"máti"},{"ch":"skolear","da":"hjemme","is":"heima"},{"ch":"skolear","da":"at handle om","is":"snúast um"},{"ch":"skolear","da":"en tid","is":"tími"},{"ch":"skolear","da":"en ven","is":"vinur"},{"ch":"skolear","da":"at håbe","is":"vona"},{"ch":"skolear","da":"trods alt","is":"þrátt fyrir allt"},{"ch":"skolear","da":"vigtig","is":"mikilvægur"},{"ch":"skolear","da":"en folkeskole","is":"grunnskóli"},{"ch":"skolear","da":"at leve op til","is":"standast (kröfur, væntingar)"},{"ch":"skolear","da":"forventninger","is":"væntingar"},{"ch":"skolear","da":"derudover","is":"auk þess"},{"ch":"skolear","da":"at have det godt","is":"líða vel"},{"ch":"skolear","da":"en eksamen","is":"próf"},{"ch":"skolear","da":"hvis","is":"ef"},{"ch":"skolear","da":"at bide negle","is":"naga neglur"},{"ch":"skolear","da":"før","is":"áður"},{"ch":"skolear","da":"at betyde","is":"þýða","alt":"merkja"},{"ch":"skolear","da":"at stræbe efter","is":"leitast við","alt":"sækjast eftir"},{"ch":"skolear","da":"at forbedre sig","is":"bæta sig"},{"ch":"skolear","da":"at anstrenge sig","is":"leggja á sig"},{"ch":"skolear","da":"at være nødt til","is":"vera tilneyddur"},{"ch":"skolear","da":"en masse","is":"mjög mikið"},{"ch":"skolear","da":"selvfølgelig","is":"að sjálfsögðu"},{"ch":"skolear","da":"at følge med","is":"fylgjast með"},{"ch":"skolear","da":"altid","is":"alltaf"},{"ch":"skolear","da":"en lærer","is":"kennari"},{"ch":"skolear","da":"i orden","is":"í lagi"},{"ch":"skolear","da":"forbedringer","is":"umbætur","alt":"framfarir"},{"ch":"skolear","da":"de sproglige fag","is":"tungumál (skólafög)"},{"ch":"skolear","da":"at være dårlig til","is":"vera lélegur í"},{"ch":"skolear","da":"fysisk aktivitet","is":"líkamleg hreyfing"},{"ch":"skolear","da":"gymnastik","is":"leikfimi"},{"ch":"skolear","da":"elendig form","is":"slæmt form"},{"ch":"skolear","da":"især","is":"sérstaklega","alt":"einkum"},{"ch":"skolear","da":"specielt godt","is":"sérstaklega gott"},{"ch":"skolear","da":"at håbe på","is":"vonast eftir"},{"ch":"skolear","da":"fysik","is":"eðlisfræði"},{"ch":"skolear","da":"en indsats","is":"framlag"},{"ch":"skolear","da":"at gøre sig umage","is":"leggja sig fram"},{"ch":"skolear","da":"en indflydelse","is":"áhrif"},{"ch":"skolear","da":"hensyn til","is":"tillit til"},{"ch":"skolear","da":"en uddannelse","is":"menntun"},{"ch":"skolear","da":"et job","is":"starf","alt":"vinna"},{"ch":"skolear","da":"et musikhold","is":"tónlistarhópur"},{"ch":"skolear","da":"musik","is":"tónlist"},{"ch":"skolear","da":"at synge","is":"syngja"},{"ch":"dagbog","da":"syg","is":"veikur"},{"ch":"dagbog","da":"hurtigt","is":"fljótt"},{"ch":"dagbog","da":"at overstå","is":"ljúka"},{"ch":"dagbog","da":"lige som","is":"eins og"},{"ch":"dagbog","da":"dobbelt","is":"tvöfalt"},{"ch":"dagbog","da":"overhovedet ikke","is":"alls ekki"},{"ch":"dagbog","da":"at huske","is":"muna"},{"ch":"dagbog","da":"en opgave","is":"verkefni"},{"ch":"dagbog","da":"forurening","is":"mengun"},{"ch":"dagbog","da":"syreregn","is":"súrt regn"},{"ch":"dagbog","da":"desværre","is":"því miður"},{"ch":"dagbog","da":"forfærdeligt","is":"hræðilegt"},{"ch":"dagbog","da":"til gengæld","is":"aftur á móti","alt":"hins vegar"},{"ch":"dagbog","da":"at redde","is":"bjarga"},{"ch":"dagbog","da":"et spisefrikvarter","is":"matarhlé"},{"ch":"dagbog","da":"en diktat","is":"upplestur (til að skrifa eftir)"},{"ch":"dagbog","da":"ordblind","is":"lesblindur"},{"ch":"dagbog","da":"en bærbar (computer)","is":"fartölva"},{"ch":"dagbog","da":"et retskrivningsprogram","is":"réttritunarforrit"},{"ch":"dagbog","da":"skønt","is":"frábært"},{"ch":"dagbog","da":"en vikar","is":"afleysingamaður"},{"ch":"dagbog","da":"bl.a. (blandt andet)","is":"m.a. (meðal annars)"},{"ch":"dagbog","da":"at undersøge","is":"rannsaka"},{"ch":"dagbog","da":"indvolde","is":"innyfli"},{"ch":"dagbog","da":"anden verdenskrig","is":"seinni heimsstyrjöldin"},{"ch":"dagbog","da":"trist","is":"dapurlegur","alt":"sorglegur"},{"ch":"dagbog","da":"at vente længe","is":"bíða lengi eftir"},{"ch":"dagbog","da":"en astronomiprøve","is":"stjörnufræðipróf"},{"ch":"dagbog","da":"en fejl","is":"villa"},{"ch":"dagbog","da":"en karakterbog","is":"einkunnabók"},{"ch":"dagbog","da":"skældt ud","is":"fá skammir"},{"ch":"dagbog","da":"foran","is":"fyrir framan"},{"ch":"dagbog","da":"et yndlingsfag","is":"uppáhaldsfag"},{"ch":"dagbog","da":"heldigvis","is":"sem betur fer"},{"ch":"tid","da":"i fjor","is":"í fyrra"},{"ch":"tid","da":"sidste år","is":"í fyrra"},{"ch":"tid","da":"i dag","is":"í dag"},{"ch":"tid","da":"i går","is":"í gær"},{"ch":"tid","da":"formiddag","is":"fyrir hádegi"},{"ch":"tid","da":"i gårmorges","is":"í gærmorgun"},{"ch":"tid","da":"forleden dag","is":"um daginn","alt":"nýlega"},{"ch":"tid","da":"i forgårs","is":"í fyrradag"},{"ch":"tid","da":"i eftermiddag","is":"síðdegis"},{"ch":"tid","da":"i morges","is":"í morgun (liðið)"},{"ch":"tid","da":"i aftes","is":"í gærkvöldi"},{"ch":"tid","da":"i morgen","is":"á morgun"},{"ch":"tid","da":"i aften","is":"í kvöld (ókomið)"},{"ch":"tid","da":"om morgenen","is":"á morgnana"},{"ch":"tid","da":"om aftenen","is":"á kvöldin"},{"ch":"tid","da":"hver dag","is":"á hverjum degi"},{"ch":"tid","da":"hver aften","is":"á hverju kvöldi"},{"ch":"tid","da":"i morgenaften","is":"annað kvöld"},{"ch":"tid","da":"i overmorgen","is":"hinn daginn","alt":"ekki á morgun heldur hinn"},{"ch":"tid","da":"i mandags","is":"á mánudaginn var"},{"ch":"tid","da":"på mandag","is":"á mánudaginn (ókomið)"},{"ch":"tid","da":"om mandagen","is":"á mánudögum (alltaf)"},{"ch":"tid","da":"i weekenden","is":"um helgina"},{"ch":"tid","da":"til efteråret","is":"í haust (ókomið)"},{"ch":"tid","da":"til sommer","is":"í sumar"},{"ch":"tid","da":"om sommeren","is":"á sumrin"},{"ch":"tid","da":"en uge","is":"vika"},{"ch":"tid","da":"en ugestid","is":"vikutími"},{"ch":"tid","da":"en måned","is":"mánuður"},{"ch":"tid","da":"et år","is":"ár"},{"ch":"tid","da":"i påsken","is":"um páskana"},{"ch":"tid","da":"i pinsen","is":"um hvítasunnuna"},{"ch":"tid","da":"i julen","is":"um jólin"},{"ch":"tid","da":"til jul","is":"á jólunum"},{"ch":"tid","da":"om en uge","is":"eftir viku"},{"ch":"tid","da":"om en måned","is":"eftir mánuð"},{"ch":"tid","da":"om halvandet år","is":"eftir eitt og hálft ár"},{"ch":"tid","da":"ved totiden","is":"um tvöleytið"},{"ch":"tid","da":"omkring klokken to","is":"um tvöleytið"},{"ch":"tid","da":"et århundrede","is":"öld"},{"ch":"tid","da":"et årsskifte","is":"áramót"},{"ch":"tid","da":"i nat","is":"í nótt"},{"ch":"udtryk","da":"at skynde sig","is":"flýta sér"},{"ch":"udtryk","da":"at gå i gang med","is":"byrja á"},{"ch":"udtryk","da":"at finde ud af","is":"komast að","alt":"finna út úr"},{"ch":"udtryk","da":"at være god til","is":"vera góður í"},{"ch":"udtryk","da":"at have svært ved","is":"eiga erfitt með"},{"ch":"udtryk","da":"at være dårlig til","is":"vera lélegur í"},{"ch":"udtryk","da":"at glæde sig til","is":"hlakka til"},{"ch":"udtryk","da":"at komme for sent","is":"koma of seint"},{"ch":"udtryk","da":"at bryde sig om","is":"kæra sig um"},{"ch":"udtryk","da":"at blive skældt ud","is":"fá skammir"},{"ch":"udtryk","da":"at være glad for","is":"vera ánægður með","alt":"þykja vænt um"}]};
+  const CH = Object.fromEntries(DATA.chapters.map(c => [c.id, c]));
+  const WORDS = DATA.words.map((w, i) => Object.assign({ id: w.ch + ':' + i }, w));
+  const byId = Object.fromEntries(WORDS.map(w => [w.id, w]));
+  const STORE = 'danska-dan1003-ordaspjold-v1';
+  const RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const $ = id => document.getElementById(id);
+  const card = $('card'), front = $('front'), back = $('back'), done = $('done');
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function deckIds(deck) {
+    if (deck === 'all') {
+      const seen = new Set();
+      return WORDS.filter(w => { const k = w.da.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map(w => w.id);
+    }
+    return WORDS.filter(w => w.ch === deck).map(w => w.id);
+  }
+  function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  let state = { deck: DATA.chapters[0].id, mode: 'en-is', sessions: {} };
+  try { const raw = localStorage.getItem(STORE); if (raw) { const s = JSON.parse(raw); if (s && s.sessions && s.deck && s.mode) state = s; } } catch (e) { }
+  if (!(state.deck in CH) && state.deck !== 'all') state.deck = DATA.chapters[0].id;
+  if (!['en-is', 'is-en'].includes(state.mode)) state.mode = 'en-is';
+  function save() { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { } }
+
+  function newSession(ids, round, subset) { return { queue: shuffle(ids), known: [], missed: [], round: round || 1, subset: !!subset, flipped: false }; }
+  const key = () => state.deck + '|' + state.mode;
+  function session() {
+    const all = deckIds(state.deck), set = new Set(all);
+    let s = state.sessions[key()];
+    if (!s || !Array.isArray(s.queue)) { s = state.sessions[key()] = newSession(all); return s; }
+    s.queue = s.queue.filter(id => set.has(id));
+    s.known = (s.known || []).filter(id => set.has(id));
+    s.missed = (s.missed || []).filter(id => set.has(id));
+    if (!s.subset) { const have = new Set([...s.queue, ...s.known]); all.forEach(id => { if (!have.has(id)) s.queue.push(id); }); }
+    if (!s.queue.length && !s.known.length) s = state.sessions[key()] = newSession(all);
+    return s;
+  }
+
+  /* ---- rendering ---- */
+  function tab(w) { const c = CH[w.ch]; return esc(c.label + ' · ' + c.title); }
+  function faceHTML(w, side) {
+    const m = state.mode;
+    let lang, cls, main, extra = '';
+    if (side === 'front') {
+      if (m === 'en-is') { lang = 'Danska'; cls = 'en'; main = `<div class="word en">${esc(w.da)}</div>`; }
+      else if (m === 'is-en') { lang = 'Íslenska'; cls = 'is'; main = `<div class="word is">${esc(w.is)}</div>` + (w.alt ? `<div class="alt">einnig: ${esc(w.alt)}</div>` : ''); }
+      else { lang = 'Skýring'; cls = 'def'; main = `<div class="word def">${esc(w.def)}</div>`; }
+    } else {
+      if (m === 'en-is') {
+        lang = 'Íslenska'; cls = 'is';
+        main = `<div class="word is">${esc(w.is)}</div>` + (w.alt ? `<div class="alt">einnig: ${esc(w.alt)}</div>` : '');
+        extra = w.def ? `<hr class="rule"><div class="gloss">${esc(w.def)}</div>` : '';
+      } else if (m === 'is-en') {
+        lang = 'Danska'; cls = 'en';
+        main = `<div class="word en">${esc(w.da)}</div>`;
+        extra = w.def ? `<hr class="rule"><div class="gloss">${esc(w.def)}</div>` : '';
+      } else {
+        lang = 'Danska'; cls = 'en';
+        main = `<div class="word en">${esc(w.da)}</div>`;
+        extra = `<hr class="rule"><div class="gloss"><span class="k">ÍS</span><span class="is">${esc(w.is)}</span>${w.alt ? ` <span class="alt">(${esc(w.alt)})</span>` : ''}</div>`;
+      }
+    }
+    return { cls, html: `<div class="meta"><span class="tab">${tab(w)}</span><span class="lang ${cls}">${lang}</span></div><div class="body">${main}${extra}</div><div class="tip">bankaðu til að snúa</div>` };
+  }
+
+  function renderControls() {
+    document.querySelectorAll('#deckSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.deck === state.deck)));
+    document.querySelectorAll('#modeSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === state.mode)));
+  }
+
+  function render() {
+    renderControls();
+    const s = session();
+    const total = s.queue.length + s.known.length;
+    const known = s.known.length;
+    $('fill').style.width = (total ? (known / total) * 100 : 0) + '%';
+    $('countKnown').innerHTML = `Kunni <b>${known}</b> af ${total}`;
+    $('countLeft').innerHTML = (s.round > 1 ? `Umferð ${s.round} · ` : '') + `Eftir <b>${s.queue.length}</b>`;
+
+    if (!s.queue.length) {
+      card.hidden = true; $('actions').hidden = true;
+      done.hidden = false; $('doneActions').hidden = false;
+      const n = s.missed.length;
+      const chips = s.missed.map(id => byId[id]).filter(Boolean).map(w => `<span class="chip">${esc(w.da)} · <span class="is">${esc(w.is)}</span></span>`).join('');
+      done.innerHTML = `<div class="eyebrow">${s.round > 1 ? 'Umferð ' + s.round + ' lokið' : 'Umferð lokið'}</div>
+        <div class="big">${total - n} <span style="font-size:.5em;color:var(--muted);font-weight:500">af ${total}</span></div>
+        <p>${n === 0 ? 'Allt rétt í fyrstu tilraun. Vel gert!' : 'rétt í fyrstu tilraun'}</p>
+        ${n ? `<p style="margin-top:.8rem"><b style="color:var(--ink)">Þessi þurfa meiri æfingu:</b></p><div class="chips">${chips}</div>` : ''}`;
+      $('btnMissed').hidden = n === 0;
+      $('btnMissed').textContent = `Æfa þau sem ég missti af (${n})`;
+      return;
+    }
+    done.hidden = true; $('doneActions').hidden = true;
+    card.hidden = false; $('actions').hidden = false;
+
+    const w = byId[s.queue[0]];
+    const f = faceHTML(w, 'front'), b = faceHTML(w, 'back');
+    front.className = 'face front ' + f.cls; front.innerHTML = f.html;
+    back.className = 'face back ' + b.cls; back.innerHTML = b.html;
+    card.classList.toggle('flipped', !!s.flipped);
+  }
+
+  /* ---- actions ---- */
+  function flip() {
+    const s = session(); if (!s.queue.length) return;
+    s.flipped = !s.flipped; save();
+    card.classList.toggle('flipped', s.flipped);
+  }
+  let busy = false;
+  function mark(knew) {
+    const s = session(); if (!s.queue.length || busy) return;
+    busy = true;
+    const dur = RM ? 0 : 220;
+    card.classList.add(knew ? 'leave-right' : 'leave-left');
+    setTimeout(() => {
+      const id = s.queue.shift();
+      if (knew) s.known.push(id);
+      else { s.queue.push(id); if (!s.missed.includes(id)) s.missed.push(id); }
+      s.flipped = false; save();
+      card.classList.add('no-anim');
+      card.classList.remove('leave-right', 'leave-left', 'flipped');
+      if (!RM) card.classList.add('enter');
+      render();
+      void card.offsetWidth;
+      requestAnimationFrame(() => { card.classList.remove('no-anim'); requestAnimationFrame(() => { card.classList.remove('enter'); busy = false; }); });
+    }, dur);
+  }
+  function resetAll() { state.sessions[key()] = newSession(deckIds(state.deck)); save(); render(); }
+  function practiceMissed() { const s = session(); if (!s.missed.length) return resetAll(); state.sessions[key()] = newSession(s.missed, s.round + 1, true); save(); render(); }
+
+  /* ---- events ---- */
+  let ignoreClickUntil = 0;
+  card.addEventListener('click', () => { if (Date.now() < ignoreClickUntil) return; flip(); });
+  card.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flip(); } });
+  let tx = 0, ty = 0, tt = 0;
+  card.addEventListener('touchstart', e => { const t = e.changedTouches[0]; tx = t.clientX; ty = t.clientY; tt = Date.now(); }, { passive: true });
+  card.addEventListener('touchend', e => {
+    const t = e.changedTouches[0]; const dx = t.clientX - tx, dy = t.clientY - ty;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && Date.now() - tt < 800) {
+      ignoreClickUntil = Date.now() + 400;
+      mark(dx > 0);
+    }
+  }, { passive: true });
+  $('btnKnow').addEventListener('click', () => mark(true));
+  $('btnAgain').addEventListener('click', () => mark(false));
+  $('btnReset').addEventListener('click', resetAll);
+  $('btnAll').addEventListener('click', resetAll);
+  $('btnMissed').addEventListener('click', practiceMissed);
+  document.querySelectorAll('#deckSeg button').forEach(b => b.addEventListener('click', () => { state.deck = b.dataset.deck; save(); render(); renderList(); }));
+  document.querySelectorAll('#modeSeg button').forEach(b => b.addEventListener('click', () => { state.mode = b.dataset.mode; save(); render(); }));
+
+  document.addEventListener('keydown', e => {
+    if (!$('list').hidden) return;
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); mark(true); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); mark(false); }
+    else if ((e.key === ' ' || e.key === 'Enter') && e.target !== card) { e.preventDefault(); flip(); }
+  });
+
+  /* ---- list view ---- */
+  function renderList() {
+    const q = $('search').value.trim().toLowerCase();
+    const chapters = state.deck === 'all' ? DATA.chapters : DATA.chapters.filter(c => c.id === state.deck);
+    let html = '';
+    chapters.forEach(c => {
+      const rows = WORDS.filter(w => w.ch === c.id && (!q || [w.da, w.def || '', w.is, w.alt || ''].some(x => x.toLowerCase().includes(q))));
+      if (!rows.length && q) return;
+      html += `<div class="group"><h2>${esc(c.label)}: ${esc(c.title)}<small>${rows.length} orð</small></h2><div class="tablewrap"><table>
+        <thead><tr><th>Danska</th><th>Beyging</th><th>Íslenska</th></tr></thead><tbody>` +
+        rows.map(w => `<tr><td class="w">${esc(w.da)}</td><td class="d">${esc(w.def || '')}</td><td class="i"><span class="is">${esc(w.is)}</span>${w.alt ? `<span class="alt">${esc(w.alt)}</span>` : ''}</td></tr>`).join('') +
+        `</tbody></table></div></div>`;
+    });
+    $('listBody').innerHTML = html || `<p class="empty">Ekkert orð fannst fyrir „${esc(q)}“.</p>`;
+  }
+  $('search').addEventListener('input', renderList);
+  $('listToggle').addEventListener('click', () => {
+    const showList = $('list').hidden;
+    $('list').hidden = !showList; $('study').hidden = showList;
+    $('listToggle').textContent = showList ? 'Spjöld' : 'Orðalisti';
+    $('listToggle').setAttribute('aria-pressed', String(showList));
+    if (showList) { renderList(); $('search').focus({ preventScroll: true }); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
