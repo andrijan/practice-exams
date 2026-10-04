@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maðurinn – hugur og heilsa</title>
+<style>
+  :root {
+    --bg: #f6f4ef; --card: #fff; --ink: #222; --muted: #666; --line: #e2ddd2;
+    --good: #2e9e5b; --good-bg: #e3f6ea; --bad: #d64545; --bad-bg: #fde8e8;
+    --pick: #2f6fd6; --pick-bg: #e6efff; --note: #fff6d6; --note-line: #f0d77a;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 19px/1.45 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px 80px; }
+  header.top { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .top-in { max-width: 860px; margin: 0 auto; padding: 10px 16px 8px; }
+  .score { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+  .bar { flex: 1; height: 14px; background: #e6e1d6; border-radius: 7px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--good); transition: width .3s; }
+  .stars { display: inline-flex; align-items: center; gap: 4px; color: #c98a00; white-space: nowrap; }
+  .stars svg { width: 22px; height: 22px; fill: #f5b301; }
+  nav.secs { display: flex; gap: 6px; overflow-x: auto; padding-top: 8px; scrollbar-width: none; }
+  nav.secs a { flex: none; font-size: 14px; padding: 5px 10px; border-radius: 999px; background: #fff;
+               border: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  nav.secs a.done { background: var(--good-bg); border-color: var(--good); }
+  h1 { font-size: 30px; margin: 22px 0 4px; }
+  .subtitle { color: var(--muted); margin: 0 0 8px; }
+  .how { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; margin: 14px 0; }
+  .how b { color: var(--pick); }
+  section.sec { margin-top: 34px; scroll-margin-top: 110px; }
+  .sec-head { display: flex; align-items: center; gap: 12px; color: #fff; border-radius: 14px 14px 0 0;
+              padding: 12px 16px; }
+  .sec-head h2 { margin: 0; font-size: 24px; }
+  .sec-head .pg { margin-left: auto; font-size: 15px; opacity: .9; }
+  .sec-head .pg a { color: #fff; }
+  .mundu { background: var(--note); border: 2px solid var(--note-line); border-top: 0; border-radius: 0 0 14px 14px;
+           padding: 10px 16px 12px; }
+  .mundu h3 { margin: 0 0 4px; font-size: 18px; }
+  .mundu ul { margin: 0; padding-left: 22px; }
+  .mundu li { margin: 3px 0; }
+  .task { background: var(--card); border-radius: 14px; margin: 16px 0; padding: 14px 16px 16px;
+          box-shadow: 0 1px 3px rgba(0,0,0,.08); border-left: 6px solid #ccc; }
+  .task.ok { border-left-color: var(--good); }
+  .task.meh { border-left-color: #e0a800; }
+  .t-head { display: flex; gap: 8px; align-items: baseline; font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+  .t-head .hint { margin-left: auto; }
+  .q { font-size: 21px; font-weight: 600; margin: 2px 0 12px; }
+  .opts { display: grid; gap: 10px; }
+  @media (min-width: 640px) { .opts.two { grid-template-columns: 1fr 1fr; } }
+  button.opt, button.chip, button.slot, .bin, button.side {
+    font: inherit; color: inherit; background: #fff; border: 2px solid #cfc8b8; border-radius: 12px;
+    padding: 12px 14px; min-height: 52px; text-align: left; cursor: pointer; touch-action: manipulation; }
+  button.opt:active, button.chip:active { transform: scale(.98); }
+  .tf { display: flex; gap: 12px; }
+  .tf button { flex: 1; text-align: center; font-weight: 700; font-size: 22px; }
+  .picked { border-color: var(--pick) !important; background: var(--pick-bg) !important; box-shadow: 0 0 0 3px #b9d0fb; }
+  .good { border-color: var(--good) !important; background: var(--good-bg) !important; }
+  .bad { border-color: var(--bad) !important; background: var(--bad-bg) !important; animation: shake .35s; }
+  .gone { opacity: .35; pointer-events: none; }
+  @keyframes shake { 0%,100% { transform: none; } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 6px #ffd54a; } }
+  .pulse { animation: pulse .6s 3; }
+  .bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .bank button.chip { min-height: 46px; padding: 8px 14px; border-radius: 999px; }
+  .figure { text-align: center; }
+  svg.dia { width: 100%; max-width: 560px; height: auto; background: #fff; border-radius: 10px; }
+  svg.dia .bub { fill: #fff; stroke: #333; cursor: pointer; }
+  svg.dia text { font-weight: 800; fill: #222; pointer-events: none; font-family: inherit; }
+  svg.dia .ld { stroke: #333; }
+  svg.dia .dot { fill: #333; }
+  svg.dia .mk.on .bub { fill: #cfe0ff; stroke: var(--pick); }
+  svg.dia .mk.ok .bub { fill: #7fd39b; stroke: var(--good); }
+  svg.dia .mk.no .bub { fill: #f6a5a5; stroke: var(--bad); }
+  .slots { display: grid; gap: 8px; margin-top: 10px; }
+  @media (min-width: 640px) { .slots { grid-template-columns: 1fr 1fr; } }
+  button.slot { display: flex; gap: 10px; align-items: center; padding: 8px 12px; }
+  button.slot .n { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 2px solid #333;
+                   display: grid; place-items: center; font-weight: 800; }
+  button.slot .w { color: var(--muted); }
+  button.slot.good .w { color: var(--ink); font-weight: 700; }
+  .match { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+  .match .col { display: grid; gap: 10px; align-content: start; }
+  button.side { width: 100%; }
+  .bins { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin-top: 6px; }
+  .bin { cursor: pointer; min-height: 110px; background: #faf8f3; border-style: dashed; }
+  .bin h4 { margin: 0 0 6px; font-size: 17px; }
+  .bin .in { display: flex; flex-wrap: wrap; gap: 6px; }
+  .bin .in span { background: var(--good-bg); border: 1px solid var(--good); border-radius: 999px; padding: 2px 10px; font-size: 16px; }
+  ol.seq { margin: 8px 0; padding: 0; list-style: none; display: grid; gap: 6px; counter-reset: s; }
+  ol.seq li { counter-increment: s; border: 2px dashed #cfc8b8; border-radius: 12px; padding: 8px 12px; min-height: 46px; color: var(--muted); }
+  ol.seq li::before { content: counter(s) ". "; font-weight: 800; color: var(--ink); }
+  ol.seq li.good { border-style: solid; color: var(--ink); font-weight: 600; }
+  .fb { margin-top: 12px; font-size: 17px; display: none; padding: 10px 12px; border-radius: 10px; }
+  .fb.show { display: block; }
+  .fb.yes { background: var(--good-bg); }
+  .fb.try { background: var(--bad-bg); }
+  .fb a { color: var(--pick); }
+  .end { background: #fff; border-radius: 14px; padding: 18px; margin-top: 30px; text-align: center; }
+  .end .big { font-size: 26px; font-weight: 800; }
+  .end button { font: inherit; font-weight: 700; padding: 12px 18px; margin: 8px; border-radius: 12px; border: 0;
+                background: var(--pick); color: #fff; cursor: pointer; }
+  .end button.alt { background: #888; }
+  footer { text-align: center; color: var(--muted); font-size: 14px; margin-top: 30px; }
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <div class="score"><span id="prog">0 / 0</span><div class="bar"><i id="barfill"></i></div>
+    <span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3 7 7 .6-5.3 4.6 1.6 7-6.3-3.8L5.7 21l1.6-7L2 9.6 9 9z"/></svg><span id="stars">0</span></span></div>
+  <nav class="secs" id="nav"></nav>
+</div></header>
+<div class="wrap">
+  <h1>Maðurinn – hugur og heilsa</h1>
+  <p class="subtitle">Æfing fyrir könnunina miðvikudaginn 7. október · námsbók bls. 6–53 og gátlisti kennarans</p>
+  <div class="how">Lestu fyrst gula <b>Mundu!</b>-kassann í hverjum kafla. Svo pikkarðu á svörin.
+    Á myndunum pikkarðu fyrst á <b>orð</b> og svo á <b>númerið</b> þar sem það á heima.
+    Þú færð <b>stjörnu</b> fyrir hvert verkefni sem þú klárar án villu.</div>
+  <div id="app"></div>
+  <div class="end" id="end"></div>
+  <footer>Byggt á gátlista kennarans, námsbókinni og vinnubókinni (Menntamálastofnun)</footer>
+</div>
+<script>
+const DATA = {"sections": [{"title": "Frumur", "pages": "10–11", "color": "#7c5cbf", "mundu": ["Líkaminn er gerður úr milljörðum af örsmáum <b>frumum<\/b>.", "Ný fruma verður til þegar gömul fruma <b>skiptir sér<\/b> í tvær.", "Fjórar gerðir: <b>húðfrumur, vöðvafrumur, taugafrumur<\/b> og <b>rauðkorn<\/b> (rauð blóðkorn)."], "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/11/", "items": [{"t": "match", "q": "Paraðu hverja frumu við það sem hún gerir.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/12/", "linkText": "bls. 11", "pairs": [["Rauðkorn", "flytja súrefni um líkamann"], ["Húðfrumur", "mynda húðina"], ["Taugafrumur", "leiða boð milli heilans og líkamans"], ["Vöðvafrumur", "mynda vöðvana"]]}, {"t": "mc", "q": "Hvernig verður ný fruma til?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/11/", "linkText": "bls. 10", "a": "Gömul fruma skiptir sér í tvær", "opts": ["Gömul fruma skiptir sér í tvær", "Hún kemur beint úr matnum", "Hún verður til í lungunum"]}, {"t": "tf", "q": "Líkaminn er gerður úr mörgum milljörðum af frumum.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/11/", "linkText": "bls. 10", "a": true}]}, {"title": "Beinagrindin", "pages": "12–15", "color": "#b8860b", "mundu": ["Í beinagrindinni eru um <b>206 bein<\/b> (bókin segir „um 200“).", "Hún <b>heldur okkur uppi<\/b> og <b>verndar mikilvæg líffæri<\/b>.", "Lengsta og sterkasta beinið: <b>lærleggurinn<\/b>. Minnsta beinið: <b>ístað<\/b>, inni í eyranu.", "Bein í fótlegg: <b>lærleggur, sköflungur<\/b> og <b>dálkur<\/b>.", "Liðir: <b>hjöruliður<\/b> (bara fram og aftur) og <b>kúluliður<\/b> (í allar áttir).", "Inni í beinum er <b>beinmergur<\/b>."], "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/13/", "items": [{"t": "label", "q": "Hvað heita beinin í fótleggnum? (Beinteinn, bls. 13)", "why": "Sköflungurinn er sverara beinið neðan við hnéð, dálkurinn það grennra.", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/14/", "linkText": "bls. 13", "svg": "<svg viewBox=\"250 560 1050 790\" class=\"dia\" role=\"img\"><image href=\"img/bls13_beinagrind.png\" x=\"0\" y=\"0\" width=\"1645\" height=\"1373\"/><g class=\"mk\" data-n=\"1\"><line x1=\"1180\" y1=\"1300\" x2=\"1000\" y2=\"1080\" class=\"ld\" style=\"stroke-width:4.25\"/><circle cx=\"1000\" cy=\"1080\" r=\"8.5\" class=\"dot\"/><circle cx=\"1180\" cy=\"1300\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"1180\" y=\"1312.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">1<\/text><\/g><g class=\"mk\" data-n=\"2\"><line x1=\"470\" y1=\"1300\" x2=\"722\" y2=\"1090\" class=\"ld\" style=\"stroke-width:4.25\"/><circle cx=\"722\" cy=\"1090\" r=\"8.5\" class=\"dot\"/><circle cx=\"470\" cy=\"1300\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"470\" y=\"1312.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">2<\/text><\/g><g class=\"mk\" data-n=\"3\"><line x1=\"840\" y1=\"1310\" x2=\"702\" y2=\"1152\" class=\"ld\" style=\"stroke-width:4.25\"/><circle cx=\"702\" cy=\"1152\" r=\"8.5\" class=\"dot\"/><circle cx=\"840\" cy=\"1310\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"840\" y=\"1322.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">3<\/text><\/g><\/svg>", "slots": ["lærleggur", "sköflungur", "dálkur"], "extra": ["upphandleggur"]}, {"t": "mc", "q": "Um það bil hve mörg bein eru í beinagrindinni?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/13/", "linkText": "bls. 12", "a": "206", "opts": ["206", "26", "56", "1000"]}, {"t": "mc", "q": "Hvert er lengsta og sterkasta bein líkamans?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/14/", "linkText": "bls. 13", "a": "Lærleggurinn", "opts": ["Lærleggurinn", "Sköflungurinn", "Hryggurinn", "Höfuðkúpan"]}, {"t": "mc", "q": "Minnsta bein líkamans heitir ístað. Hvar er það?", "why": "Það er á stærð við hrísgrjón (bls. 13).", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/13/", "linkText": "bls. 12", "a": "Inni í eyranu", "opts": ["Inni í eyranu", "Í litlu tánni", "Í nefinu", "Í fingrinum"]}, {"t": "mc", "q": "Hvert er hlutverk beinagrindarinnar?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/13/", "linkText": "bls. 12", "a": "Að halda okkur uppi og vernda mikilvæg líffæri", "opts": ["Að halda okkur uppi og vernda mikilvæg líffæri", "Að flytja súrefni um líkamann", "Að melta matinn", "Að senda boð til heilans"]}, {"t": "match", "q": "Paraðu liðinn við hreyfinguna.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/15/", "linkText": "bls. 14", "pairs": [["Hjöruliður", "beinin hreyfast bara fram og aftur"], ["Kúluliður", "beinin hreyfast í allar áttir"]]}, {"t": "mc", "q": "Hvað er inni í beinunum?", "why": "Í beinmergnum verða rauðkorn og hvítkorn til (bls. 14).", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/15/", "linkText": "bls. 14", "a": "Beinmergur", "opts": ["Beinmergur", "Blóðvökvi", "Loft", "Gall"]}, {"t": "tf", "q": "Rifbeinin eru flöt bein sem vernda lungun og hjartað.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/15/", "linkText": "bls. 14", "a": true}]}, {"title": "Vöðvar", "pages": "16–19", "color": "#c0392b", "mundu": ["Um <b>helmingur<\/b> af þyngd líkamans eru vöðvar.", "<b>Beinagrindarvöðvum<\/b> getum við stjórnað, t.d. í handleggjum og fótleggjum.", "Vöðvum í <b>maga og þörmum<\/b> stjórnum við ekki – og ekki heldur <b>hjartanu<\/b>.", "Vöðvi er gerður úr mörgum <b>vöðvaþráðum<\/b>.", "Ef vöðvar eru ekki notaðir <b>rýrna<\/b> þeir (minnka).", "Vöðvinn sem við öndum með heitir <b>þind<\/b>."], "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/17/", "items": [{"t": "mc", "q": "Hve stór hluti af þyngd líkamans eru vöðvar?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/17/", "linkText": "bls. 16", "a": "Um helmingur", "opts": ["Um helmingur", "Um tíundi hluti", "Um fjórðungur", "Næstum allt"]}, {"t": "sort", "q": "Getum við stjórnað vöðvanum? Settu hvern vöðva í rétta körfu.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/19/", "linkText": "bls. 18", "bins": ["Við stjórnum honum", "Við stjórnum honum ekki"], "items": [["Tvíhöfði í upphandleggnum", 0], ["Vöðvar í fótleggjunum", 0], ["Hjartað", 1], ["Vöðvar í maganum", 1], ["Vöðvar í þörmunum", 1]]}, {"t": "mc", "q": "Úr hverju er vöðvi gerður?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/17/", "linkText": "bls. 16", "a": "Mörgum vöðvaþráðum", "opts": ["Mörgum vöðvaþráðum", "Mörgum litlum beinum", "Brjóski", "Fitu og vatni"]}, {"t": "mc", "q": "Hvað gerist ef vöðvar eru ekki notaðir?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/17/", "linkText": "bls. 16", "a": "Þeir rýrna (minnka)", "opts": ["Þeir rýrna (minnka)", "Þeir stækka", "Þeir verða að beinum", "Ekkert gerist"]}, {"t": "mc", "q": "Hvað heitir vöðvinn sem við öndum með?", "why": "Þindin dregst niður þegar þú andar að þér (bls. 31).", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/17/", "linkText": "bls. 16", "a": "Þind", "opts": ["Þind", "Tvíhöfði", "Hjartað", "Barki"]}, {"t": "tf", "q": "Vöðvi getur bara togað, ekki ýtt. Þess vegna vinna vöðvar saman tveir og tveir.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/19/", "linkText": "bls. 18", "a": true}]}, {"title": "Blóðið", "pages": "20–25", "color": "#d63a5c", "mundu": ["Blóðrásarkerfið er: <b>blóð – æðar – hjarta<\/b>.", "Í fullorðnum manni eru um <b>5 lítrar<\/b> af blóði.", "Blóðið færir líkamanum <b>næringu og súrefni<\/b>.", "<b>Rauðkorn<\/b> flytja súrefni · <b>hvítkorn<\/b> verja okkur gegn sjúkdómum (ónæmiskerfið) · <b>blóðflögur<\/b> stöðva blæðingu úr litlum sárum · allt flýtur í <b>blóðvökva<\/b>."], "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/21/", "items": [{"t": "mc", "q": "Um það bil hve margir lítrar af blóði eru í fullorðnum manni?", "why": "Í þér eru 2–3 lítrar núna (bls. 20).", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/21/", "linkText": "bls. 20", "a": "Um 5 lítrar", "opts": ["Um 5 lítrar", "Um 1 lítri", "Um 20 lítrar", "Um 50 lítrar"]}, {"t": "match", "q": "Paraðu hluta blóðsins við það sem hann gerir.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/21/", "linkText": "bls. 20", "pairs": [["Rauðkorn", "taka súrefni í lungunum og flytja það um líkamann"], ["Hvítkorn", "vernda okkur gegn sjúkdómum"], ["Blóðflögur", "stöðva blæðingu úr litlum sárum"], ["Blóðvökvi", "blóðkornin fljóta í honum"]]}, {"t": "mc", "q": "Hvað færir blóðið líkamanum?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/21/", "linkText": "bls. 20", "a": "Næringu og súrefni", "opts": ["Næringu og súrefni", "Koltvíoxíð og gall", "Bein og brjósk", "Bara vatn"]}, {"t": "mc", "q": "Hvítkornin eru hluti af …", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/21/", "linkText": "bls. 20", "a": "ónæmiskerfi líkamans", "opts": ["ónæmiskerfi líkamans", "meltingarkerfinu", "beinagrindinni", "húðinni"]}, {"t": "sort", "q": "Hvað tilheyrir blóðrásarkerfinu?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/21/", "linkText": "bls. 20", "bins": ["Blóðrásarkerfið", "Ekki blóðrásarkerfið"], "items": [["Blóð", 0], ["Æðar", 0], ["Hjarta", 0], ["Maginn", 1], ["Lærleggurinn", 1]]}, {"t": "tf", "q": "Blóðflögurnar eru stærri en rauðkornin.", "why": "Blóðflögur eru enn minni en rauðkorn og hvítkorn (bls. 21).", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/22/", "linkText": "bls. 21", "a": false}]}, {"title": "Hjartað og æðarnar", "pages": "22–27", "color": "#e0533d", "mundu": ["Hjartað er vöðvi á stærð við <b>krepptan hnefa<\/b>.", "Það slær um <b>90 sinnum á mínútu<\/b> – líka þegar þú sefur.", "Hjartað dælir blóði til <b>lungnanna<\/b>, þar tekur blóðið til sín <b>súrefni<\/b>.", "Fjögur hólf: <b>hægri gátt, vinstri gátt, hægra hvolf, vinstra hvolf<\/b>. <b>Lokur<\/b> passa að blóðið fari rétta leið.", "Æðar: <b>slagæðar<\/b> (frá hjartanu), <b>bláæðar<\/b> (til hjartans), <b>háræðar<\/b> (minnstar).", "Stærsta slagæðin heitir <b>ósæð<\/b>."], "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/23/", "items": [{"t": "label", "q": "Merktu hjartað (vinnubók bls. 15). Myndin snýr að þér eins og í bókinni, svo <b>hægri<\/b> hlið hjartans er <b>vinstra<\/b> megin á myndinni. Blátt = lítið súrefni, rautt = mikið súrefni.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/27/", "linkText": "bls. 26", "svg": "<svg viewBox=\"100 395 1110 1290\" class=\"dia\" role=\"img\"><image href=\"img/vb15_hjarta.jpg\" x=\"0\" y=\"0\" width=\"1311\" height=\"2050\"/><g class=\"mk\" data-n=\"1\"><circle cx=\"154\" cy=\"466\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"154\" y=\"478.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">1<\/text><\/g><g class=\"mk\" data-n=\"2\"><circle cx=\"154\" cy=\"1645\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"154\" y=\"1657.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">2<\/text><\/g><g class=\"mk\" data-n=\"3\"><circle cx=\"1158\" cy=\"1138\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"1158\" y=\"1150.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">3<\/text><\/g><g class=\"mk\" data-n=\"4\"><circle cx=\"1158\" cy=\"1550\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"1158\" y=\"1562.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">4<\/text><\/g><g class=\"mk\" data-n=\"5\"><circle cx=\"154\" cy=\"1394\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"154\" y=\"1406.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">5<\/text><\/g><g class=\"mk\" data-n=\"6\"><circle cx=\"1158\" cy=\"1381\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"1158\" y=\"1393.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">6<\/text><\/g><g class=\"mk\" data-n=\"7\"><circle cx=\"1158\" cy=\"562\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"1158\" y=\"574.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">7<\/text><\/g><g class=\"mk\" data-n=\"8\"><line x1=\"1158\" y1=\"440\" x2=\"779\" y2=\"612\" class=\"ld\" style=\"stroke-width:4.25\"/><circle cx=\"779\" cy=\"612\" r=\"8.5\" class=\"dot\"/><circle cx=\"1158\" cy=\"440\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"1158\" y=\"452.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">8<\/text><\/g><\/svg>", "slots": ["hægri gátt", "hægra hvolf", "vinstri gátt", "vinstra hvolf", "lokur", "lokur", "lokur", "ósæð"], "extra": []}, {"t": "mc", "q": "Hvað er hjartað stórt?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/23/", "linkText": "bls. 22", "a": "Á stærð við krepptan hnefa", "opts": ["Á stærð við krepptan hnefa", "Á stærð við fótbolta", "Á stærð við hrísgrjón", "Á stærð við höfuðið"]}, {"t": "mc", "q": "Um það bil hve oft slær hjartað á mínútu?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/23/", "linkText": "bls. 22", "a": "Um 90 sinnum", "opts": ["Um 90 sinnum", "Um 10 sinnum", "Um 500 sinnum", "Um 2 sinnum"]}, {"t": "mc", "q": "Hvað eru mörg hólf í hjartanu?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/23/", "linkText": "bls. 22", "a": "Fjögur", "opts": ["Fjögur", "Tvö", "Þrjú", "Sex"]}, {"t": "match", "q": "Paraðu æðina við lýsinguna.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/24/", "linkText": "bls. 23", "pairs": [["Slagæðar", "flytja blóð frá hjartanu"], ["Bláæðar", "flytja blóð til hjartans"], ["Háræðar", "minnstu æðarnar"]]}, {"t": "mc", "q": "Hvað heitir stærsta slagæð líkamans?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/23/", "linkText": "bls. 22", "a": "Ósæðin", "opts": ["Ósæðin", "Bláæðin", "Háræðin", "Barkinn"]}, {"t": "order", "q": "Raðaðu ferð blóðsins í rétta röð.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/23/", "linkText": "bls. 22", "steps": ["Hjartað dælir blóðinu", "til lungnanna og sækir súrefni", "aftur til hjartans", "út um allan líkamann"]}, {"t": "tf", "q": "Hjartað hvílist á nóttunni þegar við sofum.", "why": "Hjartað hvílist aldrei – það dælir jafnt á nóttu sem degi (bls. 26).", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/27/", "linkText": "bls. 26", "a": false}]}, {"title": "Öndun", "pages": "28–31", "color": "#2e86c1", "mundu": ["Lungun <b>hreinsa blóðið og gefa því súrefni<\/b>.", "Við þurfum <b>súrefni<\/b> til að lifa og öndum frá okkur <b>koltvíoxíði<\/b>.", "Leið loftsins: <b>nef/munnur → kok → barkakýli → barki → berkjur → lungu → lungnablöðrur<\/b>.", "Í <b>lungnablöðrunum<\/b> sækir blóðið súrefnið.", "<b>Þindin<\/b> er vöðvinn sem við öndum með."], "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/29/", "items": [{"t": "label", "q": "Merktu öndunarfærin (vinnubók bls. 18).", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/31/", "linkText": "bls. 30", "svg": "<svg viewBox=\"100 290 1205 1060\" class=\"dia\" role=\"img\"><image href=\"img/vb18_ondun.jpg\" x=\"0\" y=\"0\" width=\"1311\" height=\"2050\"/><g class=\"mk\" data-n=\"1\"><line x1=\"1250\" y1=\"338\" x2=\"928\" y2=\"392\" class=\"ld\" style=\"stroke-width:4.25\"/><circle cx=\"928\" cy=\"392\" r=\"8.5\" class=\"dot\"/><circle cx=\"1250\" cy=\"338\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"1250\" y=\"350.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">1<\/text><\/g><g class=\"mk\" data-n=\"2\"><circle cx=\"154\" cy=\"615\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"154\" y=\"627.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">2<\/text><\/g><g class=\"mk\" data-n=\"3\"><circle cx=\"154\" cy=\"762\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"154\" y=\"774.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">3<\/text><\/g><g class=\"mk\" data-n=\"4\"><line x1=\"1250\" y1=\"656\" x2=\"979\" y2=\"656\" class=\"ld\" style=\"stroke-width:4.25\"/><circle cx=\"979\" cy=\"656\" r=\"8.5\" class=\"dot\"/><circle cx=\"1250\" cy=\"656\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"1250\" y=\"668.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">4<\/text><\/g><g class=\"mk\" data-n=\"5\"><circle cx=\"154\" cy=\"910\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"154\" y=\"922.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">5<\/text><\/g><g class=\"mk\" data-n=\"6\"><circle cx=\"154\" cy=\"1056\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"154\" y=\"1068.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">6<\/text><\/g><g class=\"mk\" data-n=\"7\"><circle cx=\"154\" cy=\"1274\" r=\"34\" class=\"bub\" style=\"stroke-width:4.25\"/><text x=\"154\" y=\"1286.24\" text-anchor=\"middle\" style=\"font-size:35.7px\">7<\/text><\/g><\/svg>", "slots": ["nef", "kok", "barkakýli", "barki", "berkjur", "lunga", "lungnablöðrur"], "extra": []}, {"t": "mc", "q": "Hvert er hlutverk lungnanna?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/29/", "linkText": "bls. 28", "a": "Að hreinsa blóðið og gefa því súrefni", "opts": ["Að hreinsa blóðið og gefa því súrefni", "Að dæla blóði um líkamann", "Að búa til gall", "Að melta matinn"]}, {"t": "mc", "q": "Hvaða lofttegund öndum við FRÁ okkur?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/29/", "linkText": "bls. 28", "a": "Koltvíoxíð", "opts": ["Koltvíoxíð", "Súrefni", "Helíum", "Gall"]}, {"t": "mc", "q": "Hvaða lofttegund þurfum við til að geta lifað?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/29/", "linkText": "bls. 28", "a": "Súrefni", "opts": ["Súrefni", "Koltvíoxíð", "Helíum", "Reyk"]}, {"t": "mc", "q": "Hvar inni í lungunum sækir blóðið súrefnið?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/31/", "linkText": "bls. 30", "a": "Í lungnablöðrunum", "opts": ["Í lungnablöðrunum", "Í barkakýlinu", "Í nefinu", "Í maganum"]}, {"t": "order", "q": "Raðaðu leið loftsins þegar þú andar að þér.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/31/", "linkText": "bls. 30", "steps": ["nef eða munnur", "kok", "barkakýli", "barki", "berkjur", "lungu"]}]}, {"title": "Hreinsistöðvar", "pages": "32–35", "color": "#16a085", "mundu": ["<b>Lifrin<\/b> og <b>nýrun<\/b> eru tvær öflugar hreinsistöðvar líkamans.", "Lifrin hreinsar blóðið og er <b>stærsta líffærið inni í líkamanum<\/b>.", "Lifrin býr til <b>gall<\/b> sem hjálpar til við að melta <b>fitu<\/b>.", "<b>Nýrun<\/b> hreinsa úrgangsefni úr blóðinu – úr þeim verður piss.", "Líkaminn losar sig við úrgang: <b>pissa, kúka, svitna, æla<\/b>."], "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/33/", "items": [{"t": "mc", "q": "Hverjar eru tvær öflugu hreinsistöðvar líkamans?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/33/", "linkText": "bls. 32", "a": "Lifrin og nýrun", "opts": ["Lifrin og nýrun", "Hjartað og lungun", "Maginn og vélindað", "Heilinn og mænan"]}, {"t": "mc", "q": "Hvert er stærsta líffærið INNI í líkamanum?", "why": "Stærsta líffærið af öllum er húðin – en hún er utan á.", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/33/", "linkText": "bls. 32", "a": "Lifrin", "opts": ["Lifrin", "Hjartað", "Nýrun", "Maginn"]}, {"t": "mc", "q": "Lifrin býr til gall. Hvað gerir gallið?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/33/", "linkText": "bls. 32", "a": "Hjálpar til við að melta fitu", "opts": ["Hjálpar til við að melta fitu", "Flytur súrefni", "Stöðvar blæðingu", "Heldur á okkur hita"]}, {"t": "mc", "q": "Hvað gera nýrun?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/33/", "linkText": "bls. 32", "a": "Hreinsa úrgangsefni úr blóðinu", "opts": ["Hreinsa úrgangsefni úr blóðinu", "Dæla blóði", "Búa til gall", "Taka súrefni úr loftinu"]}, {"t": "sort", "q": "Hvernig losar líkaminn sig við úrgangsefni?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/33/", "linkText": "bls. 32", "bins": ["Losar úrgang", "Losar ekki úrgang"], "items": [["Pissa", 0], ["Kúka", 0], ["Svitna", 0], ["Æla", 0], ["Borða", 1], ["Sofa", 1]]}, {"t": "tf", "q": "Nýrun líta út eins og kaffibaunir, nema miklu stærri.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/34/", "linkText": "bls. 33", "a": true}]}, {"title": "Húðin", "pages": "36–39", "color": "#d4885a", "mundu": ["<b>Húðin<\/b> er stærsta líffæri líkamans.", "Þrjú lög: <b>hörund<\/b> (húðþekja) yst, <b>leður<\/b> (leðurhúð) í miðjunni, <b>húðbeð<\/b> (undirhúð) innst – að mestu fita.", "Húðin <b>heldur réttum hita<\/b>, <b>verndar<\/b> gegn óhreinindum, er <b>vatnsþétt<\/b>, <b>endurnýjar sig<\/b> og <b>getur teygst<\/b>.", "Í leðrinu eru hársekkir, svitakirtlar, æðar og taugar."], "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/37/", "items": [{"t": "mc", "q": "Hvert er stærsta líffæri líkamans?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/37/", "linkText": "bls. 36", "a": "Húðin", "opts": ["Húðin", "Lifrin", "Lungun", "Heilinn"]}, {"t": "label", "q": "Húðin er úr þremur lögum. Merktu lögin (vinnubók bls. 23).", "why": "Kennarinn notar orðin hörund, leður og húðbeð; í bókinni heita þau húðþekja, leðurhúð og undirhúð.", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/39/", "linkText": "bls. 38", "svg": "<svg viewBox=\"100 285 1105 745\" class=\"dia\" role=\"img\"><image href=\"img/vb23_hud.jpg\" x=\"0\" y=\"0\" width=\"1311\" height=\"2050\"/><g class=\"mk\" data-n=\"1\"><circle cx=\"154\" cy=\"325\" r=\"32\" class=\"bub\" style=\"stroke-width:4.0\"/><text x=\"154\" y=\"336.52\" text-anchor=\"middle\" style=\"font-size:33.6px\">1<\/text><\/g><g class=\"mk\" data-n=\"2\"><circle cx=\"1158\" cy=\"822\" r=\"32\" class=\"bub\" style=\"stroke-width:4.0\"/><text x=\"1158\" y=\"833.52\" text-anchor=\"middle\" style=\"font-size:33.6px\">2<\/text><\/g><g class=\"mk\" data-n=\"3\"><circle cx=\"154\" cy=\"871\" r=\"32\" class=\"bub\" style=\"stroke-width:4.0\"/><text x=\"154\" y=\"882.52\" text-anchor=\"middle\" style=\"font-size:33.6px\">3<\/text><\/g><\/svg>", "slots": ["hörund (húðþekja)", "leður (leðurhúð)", "húðbeð (undirhúð)"], "extra": []}, {"t": "label", "q": "Merktu hlutana í húðinni (vinnubók bls. 23).", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/39/", "linkText": "bls. 38", "svg": "<svg viewBox=\"100 285 1105 745\" class=\"dia\" role=\"img\"><image href=\"img/vb23_hud.jpg\" x=\"0\" y=\"0\" width=\"1311\" height=\"2050\"/><g class=\"mk\" data-n=\"1\"><circle cx=\"1158\" cy=\"325\" r=\"32\" class=\"bub\" style=\"stroke-width:4.0\"/><text x=\"1158\" y=\"336.52\" text-anchor=\"middle\" style=\"font-size:33.6px\">1<\/text><\/g><g class=\"mk\" data-n=\"2\"><circle cx=\"154\" cy=\"598\" r=\"32\" class=\"bub\" style=\"stroke-width:4.0\"/><text x=\"154\" y=\"609.52\" text-anchor=\"middle\" style=\"font-size:33.6px\">2<\/text><\/g><g class=\"mk\" data-n=\"3\"><circle cx=\"1158\" cy=\"479\" r=\"32\" class=\"bub\" style=\"stroke-width:4.0\"/><text x=\"1158\" y=\"490.52\" text-anchor=\"middle\" style=\"font-size:33.6px\">3<\/text><\/g><g class=\"mk\" data-n=\"4\"><circle cx=\"154\" cy=\"478\" r=\"32\" class=\"bub\" style=\"stroke-width:4.0\"/><text x=\"154\" y=\"489.52\" text-anchor=\"middle\" style=\"font-size:33.6px\">4<\/text><\/g><g class=\"mk\" data-n=\"5\"><circle cx=\"1158\" cy=\"598\" r=\"32\" class=\"bub\" style=\"stroke-width:4.0\"/><text x=\"1158\" y=\"609.52\" text-anchor=\"middle\" style=\"font-size:33.6px\">5<\/text><\/g><g class=\"mk\" data-n=\"6\"><circle cx=\"154\" cy=\"699\" r=\"32\" class=\"bub\" style=\"stroke-width:4.0\"/><text x=\"154\" y=\"710.52\" text-anchor=\"middle\" style=\"font-size:33.6px\">6<\/text><\/g><g class=\"mk\" data-n=\"7\"><circle cx=\"1158\" cy=\"992\" r=\"32\" class=\"bub\" style=\"stroke-width:4.0\"/><text x=\"1158\" y=\"1003.52\" text-anchor=\"middle\" style=\"font-size:33.6px\">7<\/text><\/g><\/svg>", "slots": ["hár", "fitukirtill", "hárreisivöðvi", "skynfæri í húð", "taugaþráður", "svitakirtill", "hársekkur"], "extra": []}, {"t": "sort", "q": "Hvað gerir húðin?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/37/", "linkText": "bls. 36", "bins": ["Húðin gerir þetta", "Húðin gerir þetta ekki"], "items": [["Heldur á okkur réttum hita", 0], ["Verndar gegn óhreinindum", 0], ["Er vatnsþétt", 0], ["Endurnýjar sig", 0], ["Getur teygst", 0], ["Dælir blóði", 1], ["Meltir matinn", 1]]}, {"t": "mc", "q": "Hvað heitir innsta lag húðarinnar, sem er að mestu úr fitu?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/39/", "linkText": "bls. 38", "a": "Húðbeð (undirhúð)", "opts": ["Húðbeð (undirhúð)", "Hörund (húðþekja)", "Leður (leðurhúð)", "Beinmergur"]}, {"t": "mc", "q": "Hvað heitir dökka litarefnið í húðinni sem ver okkur gegn sterku sólskini?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/40/", "linkText": "bls. 39", "a": "Melanín", "opts": ["Melanín", "Gall", "Prótín", "Koltvíoxíð"]}]}, {"title": "Matur og næring", "pages": "40–43", "color": "#27ae60", "mundu": ["<b>Prótín<\/b> – byggingarefni: kjöt, fiskur, egg, mjólk, baunir.", "<b>Kolvetni<\/b> – orka fyrir frumurnar: brauð, kartöflur, pasta, hrísgrjón, ávextir.", "<b>Fita<\/b> – góður orkugjafi: smjör, matarolía, ostur, kjöt, fiskur.", "<b>Vítamín<\/b> – svo líkaminn vaxi: ávextir, ber, grænmeti, mjólk, egg.", "<b>Steinefni<\/b> – ýmis hlutverk: spergilkál, spínat, ostur, mjólk."], "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/41/", "items": [{"t": "match", "q": "Paraðu næringarefnið við hlutverkið.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/44/", "linkText": "bls. 43", "pairs": [["Prótín", "byggingarefni"], ["Kolvetni", "orka svo frumurnar geti unnið"], ["Fita", "góður orkugjafi og heldur á okkur hita"], ["Vítamín", "nauðsynleg svo líkaminn vaxi"], ["Steinefni", "gegna ýmsum hlutverkum"]]}, {"t": "sort", "q": "Í hvaða flokki er mest af þessum mat? Settu matinn í rétta körfu.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/41/", "linkText": "bls. 40", "bins": ["Prótín", "Kolvetni", "Fita", "Vítamín", "Steinefni"], "items": [["Baunir", 0], ["Brauð", 1], ["Pasta", 1], ["Kartöflur", 1], ["Smjör", 2], ["Matarolía", 2], ["Ber", 3], ["Grænmeti", 3], ["Spínat", 4], ["Spergilkál", 4]]}, {"t": "mc", "q": "Hvaða næringarefni er byggingarefni, til dæmis fyrir vöðvana?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/44/", "linkText": "bls. 43", "a": "Prótín", "opts": ["Prótín", "Kolvetni", "Fita", "Steinefni"]}, {"t": "tf", "q": "Kolvetni fáum við helst úr smjöri og matarolíu.", "why": "Kolvetni fáum við úr brauði, kartöflum, pasta og hrísgrjónum. Smjör og matarolía eru fita.", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/41/", "linkText": "bls. 40", "a": false}]}, {"title": "Meltingin", "pages": "44–45", "color": "#8e44ad", "mundu": ["Leið matarins: <b>1 munnurinn → 2 vélindað → 3 maginn → 4 smáþarmarnir → 5 ristillinn → 6 endaþarmurinn<\/b>.", "Munnur: tennurnar mala matinn og munnvatn blandast honum.", "Magi: magasafi brýtur matinn niður og drepur bakteríur.", "Smáþarmar: líkaminn tekur til sín næringuna. Ristill: líkaminn tekur til sín vatn.", "Endaþarmur: það sem líkaminn þarf ekki fer út sem kúkur."], "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/45/", "items": [{"t": "order", "q": "Raðaðu leið matarins í gegnum líkamann.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/45/", "linkText": "bls. 44", "steps": ["Munnurinn", "Vélindað", "Maginn", "Smáþarmarnir", "Ristillinn", "Endaþarmurinn"]}, {"t": "match", "q": "Hvað gerist hvar? Paraðu saman.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/45/", "linkText": "bls. 44", "pairs": [["Munnurinn", "tennurnar mala matinn og munnvatn blandast honum"], ["Vélindað", "löng slanga niður í magann"], ["Maginn", "magasafi brýtur matinn niður"], ["Smáþarmarnir", "líkaminn tekur til sín næringuna"], ["Ristillinn", "líkaminn tekur til sín vatn"], ["Endaþarmurinn", "afgangurinn fer út sem kúkur"]]}]}, {"title": "Heilinn og taugarnar", "pages": "50–53", "color": "#5d6d7e", "mundu": ["<b>Heili + taugar = taugakerfi<\/b>.", "Taugarnar <b>senda boð til og frá heilanum<\/b>.", "Helstu hlutar heilans: <b>stóri heili, litli heili<\/b> og <b>heilastofn<\/b>.", "<b>Litli heili<\/b> stýrir jafnvæginu."], "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/51/", "items": [{"t": "label", "q": "Merktu hluta heilans.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/53/", "linkText": "bls. 52", "svg": "<svg viewBox=\"20 0 420 372\" class=\"dia\" role=\"img\"><image href=\"img/bls52_heili.svg\" x=\"0\" y=\"0\" width=\"538.583\" height=\"372\"/><g class=\"mk\" data-n=\"1\"><circle cx=\"94\" cy=\"27\" r=\"13\" class=\"bub\" style=\"stroke-width:1.625\"/><text x=\"94\" y=\"31.68\" text-anchor=\"middle\" style=\"font-size:13.65px\">1<\/text><\/g><g class=\"mk\" data-n=\"2\"><circle cx=\"98\" cy=\"275\" r=\"13\" class=\"bub\" style=\"stroke-width:1.625\"/><text x=\"98\" y=\"279.68\" text-anchor=\"middle\" style=\"font-size:13.65px\">2<\/text><\/g><g class=\"mk\" data-n=\"3\"><circle cx=\"394\" cy=\"232\" r=\"13\" class=\"bub\" style=\"stroke-width:1.625\"/><text x=\"394\" y=\"236.68\" text-anchor=\"middle\" style=\"font-size:13.65px\">3<\/text><\/g><g class=\"mk\" data-n=\"4\"><circle cx=\"121\" cy=\"310\" r=\"13\" class=\"bub\" style=\"stroke-width:1.625\"/><text x=\"121\" y=\"314.68\" text-anchor=\"middle\" style=\"font-size:13.65px\">4<\/text><\/g><\/svg>", "slots": ["stóri heili", "litli heili", "heilastofn", "mæna"], "extra": []}, {"t": "mc", "q": "Hvað kallast heilinn og taugarnar saman?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/51/", "linkText": "bls. 50", "a": "Taugakerfi", "opts": ["Taugakerfi", "Blóðrásarkerfi", "Ónæmiskerfi", "Meltingarkerfi"]}, {"t": "mc", "q": "Hvert er hlutverk tauganna?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/51/", "linkText": "bls. 50", "a": "Að senda boð til og frá heilanum", "opts": ["Að senda boð til og frá heilanum", "Að flytja súrefni", "Að melta fitu", "Að halda okkur uppi"]}, {"t": "mc", "q": "Hvaða hluti heilans stýrir jafnvæginu?", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/51/", "linkText": "bls. 50", "a": "Litli heili", "opts": ["Litli heili", "Stóri heili", "Heilastofninn", "Mænan"]}, {"t": "tf", "q": "Ef þú snertir heita hellu kippirðu hendinni að þér áður en heilinn finnur sársaukann.", "why": "Þetta kallast taugaviðbragð (bls. 53).", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/54/", "linkText": "bls. 53", "a": true}]}, {"title": "Upprifjun: rétt eða rangt?", "pages": "6–53", "color": "#34495e", "mundu": ["Nú blandast allt saman. Lestu hverja fullyrðingu vel áður en þú velur."], "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/7/", "items": [{"t": "tf", "q": "Í beinagrindinni eru um 106 bein.", "why": "Þau eru um 206.", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/7/", "linkText": "bls. 6", "a": false}, {"t": "tf", "q": "Hjartað er vöðvi sem við getum ekki stjórnað.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/7/", "linkText": "bls. 6", "a": true}, {"t": "tf", "q": "Minnsta bein líkamans er í litlu tánni.", "why": "Það heitir ístað og er inni í eyranu.", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/7/", "linkText": "bls. 6", "a": false}, {"t": "tf", "q": "Hvítkornin flytja súrefni um líkamann.", "why": "Það eru rauðkornin sem flytja súrefni. Hvítkornin verja okkur gegn sjúkdómum.", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/7/", "linkText": "bls. 6", "a": false}, {"t": "tf", "q": "Bláæðar flytja blóð frá hjartanu.", "why": "Bláæðar flytja blóð TIL hjartans, slagæðar FRÁ því.", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/24/", "linkText": "bls. 23", "a": false}, {"t": "tf", "q": "Við öndum frá okkur súrefni.", "why": "Við öndum frá okkur koltvíoxíði.", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/7/", "linkText": "bls. 6", "a": false}, {"t": "tf", "q": "Húðin er vatnsþétt og getur endurnýjað sig.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/7/", "linkText": "bls. 6", "a": true}, {"t": "tf", "q": "Lifrin framleiðir gall.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/7/", "linkText": "bls. 6", "a": true}, {"t": "tf", "q": "Stóri heili stýrir jafnvæginu.", "why": "Það er litli heili sem stýrir jafnvæginu.", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/7/", "linkText": "bls. 6", "a": false}, {"t": "tf", "q": "Blóðflögur stöðva blæðingu úr litlum sárum.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/7/", "linkText": "bls. 6", "a": true}, {"t": "tf", "q": "Vöðvi er gerður úr mörgum vöðvaþráðum.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/7/", "linkText": "bls. 6", "a": true}, {"t": "tf", "q": "Húðin er gerð úr þremur lögum.", "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/madurinn/7/", "linkText": "bls. 6", "a": true}]}]};
+const $ = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const HINTS = { mc: "Pikkaðu á rétta svarið", tf: "Rétt eða rangt?", label: "Orð → númer á myndinni",
+  match: "Pikkaðu á eitt í hvorum dálki", sort: "Pikkaðu á orð, svo á körfu", order: "Pikkaðu í réttri röð" };
+const tasks = [];  // {el, sec, state: null|'ok'|'meh', reset}
+
+function flash(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls);
+  setTimeout(() => el.classList.remove(cls), 700); }
+
+function feedback(box, it, clean) {
+  const fb = box.querySelector('.fb');
+  fb.className = 'fb show yes';
+  fb.innerHTML = (clean ? '<b>Vel gert!</b> ' : '<b>Komið!</b> ') + (it.why || '') +
+    (it.link ? ` <a href="${it.link}" target="_blank" rel="noopener">Skoða í bókinni (${it.linkText})</a>` : '');
+}
+function tryAgain(box, msg) { const fb = box.querySelector('.fb'); fb.className = 'fb show try'; fb.innerHTML = msg; }
+
+function finish(t, clean) {
+  t.state = clean ? 'ok' : 'meh';
+  t.el.classList.add(clean ? 'ok' : 'meh');
+  feedback(t.el, t.it, clean);
+  update();
+}
+
+function build(t) {
+  const it = t.it, box = t.el;
+  box.className = 'task'; box.innerHTML = '';
+  box.append($('div', 't-head', `<span>Verkefni ${t.no}</span><span class="hint">${HINTS[it.t]}</span>`));
+  box.append($('div', 'q', it.q));
+  const body = $('div'); box.append(body); box.append($('div', 'fb'));
+  let miss = 0;
+  const done = () => finish(t, miss === 0);
+
+  if (it.t === 'mc' || it.t === 'tf') {
+    const opts = it.t === 'tf' ? [['Rétt', true], ['Rangt', false]] : shuffle(it.opts).map(o => [o, o]);
+    const wrap = $('div', it.t === 'tf' ? 'tf' : 'opts' + (opts.length === 4 ? ' two' : ''));
+    const btns = opts.map(([txt, val]) => {
+      const b = $('button', 'opt', txt);
+      b.onclick = () => {
+        if (t.state) return;
+        if (val === it.a) {
+          b.classList.add('good'); btns.forEach(x => x !== b && x.classList.add('gone')); done();
+        } else {
+          miss++; b.classList.add('bad', 'gone');
+          if (it.t === 'tf' || miss >= 2) {
+            btns.forEach(x => { if (x.dataset.v === String(it.a)) x.classList.add('good'); else x.classList.add('gone'); });
+            done();
+          } else tryAgain(box, 'Ekki alveg – reyndu aftur!');
+        }
+      };
+      b.dataset.v = String(val); wrap.append(b); return b;
+    });
+    body.append(wrap);
+  }
+
+  if (it.t === 'label') {
+    const fig = $('div', 'figure', it.svg); body.append(fig);
+    const bank = $('div', 'bank'); const slots = $('div', 'slots');
+    let chip = null, slot = null; const left = new Set(it.slots.map((_, i) => i));
+    const tries = it.slots.map(() => 0);
+    const chips = shuffle(it.slots.concat(it.extra)).map(w => {
+      const c = $('button', 'chip', w); c.dataset.w = w;
+      c.onclick = () => { if (c.classList.contains('gone')) return;
+        if (slot !== null) return attempt(c, slot);
+        chips.forEach(x => x.classList.remove('picked')); chip = c; c.classList.add('picked'); };
+      bank.append(c); return c; });
+    const sbtn = it.slots.map((w, i) => {
+      const s = $('button', 'slot', `<span class="n">${i + 1}</span><span class="w">…</span>`);
+      s.onclick = () => pick(i); slots.append(s); return s; });
+    fig.querySelectorAll('.mk').forEach(g => g.addEventListener('click', () => pick(+g.dataset.n - 1)));
+    const mk = i => fig.querySelector(`.mk[data-n="${i + 1}"]`);
+    function pick(i) {
+      if (!left.has(i)) return;
+      if (chip) return attempt(chip, i);
+      sbtn.forEach(x => x.classList.remove('picked')); fig.querySelectorAll('.mk').forEach(g => g.classList.remove('on'));
+      slot = i; sbtn[i].classList.add('picked'); mk(i).classList.add('on');
+    }
+    function attempt(c, i) {
+      sbtn.forEach(x => x.classList.remove('picked')); fig.querySelectorAll('.mk').forEach(g => g.classList.remove('on'));
+      chips.forEach(x => x.classList.remove('picked')); chip = null; slot = null;
+      if (c.dataset.w === it.slots[i]) {
+        left.delete(i); c.classList.add('gone'); sbtn[i].classList.add('good');
+        sbtn[i].querySelector('.w').textContent = it.slots[i]; mk(i).classList.add('ok');
+        box.querySelector('.fb').className = 'fb';
+        if (!left.size) done();
+      } else {
+        miss++; tries[i]++; flash(sbtn[i], 'bad'); flash(c, 'bad');
+        mk(i).classList.add('no'); setTimeout(() => mk(i).classList.remove('no'), 600);
+        if (tries[i] >= 2) {
+          const right = chips.find(x => x.dataset.w === it.slots[i] && !x.classList.contains('gone'));
+          if (right) flash(right, 'pulse');
+          tryAgain(box, `Vísbending: rétta orðið fyrir númer ${i + 1} blikkar.`);
+        } else tryAgain(box, 'Ekki alveg – reyndu annað orð!');
+      }
+    }
+    body.append(bank, slots);
+  }
+
+  if (it.t === 'match') {
+    const m = $('div', 'match'), L = $('div', 'col'), R = $('div', 'col');
+    let a = null, b = null, left = it.pairs.length;
+    const mk = (txt, key, side) => { const x = $('button', 'side', txt); x.dataset.k = key;
+      x.onclick = () => { if (x.classList.contains('good')) return;
+        const cur = side === 'L' ? a : b; if (cur) cur.classList.remove('picked');
+        if (side === 'L') a = x; else b = x; x.classList.add('picked'); check(); }; return x; };
+    shuffle(it.pairs.map((p, i) => [p[0], i])).forEach(([t0, i]) => L.append(mk(t0, i, 'L')));
+    shuffle(it.pairs.map((p, i) => [p[1], i])).forEach(([t1, i]) => R.append(mk(t1, i, 'R')));
+    function check() {
+      if (!a || !b) return;
+      const x = a, y = b; a = b = null; x.classList.remove('picked'); y.classList.remove('picked');
+      if (x.dataset.k === y.dataset.k) { x.classList.add('good'); y.classList.add('good'); box.querySelector('.fb').className = 'fb'; if (!--left) done(); }
+      else { miss++; flash(x, 'bad'); flash(y, 'bad'); tryAgain(box, 'Þetta passar ekki saman – reyndu aftur!'); }
+    }
+    m.append(L, R); body.append(m);
+  }
+
+  if (it.t === 'sort') {
+    const bank = $('div', 'bank'), bins = $('div', 'bins');
+    let chip = null, left = it.items.length;
+    const chips = shuffle(it.items).map(([w, k]) => { const c = $('button', 'chip', w); c.dataset.k = k;
+      c.onclick = () => { if (c.classList.contains('gone')) return; chips.forEach(x => x.classList.remove('picked')); chip = c; c.classList.add('picked'); };
+      bank.append(c); return c; });
+    it.bins.forEach((name, k) => { const bn = $('div', 'bin', `<h4>${name}</h4><div class="in"></div>`);
+      bn.onclick = () => { if (!chip) { tryAgain(box, 'Pikkaðu fyrst á orð, svo á körfuna.'); return; }
+        const c = chip; chip = null; c.classList.remove('picked');
+        if (+c.dataset.k === k) { c.classList.add('gone'); c.style.display = 'none';
+          bn.querySelector('.in').append($('span', '', c.textContent)); box.querySelector('.fb').className = 'fb'; if (!--left) done(); }
+        else { miss++; flash(c, 'bad'); flash(bn, 'bad'); tryAgain(box, 'Ekki þessi karfa – reyndu hina!'); } };
+      bins.append(bn); });
+    body.append(bank, bins);
+  }
+
+  if (it.t === 'order') {
+    const seq = $('ol', 'seq'), bank = $('div', 'bank'); let next = 0;
+    const lis = it.steps.map(() => { const li = $('li', '', '…'); seq.append(li); return li; });
+    shuffle(it.steps).forEach(w => { const c = $('button', 'chip', w);
+      c.onclick = () => { if (c.classList.contains('gone')) return;
+        if (w === it.steps[next]) { c.classList.add('gone'); c.style.display = 'none'; lis[next].textContent = w; lis[next].classList.add('good');
+          box.querySelector('.fb').className = 'fb'; if (++next === it.steps.length) done(); }
+        else { miss++; flash(c, 'bad'); tryAgain(box, `Ekki alveg – hvað kemur nr. ${next + 1}?`); } };
+      bank.append(c); });
+    body.append(seq, bank);
+  }
+}
+
+function update() {
+  const n = tasks.length, d = tasks.filter(t => t.state).length, s = tasks.filter(t => t.state === 'ok').length;
+  document.getElementById('prog').textContent = `${d} / ${n}`;
+  document.getElementById('stars').textContent = s;
+  document.getElementById('barfill').style.width = (100 * d / n) + '%';
+  DATA.sections.forEach((sec, i) => { const all = tasks.filter(t => t.sec === i);
+    document.getElementById('nav-' + i).classList.toggle('done', all.every(t => t.state)); });
+  const end = document.getElementById('end');
+  if (d < n) { end.innerHTML = `<div>Þú ert búinn með <b>${d}</b> af <b>${n}</b> verkefnum.</div>`; return; }
+  const hard = tasks.filter(t => t.state === 'meh').length;
+  const star = s % 10 === 1 && s % 100 !== 11 ? 'stjarna' : 'stjörnur';
+  const msg = hard === 1 ? 'Eitt verkefni var erfitt. Æfðu það aftur þangað til þú færð stjörnu fyrir það.'
+    : hard ? `${hard} verkefni voru erfið. Æfðu þau aftur þangað til þú færð stjörnu fyrir þau öll.` : 'Fullkomið – þú kannt þetta!';
+  end.innerHTML = `<div class="big">Búið! ${s} ${star} af ${n}</div><p>${msg}</p>`;
+  if (hard) { const b = $('button', '', 'Æfa erfiðu verkefnin aftur'); b.onclick = () => redo(t => t.state === 'meh'); end.append(b); }
+  const all = $('button', 'alt', 'Byrja upp á nýtt'); all.onclick = () => redo(() => true); end.append(all);
+}
+
+function redo(which) {
+  const list = tasks.filter(which);
+  list.forEach(t => { t.state = null; build(t); });
+  update();
+  if (list[0]) list[0].el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+(function init() {
+  const app = document.getElementById('app'), nav = document.getElementById('nav');
+  let no = 0;
+  DATA.sections.forEach((sec, i) => {
+    const s = $('section', 'sec'); s.id = 'k' + i;
+    s.append($('div', 'sec-head', `<h2>${i + 1}. ${sec.title}</h2><span class="pg"><a href="${sec.link}" target="_blank" rel="noopener">bls. ${sec.pages}</a></span>`));
+    s.lastChild.style.background = sec.color;
+    s.append($('div', 'mundu', '<h3>Mundu!</h3><ul>' + sec.mundu.map(m => `<li>${m}</li>`).join('') + '</ul>'));
+    sec.items.forEach(it => { const el = $('div'); s.append(el); const t = { it, el, sec: i, no: ++no, state: null }; tasks.push(t); build(t); });
+    app.append(s);
+    const a = $('a', '', sec.title); a.href = '#k' + i; a.id = 'nav-' + i; nav.append(a);
+  });
+  update();
+})();
+</script>
+</body>
+</html>

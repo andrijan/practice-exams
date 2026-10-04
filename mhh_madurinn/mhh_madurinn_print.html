@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="UTF-8">
+<title>Maðurinn – hugur og heilsa</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 16mm;
+  }
+  :root {
+    --ink: #000;
+    --paper: #fff;
+    --rule: #000;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 12pt;
+    line-height: 1.45;
+  }
+  body {
+    max-width: 170mm;
+    margin: 0 auto;
+    padding: 0;
+  }
+  h1 {
+    text-align: center;
+    font-size: 18pt;
+    margin: 0 0 0.3rem;
+    font-weight: 700;
+  }
+  .subtitle {
+    text-align: center;
+    font-style: italic;
+    margin: 0 0 1.5rem;
+    font-size: 11pt;
+  }
+  h2 {
+    font-size: 14pt;
+    margin: 1.4rem 0 0.6rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1.5px solid var(--rule);
+  }
+  h3 {
+    font-size: 12pt;
+    margin: 1rem 0 0.4rem;
+    font-style: italic;
+  }
+  .question {
+    margin: 0.8rem 0;
+    padding: 0.4rem 0 0.4rem 0.6rem;
+    border-left: 1.5px solid var(--rule);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .q-num { font-weight: 700; margin-right: 0.3rem; }
+  .prompt { margin-bottom: 0.4rem; }
+  .subq { margin: 0.3rem 0 0.3rem 1.2rem; }
+  .subq-label { font-weight: 700; margin-right: 0.3rem; }
+  .figure {
+    margin: 0.4rem 0 0.6rem;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .figure svg {
+    max-width: 360px;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+  }
+  .figure svg text {
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 11pt;
+    fill: #000;
+  }
+  .figure svg .stroke { fill: none; stroke: #000; stroke-width: 1.2; stroke-linejoin: round; }
+  .figure svg .dashed { fill: none; stroke: #000; stroke-width: 1; stroke-dasharray: 3 2; }
+  .figure svg .fill-light { fill: #f0f0f0; stroke: #000; stroke-width: 1.2; }
+  .figure svg .arc { fill: none; stroke: #000; stroke-width: 1.5; }
+  .figure svg .red { fill: #000; }
+  .figure svg .pt { fill: #000; }
+
+  .note { font-style: italic; font-size: 10.5pt; }
+  hr { border: none; border-top: 1px solid var(--rule); margin: 1.2rem 0; }
+
+  .answerline {
+    margin-top: 0.6rem;
+    border-top: 1px dotted #000;
+    padding-top: 0.4rem;
+    font-size: 11pt;
+  }
+  .answerline-blank {
+    margin-top: 0.4rem;
+    border-bottom: 1px solid #000;
+    height: 1.2rem;
+  }
+
+  .solutions {
+    page-break-before: always;
+    break-before: page;
+  }
+  .solutions h2 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 16pt;
+  }
+  .solutions ol { padding-left: 1.4rem; }
+  .solutions li {
+    margin: 0.3rem 0;
+    page-break-inside: avoid;
+  }
+  .solutions .working {
+    color: #000;
+    font-size: 10.5pt;
+    font-style: italic;
+    margin-left: 0.4rem;
+  }
+
+  /* hide anything explicitly marked as on-screen-only */
+  .screen-only { display: none !important; }
+
+  @media screen {
+    body {
+      max-width: 800px;
+      padding: 2rem 1rem 4rem;
+      background: #fafaf7;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>Maðurinn – hugur og heilsa</h1>
+<p class="subtitle">Æfing fyrir könnunina miðvikudaginn 7. október · námsbók bls. 6–53 og gátlisti kennarans</p>
+
+<p class="note">Nafn: ______________________________</p>
+
+<style>
+  .figure svg.dia { max-width: 420px; filter: grayscale(1); }
+  .figure svg.dia .bub { fill: #fff; stroke: #000; }
+  .figure svg.dia text { font-family: Arial, sans-serif; font-weight: 700; }
+  .figure svg.dia .ld, .figure svg.dia .dot { stroke: #000; fill: #000; }
+  .opts span { display: inline-block; margin: .15rem 1.2rem .15rem 0; }
+  .bank { border: 1px solid #000; padding: .3rem .5rem; margin: .3rem 0; }
+  .lines li { margin: .35rem 0; }
+  table.bins { border-collapse: collapse; width: 100%; margin-top: .3rem; }
+  table.bins th, table.bins td { border: 1px solid #000; padding: .3rem; vertical-align: top; height: 3.2rem; }
+  .mundu { border: 1px dashed #000; padding: .3rem .6rem; margin: .4rem 0 .6rem; font-size: 10.5pt; }
+  .mundu ul { margin: .2rem 0; padding-left: 1.1rem; }
+</style>
+<h2>1. Frumur <small>(bls. 10–11)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Líkaminn er gerður úr milljörðum af örsmáum <b>frumum</b>.</li><li>Ný fruma verður til þegar gömul fruma <b>skiptir sér</b> í tvær.</li><li>Fjórar gerðir: <b>húðfrumur, vöðvafrumur, taugafrumur</b> og <b>rauðkorn</b> (rauð blóðkorn).</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">1.</span> Paraðu hverja frumu við það sem hún gerir. <i>(Paraðu saman)</i></div><table class="bins"><tr><th>Skrifaðu bókstafinn</th><th>&nbsp;</th></tr><tr><td>Rauðkorn ___</td><td>a) mynda vöðvana</td></tr><tr><td>Húðfrumur ___</td><td>b) mynda húðina</td></tr><tr><td>Taugafrumur ___</td><td>c) flytja súrefni um líkamann</td></tr><tr><td>Vöðvafrumur ___</td><td>d) leiða boð milli heilans og líkamans</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">2.</span> Hvernig verður ný fruma til? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Hún kemur beint úr matnum</span><span>◯ Gömul fruma skiptir sér í tvær</span><span>◯ Hún verður til í lungunum</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">3.</span> Líkaminn er gerður úr mörgum milljörðum af frumum. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<h2>2. Beinagrindin <small>(bls. 12–15)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Í beinagrindinni eru um <b>206 bein</b> (bókin segir „um 200“).</li><li>Hún <b>heldur okkur uppi</b> og <b>verndar mikilvæg líffæri</b>.</li><li>Lengsta og sterkasta beinið: <b>lærleggurinn</b>. Minnsta beinið: <b>ístað</b>, inni í eyranu.</li><li>Bein í fótlegg: <b>lærleggur, sköflungur</b> og <b>dálkur</b>.</li><li>Liðir: <b>hjöruliður</b> (bara fram og aftur) og <b>kúluliður</b> (í allar áttir).</li><li>Inni í beinum er <b>beinmergur</b>.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">4.</span> Hvað heita beinin í fótleggnum? (Beinteinn, bls. 13) <i>(Merktu myndina)</i></div><div class="figure"><svg viewBox="250 560 1050 790" class="dia" role="img"><image href="img/bls13_beinagrind.png" x="0" y="0" width="1645" height="1373"/><g class="mk" data-n="1"><line x1="1180" y1="1300" x2="1000" y2="1080" class="ld" style="stroke-width:4.25"/><circle cx="1000" cy="1080" r="8.5" class="dot"/><circle cx="1180" cy="1300" r="34" class="bub" style="stroke-width:4.25"/><text x="1180" y="1312.24" text-anchor="middle" style="font-size:35.7px">1</text></g><g class="mk" data-n="2"><line x1="470" y1="1300" x2="722" y2="1090" class="ld" style="stroke-width:4.25"/><circle cx="722" cy="1090" r="8.5" class="dot"/><circle cx="470" cy="1300" r="34" class="bub" style="stroke-width:4.25"/><text x="470" y="1312.24" text-anchor="middle" style="font-size:35.7px">2</text></g><g class="mk" data-n="3"><line x1="840" y1="1310" x2="702" y2="1152" class="ld" style="stroke-width:4.25"/><circle cx="702" cy="1152" r="8.5" class="dot"/><circle cx="840" cy="1310" r="34" class="bub" style="stroke-width:4.25"/><text x="840" y="1322.24" text-anchor="middle" style="font-size:35.7px">3</text></g></svg></div><div class="bank">Orð: dálkur, lærleggur, sköflungur, upphandleggur</div><ol class="lines"><li>______________________</li><li>______________________</li><li>______________________</li></ol></div>
+<div class="question"><div class="prompt"><span class="q-num">5.</span> Um það bil hve mörg bein eru í beinagrindinni? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ 26</span><span>◯ 1000</span><span>◯ 56</span><span>◯ 206</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">6.</span> Hvert er lengsta og sterkasta bein líkamans? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Sköflungurinn</span><span>◯ Lærleggurinn</span><span>◯ Höfuðkúpan</span><span>◯ Hryggurinn</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">7.</span> Minnsta bein líkamans heitir ístað. Hvar er það? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Í fingrinum</span><span>◯ Í nefinu</span><span>◯ Inni í eyranu</span><span>◯ Í litlu tánni</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">8.</span> Hvert er hlutverk beinagrindarinnar? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Að melta matinn</span><span>◯ Að halda okkur uppi og vernda mikilvæg líffæri</span><span>◯ Að flytja súrefni um líkamann</span><span>◯ Að senda boð til heilans</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">9.</span> Paraðu liðinn við hreyfinguna. <i>(Paraðu saman)</i></div><table class="bins"><tr><th>Skrifaðu bókstafinn</th><th>&nbsp;</th></tr><tr><td>Hjöruliður ___</td><td>a) beinin hreyfast í allar áttir</td></tr><tr><td>Kúluliður ___</td><td>b) beinin hreyfast bara fram og aftur</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">10.</span> Hvað er inni í beinunum? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Gall</span><span>◯ Blóðvökvi</span><span>◯ Loft</span><span>◯ Beinmergur</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">11.</span> Rifbeinin eru flöt bein sem vernda lungun og hjartað. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<h2>3. Vöðvar <small>(bls. 16–19)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Um <b>helmingur</b> af þyngd líkamans eru vöðvar.</li><li><b>Beinagrindarvöðvum</b> getum við stjórnað, t.d. í handleggjum og fótleggjum.</li><li>Vöðvum í <b>maga og þörmum</b> stjórnum við ekki – og ekki heldur <b>hjartanu</b>.</li><li>Vöðvi er gerður úr mörgum <b>vöðvaþráðum</b>.</li><li>Ef vöðvar eru ekki notaðir <b>rýrna</b> þeir (minnka).</li><li>Vöðvinn sem við öndum með heitir <b>þind</b>.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">12.</span> Hve stór hluti af þyngd líkamans eru vöðvar? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Um tíundi hluti</span><span>◯ Næstum allt</span><span>◯ Um fjórðungur</span><span>◯ Um helmingur</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">13.</span> Getum við stjórnað vöðvanum? Settu hvern vöðva í rétta körfu. <i>(Flokkaðu)</i></div><div class="bank">Vöðvar í maganum, Vöðvar í þörmunum, Hjartað, Tvíhöfði í upphandleggnum, Vöðvar í fótleggjunum</div><table class="bins"><tr><th>Við stjórnum honum</th><th>Við stjórnum honum ekki</th></tr><tr><td></td><td></td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">14.</span> Úr hverju er vöðvi gerður? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Mörgum litlum beinum</span><span>◯ Brjóski</span><span>◯ Fitu og vatni</span><span>◯ Mörgum vöðvaþráðum</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">15.</span> Hvað gerist ef vöðvar eru ekki notaðir? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Þeir rýrna (minnka)</span><span>◯ Þeir verða að beinum</span><span>◯ Ekkert gerist</span><span>◯ Þeir stækka</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">16.</span> Hvað heitir vöðvinn sem við öndum með? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Barki</span><span>◯ Þind</span><span>◯ Hjartað</span><span>◯ Tvíhöfði</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">17.</span> Vöðvi getur bara togað, ekki ýtt. Þess vegna vinna vöðvar saman tveir og tveir. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<h2>4. Blóðið <small>(bls. 20–25)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Blóðrásarkerfið er: <b>blóð – æðar – hjarta</b>.</li><li>Í fullorðnum manni eru um <b>5 lítrar</b> af blóði.</li><li>Blóðið færir líkamanum <b>næringu og súrefni</b>.</li><li><b>Rauðkorn</b> flytja súrefni · <b>hvítkorn</b> verja okkur gegn sjúkdómum (ónæmiskerfið) · <b>blóðflögur</b> stöðva blæðingu úr litlum sárum · allt flýtur í <b>blóðvökva</b>.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">18.</span> Um það bil hve margir lítrar af blóði eru í fullorðnum manni? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Um 1 lítri</span><span>◯ Um 5 lítrar</span><span>◯ Um 50 lítrar</span><span>◯ Um 20 lítrar</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">19.</span> Paraðu hluta blóðsins við það sem hann gerir. <i>(Paraðu saman)</i></div><table class="bins"><tr><th>Skrifaðu bókstafinn</th><th>&nbsp;</th></tr><tr><td>Rauðkorn ___</td><td>a) vernda okkur gegn sjúkdómum</td></tr><tr><td>Hvítkorn ___</td><td>b) blóðkornin fljóta í honum</td></tr><tr><td>Blóðflögur ___</td><td>c) stöðva blæðingu úr litlum sárum</td></tr><tr><td>Blóðvökvi ___</td><td>d) taka súrefni í lungunum og flytja það um líkamann</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">20.</span> Hvað færir blóðið líkamanum? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Koltvíoxíð og gall</span><span>◯ Bara vatn</span><span>◯ Næringu og súrefni</span><span>◯ Bein og brjósk</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">21.</span> Hvítkornin eru hluti af … <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ meltingarkerfinu</span><span>◯ húðinni</span><span>◯ beinagrindinni</span><span>◯ ónæmiskerfi líkamans</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">22.</span> Hvað tilheyrir blóðrásarkerfinu? <i>(Flokkaðu)</i></div><div class="bank">Blóð, Hjarta, Æðar, Lærleggurinn, Maginn</div><table class="bins"><tr><th>Blóðrásarkerfið</th><th>Ekki blóðrásarkerfið</th></tr><tr><td></td><td></td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">23.</span> Blóðflögurnar eru stærri en rauðkornin. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<h2>5. Hjartað og æðarnar <small>(bls. 22–27)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Hjartað er vöðvi á stærð við <b>krepptan hnefa</b>.</li><li>Það slær um <b>90 sinnum á mínútu</b> – líka þegar þú sefur.</li><li>Hjartað dælir blóði til <b>lungnanna</b>, þar tekur blóðið til sín <b>súrefni</b>.</li><li>Fjögur hólf: <b>hægri gátt, vinstri gátt, hægra hvolf, vinstra hvolf</b>. <b>Lokur</b> passa að blóðið fari rétta leið.</li><li>Æðar: <b>slagæðar</b> (frá hjartanu), <b>bláæðar</b> (til hjartans), <b>háræðar</b> (minnstar).</li><li>Stærsta slagæðin heitir <b>ósæð</b>.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">24.</span> Merktu hjartað (vinnubók bls. 15). Myndin snýr að þér eins og í bókinni, svo <b>hægri</b> hlið hjartans er <b>vinstra</b> megin á myndinni. Blátt = lítið súrefni, rautt = mikið súrefni. <i>(Merktu myndina)</i></div><div class="figure"><svg viewBox="100 395 1110 1290" class="dia" role="img"><image href="img/vb15_hjarta.jpg" x="0" y="0" width="1311" height="2050"/><g class="mk" data-n="1"><circle cx="154" cy="466" r="34" class="bub" style="stroke-width:4.25"/><text x="154" y="478.24" text-anchor="middle" style="font-size:35.7px">1</text></g><g class="mk" data-n="2"><circle cx="154" cy="1645" r="34" class="bub" style="stroke-width:4.25"/><text x="154" y="1657.24" text-anchor="middle" style="font-size:35.7px">2</text></g><g class="mk" data-n="3"><circle cx="1158" cy="1138" r="34" class="bub" style="stroke-width:4.25"/><text x="1158" y="1150.24" text-anchor="middle" style="font-size:35.7px">3</text></g><g class="mk" data-n="4"><circle cx="1158" cy="1550" r="34" class="bub" style="stroke-width:4.25"/><text x="1158" y="1562.24" text-anchor="middle" style="font-size:35.7px">4</text></g><g class="mk" data-n="5"><circle cx="154" cy="1394" r="34" class="bub" style="stroke-width:4.25"/><text x="154" y="1406.24" text-anchor="middle" style="font-size:35.7px">5</text></g><g class="mk" data-n="6"><circle cx="1158" cy="1381" r="34" class="bub" style="stroke-width:4.25"/><text x="1158" y="1393.24" text-anchor="middle" style="font-size:35.7px">6</text></g><g class="mk" data-n="7"><circle cx="1158" cy="562" r="34" class="bub" style="stroke-width:4.25"/><text x="1158" y="574.24" text-anchor="middle" style="font-size:35.7px">7</text></g><g class="mk" data-n="8"><line x1="1158" y1="440" x2="779" y2="612" class="ld" style="stroke-width:4.25"/><circle cx="779" cy="612" r="8.5" class="dot"/><circle cx="1158" cy="440" r="34" class="bub" style="stroke-width:4.25"/><text x="1158" y="452.24" text-anchor="middle" style="font-size:35.7px">8</text></g></svg></div><div class="bank">Orð: hægra hvolf, hægri gátt, lokur, vinstra hvolf, vinstri gátt, ósæð</div><ol class="lines"><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li></ol></div>
+<div class="question"><div class="prompt"><span class="q-num">25.</span> Hvað er hjartað stórt? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Á stærð við krepptan hnefa</span><span>◯ Á stærð við hrísgrjón</span><span>◯ Á stærð við fótbolta</span><span>◯ Á stærð við höfuðið</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">26.</span> Um það bil hve oft slær hjartað á mínútu? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Um 2 sinnum</span><span>◯ Um 500 sinnum</span><span>◯ Um 90 sinnum</span><span>◯ Um 10 sinnum</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">27.</span> Hvað eru mörg hólf í hjartanu? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Sex</span><span>◯ Tvö</span><span>◯ Þrjú</span><span>◯ Fjögur</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">28.</span> Paraðu æðina við lýsinguna. <i>(Paraðu saman)</i></div><table class="bins"><tr><th>Skrifaðu bókstafinn</th><th>&nbsp;</th></tr><tr><td>Slagæðar ___</td><td>a) flytja blóð frá hjartanu</td></tr><tr><td>Bláæðar ___</td><td>b) flytja blóð til hjartans</td></tr><tr><td>Háræðar ___</td><td>c) minnstu æðarnar</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">29.</span> Hvað heitir stærsta slagæð líkamans? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Ósæðin</span><span>◯ Bláæðin</span><span>◯ Barkinn</span><span>◯ Háræðin</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">30.</span> Raðaðu ferð blóðsins í rétta röð. <i>(Raðaðu í rétta röð)</i></div><div class="opts"><span>___ til lungnanna og sækir súrefni</span><span>___ Hjartað dælir blóðinu</span><span>___ út um allan líkamann</span><span>___ aftur til hjartans</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">31.</span> Hjartað hvílist á nóttunni þegar við sofum. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<h2>6. Öndun <small>(bls. 28–31)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Lungun <b>hreinsa blóðið og gefa því súrefni</b>.</li><li>Við þurfum <b>súrefni</b> til að lifa og öndum frá okkur <b>koltvíoxíði</b>.</li><li>Leið loftsins: <b>nef/munnur → kok → barkakýli → barki → berkjur → lungu → lungnablöðrur</b>.</li><li>Í <b>lungnablöðrunum</b> sækir blóðið súrefnið.</li><li><b>Þindin</b> er vöðvinn sem við öndum með.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">32.</span> Merktu öndunarfærin (vinnubók bls. 18). <i>(Merktu myndina)</i></div><div class="figure"><svg viewBox="100 290 1205 1060" class="dia" role="img"><image href="img/vb18_ondun.jpg" x="0" y="0" width="1311" height="2050"/><g class="mk" data-n="1"><line x1="1250" y1="338" x2="928" y2="392" class="ld" style="stroke-width:4.25"/><circle cx="928" cy="392" r="8.5" class="dot"/><circle cx="1250" cy="338" r="34" class="bub" style="stroke-width:4.25"/><text x="1250" y="350.24" text-anchor="middle" style="font-size:35.7px">1</text></g><g class="mk" data-n="2"><circle cx="154" cy="615" r="34" class="bub" style="stroke-width:4.25"/><text x="154" y="627.24" text-anchor="middle" style="font-size:35.7px">2</text></g><g class="mk" data-n="3"><circle cx="154" cy="762" r="34" class="bub" style="stroke-width:4.25"/><text x="154" y="774.24" text-anchor="middle" style="font-size:35.7px">3</text></g><g class="mk" data-n="4"><line x1="1250" y1="656" x2="979" y2="656" class="ld" style="stroke-width:4.25"/><circle cx="979" cy="656" r="8.5" class="dot"/><circle cx="1250" cy="656" r="34" class="bub" style="stroke-width:4.25"/><text x="1250" y="668.24" text-anchor="middle" style="font-size:35.7px">4</text></g><g class="mk" data-n="5"><circle cx="154" cy="910" r="34" class="bub" style="stroke-width:4.25"/><text x="154" y="922.24" text-anchor="middle" style="font-size:35.7px">5</text></g><g class="mk" data-n="6"><circle cx="154" cy="1056" r="34" class="bub" style="stroke-width:4.25"/><text x="154" y="1068.24" text-anchor="middle" style="font-size:35.7px">6</text></g><g class="mk" data-n="7"><circle cx="154" cy="1274" r="34" class="bub" style="stroke-width:4.25"/><text x="154" y="1286.24" text-anchor="middle" style="font-size:35.7px">7</text></g></svg></div><div class="bank">Orð: barkakýli, barki, berkjur, kok, lunga, lungnablöðrur, nef</div><ol class="lines"><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li></ol></div>
+<div class="question"><div class="prompt"><span class="q-num">33.</span> Hvert er hlutverk lungnanna? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Að melta matinn</span><span>◯ Að dæla blóði um líkamann</span><span>◯ Að búa til gall</span><span>◯ Að hreinsa blóðið og gefa því súrefni</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">34.</span> Hvaða lofttegund öndum við FRÁ okkur? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Helíum</span><span>◯ Koltvíoxíð</span><span>◯ Gall</span><span>◯ Súrefni</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">35.</span> Hvaða lofttegund þurfum við til að geta lifað? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Helíum</span><span>◯ Súrefni</span><span>◯ Koltvíoxíð</span><span>◯ Reyk</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">36.</span> Hvar inni í lungunum sækir blóðið súrefnið? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Í maganum</span><span>◯ Í barkakýlinu</span><span>◯ Í nefinu</span><span>◯ Í lungnablöðrunum</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">37.</span> Raðaðu leið loftsins þegar þú andar að þér. <i>(Raðaðu í rétta röð)</i></div><div class="opts"><span>___ nef eða munnur</span><span>___ kok</span><span>___ berkjur</span><span>___ barki</span><span>___ lungu</span><span>___ barkakýli</span></div></div>
+<h2>7. Hreinsistöðvar <small>(bls. 32–35)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li><b>Lifrin</b> og <b>nýrun</b> eru tvær öflugar hreinsistöðvar líkamans.</li><li>Lifrin hreinsar blóðið og er <b>stærsta líffærið inni í líkamanum</b>.</li><li>Lifrin býr til <b>gall</b> sem hjálpar til við að melta <b>fitu</b>.</li><li><b>Nýrun</b> hreinsa úrgangsefni úr blóðinu – úr þeim verður piss.</li><li>Líkaminn losar sig við úrgang: <b>pissa, kúka, svitna, æla</b>.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">38.</span> Hverjar eru tvær öflugu hreinsistöðvar líkamans? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Maginn og vélindað</span><span>◯ Hjartað og lungun</span><span>◯ Heilinn og mænan</span><span>◯ Lifrin og nýrun</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">39.</span> Hvert er stærsta líffærið INNI í líkamanum? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Hjartað</span><span>◯ Lifrin</span><span>◯ Nýrun</span><span>◯ Maginn</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">40.</span> Lifrin býr til gall. Hvað gerir gallið? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Heldur á okkur hita</span><span>◯ Flytur súrefni</span><span>◯ Stöðvar blæðingu</span><span>◯ Hjálpar til við að melta fitu</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">41.</span> Hvað gera nýrun? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Hreinsa úrgangsefni úr blóðinu</span><span>◯ Búa til gall</span><span>◯ Dæla blóði</span><span>◯ Taka súrefni úr loftinu</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">42.</span> Hvernig losar líkaminn sig við úrgangsefni? <i>(Flokkaðu)</i></div><div class="bank">Æla, Borða, Kúka, Pissa, Svitna, Sofa</div><table class="bins"><tr><th>Losar úrgang</th><th>Losar ekki úrgang</th></tr><tr><td></td><td></td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">43.</span> Nýrun líta út eins og kaffibaunir, nema miklu stærri. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<h2>8. Húðin <small>(bls. 36–39)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li><b>Húðin</b> er stærsta líffæri líkamans.</li><li>Þrjú lög: <b>hörund</b> (húðþekja) yst, <b>leður</b> (leðurhúð) í miðjunni, <b>húðbeð</b> (undirhúð) innst – að mestu fita.</li><li>Húðin <b>heldur réttum hita</b>, <b>verndar</b> gegn óhreinindum, er <b>vatnsþétt</b>, <b>endurnýjar sig</b> og <b>getur teygst</b>.</li><li>Í leðrinu eru hársekkir, svitakirtlar, æðar og taugar.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">44.</span> Hvert er stærsta líffæri líkamans? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Heilinn</span><span>◯ Húðin</span><span>◯ Lungun</span><span>◯ Lifrin</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">45.</span> Húðin er úr þremur lögum. Merktu lögin (vinnubók bls. 23). <i>(Merktu myndina)</i></div><div class="figure"><svg viewBox="100 285 1105 745" class="dia" role="img"><image href="img/vb23_hud.jpg" x="0" y="0" width="1311" height="2050"/><g class="mk" data-n="1"><circle cx="154" cy="325" r="32" class="bub" style="stroke-width:4.0"/><text x="154" y="336.52" text-anchor="middle" style="font-size:33.6px">1</text></g><g class="mk" data-n="2"><circle cx="1158" cy="822" r="32" class="bub" style="stroke-width:4.0"/><text x="1158" y="833.52" text-anchor="middle" style="font-size:33.6px">2</text></g><g class="mk" data-n="3"><circle cx="154" cy="871" r="32" class="bub" style="stroke-width:4.0"/><text x="154" y="882.52" text-anchor="middle" style="font-size:33.6px">3</text></g></svg></div><div class="bank">Orð: hörund (húðþekja), húðbeð (undirhúð), leður (leðurhúð)</div><ol class="lines"><li>______________________</li><li>______________________</li><li>______________________</li></ol></div>
+<div class="question"><div class="prompt"><span class="q-num">46.</span> Merktu hlutana í húðinni (vinnubók bls. 23). <i>(Merktu myndina)</i></div><div class="figure"><svg viewBox="100 285 1105 745" class="dia" role="img"><image href="img/vb23_hud.jpg" x="0" y="0" width="1311" height="2050"/><g class="mk" data-n="1"><circle cx="1158" cy="325" r="32" class="bub" style="stroke-width:4.0"/><text x="1158" y="336.52" text-anchor="middle" style="font-size:33.6px">1</text></g><g class="mk" data-n="2"><circle cx="154" cy="598" r="32" class="bub" style="stroke-width:4.0"/><text x="154" y="609.52" text-anchor="middle" style="font-size:33.6px">2</text></g><g class="mk" data-n="3"><circle cx="1158" cy="479" r="32" class="bub" style="stroke-width:4.0"/><text x="1158" y="490.52" text-anchor="middle" style="font-size:33.6px">3</text></g><g class="mk" data-n="4"><circle cx="154" cy="478" r="32" class="bub" style="stroke-width:4.0"/><text x="154" y="489.52" text-anchor="middle" style="font-size:33.6px">4</text></g><g class="mk" data-n="5"><circle cx="1158" cy="598" r="32" class="bub" style="stroke-width:4.0"/><text x="1158" y="609.52" text-anchor="middle" style="font-size:33.6px">5</text></g><g class="mk" data-n="6"><circle cx="154" cy="699" r="32" class="bub" style="stroke-width:4.0"/><text x="154" y="710.52" text-anchor="middle" style="font-size:33.6px">6</text></g><g class="mk" data-n="7"><circle cx="1158" cy="992" r="32" class="bub" style="stroke-width:4.0"/><text x="1158" y="1003.52" text-anchor="middle" style="font-size:33.6px">7</text></g></svg></div><div class="bank">Orð: fitukirtill, hár, hárreisivöðvi, hársekkur, skynfæri í húð, svitakirtill, taugaþráður</div><ol class="lines"><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li></ol></div>
+<div class="question"><div class="prompt"><span class="q-num">47.</span> Hvað gerir húðin? <i>(Flokkaðu)</i></div><div class="bank">Getur teygst, Meltir matinn, Dælir blóði, Er vatnsþétt, Verndar gegn óhreinindum, Heldur á okkur réttum hita, Endurnýjar sig</div><table class="bins"><tr><th>Húðin gerir þetta</th><th>Húðin gerir þetta ekki</th></tr><tr><td></td><td></td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">48.</span> Hvað heitir innsta lag húðarinnar, sem er að mestu úr fitu? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Húðbeð (undirhúð)</span><span>◯ Leður (leðurhúð)</span><span>◯ Hörund (húðþekja)</span><span>◯ Beinmergur</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">49.</span> Hvað heitir dökka litarefnið í húðinni sem ver okkur gegn sterku sólskini? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Prótín</span><span>◯ Gall</span><span>◯ Koltvíoxíð</span><span>◯ Melanín</span></div></div>
+<h2>9. Matur og næring <small>(bls. 40–43)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li><b>Prótín</b> – byggingarefni: kjöt, fiskur, egg, mjólk, baunir.</li><li><b>Kolvetni</b> – orka fyrir frumurnar: brauð, kartöflur, pasta, hrísgrjón, ávextir.</li><li><b>Fita</b> – góður orkugjafi: smjör, matarolía, ostur, kjöt, fiskur.</li><li><b>Vítamín</b> – svo líkaminn vaxi: ávextir, ber, grænmeti, mjólk, egg.</li><li><b>Steinefni</b> – ýmis hlutverk: spergilkál, spínat, ostur, mjólk.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">50.</span> Paraðu næringarefnið við hlutverkið. <i>(Paraðu saman)</i></div><table class="bins"><tr><th>Skrifaðu bókstafinn</th><th>&nbsp;</th></tr><tr><td>Prótín ___</td><td>a) gegna ýmsum hlutverkum</td></tr><tr><td>Kolvetni ___</td><td>b) orka svo frumurnar geti unnið</td></tr><tr><td>Fita ___</td><td>c) byggingarefni</td></tr><tr><td>Vítamín ___</td><td>d) góður orkugjafi og heldur á okkur hita</td></tr><tr><td>Steinefni ___</td><td>e) nauðsynleg svo líkaminn vaxi</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">51.</span> Í hvaða flokki er mest af þessum mat? Settu matinn í rétta körfu. <i>(Flokkaðu)</i></div><div class="bank">Spergilkál, Grænmeti, Baunir, Brauð, Kartöflur, Matarolía, Pasta, Ber, Smjör, Spínat</div><table class="bins"><tr><th>Prótín</th><th>Kolvetni</th><th>Fita</th><th>Vítamín</th><th>Steinefni</th></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">52.</span> Hvaða næringarefni er byggingarefni, til dæmis fyrir vöðvana? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Steinefni</span><span>◯ Fita</span><span>◯ Prótín</span><span>◯ Kolvetni</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">53.</span> Kolvetni fáum við helst úr smjöri og matarolíu. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<h2>10. Meltingin <small>(bls. 44–45)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Leið matarins: <b>1 munnurinn → 2 vélindað → 3 maginn → 4 smáþarmarnir → 5 ristillinn → 6 endaþarmurinn</b>.</li><li>Munnur: tennurnar mala matinn og munnvatn blandast honum.</li><li>Magi: magasafi brýtur matinn niður og drepur bakteríur.</li><li>Smáþarmar: líkaminn tekur til sín næringuna. Ristill: líkaminn tekur til sín vatn.</li><li>Endaþarmur: það sem líkaminn þarf ekki fer út sem kúkur.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">54.</span> Raðaðu leið matarins í gegnum líkamann. <i>(Raðaðu í rétta röð)</i></div><div class="opts"><span>___ Maginn</span><span>___ Smáþarmarnir</span><span>___ Ristillinn</span><span>___ Munnurinn</span><span>___ Vélindað</span><span>___ Endaþarmurinn</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">55.</span> Hvað gerist hvar? Paraðu saman. <i>(Paraðu saman)</i></div><table class="bins"><tr><th>Skrifaðu bókstafinn</th><th>&nbsp;</th></tr><tr><td>Munnurinn ___</td><td>a) líkaminn tekur til sín vatn</td></tr><tr><td>Vélindað ___</td><td>b) löng slanga niður í magann</td></tr><tr><td>Maginn ___</td><td>c) líkaminn tekur til sín næringuna</td></tr><tr><td>Smáþarmarnir ___</td><td>d) tennurnar mala matinn og munnvatn blandast honum</td></tr><tr><td>Ristillinn ___</td><td>e) afgangurinn fer út sem kúkur</td></tr><tr><td>Endaþarmurinn ___</td><td>f) magasafi brýtur matinn niður</td></tr></table></div>
+<h2>11. Heilinn og taugarnar <small>(bls. 50–53)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li><b>Heili + taugar = taugakerfi</b>.</li><li>Taugarnar <b>senda boð til og frá heilanum</b>.</li><li>Helstu hlutar heilans: <b>stóri heili, litli heili</b> og <b>heilastofn</b>.</li><li><b>Litli heili</b> stýrir jafnvæginu.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">56.</span> Merktu hluta heilans. <i>(Merktu myndina)</i></div><div class="figure"><svg viewBox="20 0 420 372" class="dia" role="img"><image href="img/bls52_heili.svg" x="0" y="0" width="538.583" height="372"/><g class="mk" data-n="1"><circle cx="94" cy="27" r="13" class="bub" style="stroke-width:1.625"/><text x="94" y="31.68" text-anchor="middle" style="font-size:13.65px">1</text></g><g class="mk" data-n="2"><circle cx="98" cy="275" r="13" class="bub" style="stroke-width:1.625"/><text x="98" y="279.68" text-anchor="middle" style="font-size:13.65px">2</text></g><g class="mk" data-n="3"><circle cx="394" cy="232" r="13" class="bub" style="stroke-width:1.625"/><text x="394" y="236.68" text-anchor="middle" style="font-size:13.65px">3</text></g><g class="mk" data-n="4"><circle cx="121" cy="310" r="13" class="bub" style="stroke-width:1.625"/><text x="121" y="314.68" text-anchor="middle" style="font-size:13.65px">4</text></g></svg></div><div class="bank">Orð: heilastofn, litli heili, mæna, stóri heili</div><ol class="lines"><li>______________________</li><li>______________________</li><li>______________________</li><li>______________________</li></ol></div>
+<div class="question"><div class="prompt"><span class="q-num">57.</span> Hvað kallast heilinn og taugarnar saman? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Taugakerfi</span><span>◯ Blóðrásarkerfi</span><span>◯ Meltingarkerfi</span><span>◯ Ónæmiskerfi</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">58.</span> Hvert er hlutverk tauganna? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Að halda okkur uppi</span><span>◯ Að senda boð til og frá heilanum</span><span>◯ Að melta fitu</span><span>◯ Að flytja súrefni</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">59.</span> Hvaða hluti heilans stýrir jafnvæginu? <i>(Veldu rétt svar)</i></div><div class="opts"><span>◯ Litli heili</span><span>◯ Stóri heili</span><span>◯ Heilastofninn</span><span>◯ Mænan</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">60.</span> Ef þú snertir heita hellu kippirðu hendinni að þér áður en heilinn finnur sársaukann. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<h2>12. Upprifjun: rétt eða rangt? <small>(bls. 6–53)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Nú blandast allt saman. Lestu hverja fullyrðingu vel áður en þú velur.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">61.</span> Í beinagrindinni eru um 106 bein. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">62.</span> Hjartað er vöðvi sem við getum ekki stjórnað. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">63.</span> Minnsta bein líkamans er í litlu tánni. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">64.</span> Hvítkornin flytja súrefni um líkamann. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">65.</span> Bláæðar flytja blóð frá hjartanu. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">66.</span> Við öndum frá okkur súrefni. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">67.</span> Húðin er vatnsþétt og getur endurnýjað sig. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">68.</span> Lifrin framleiðir gall. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">69.</span> Stóri heili stýrir jafnvæginu. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">70.</span> Blóðflögur stöðva blæðingu úr litlum sárum. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">71.</span> Vöðvi er gerður úr mörgum vöðvaþráðum. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">72.</span> Húðin er gerð úr þremur lögum. <i>(Rétt eða rangt?)</i></div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+
+<section class="solutions"><h2>Lausnir</h2>
+<h3>1. Frumur</h3><ol start='1'>
+<li>Rauðkorn – c) flytja súrefni um líkamann; Húðfrumur – b) mynda húðina; Taugafrumur – d) leiða boð milli heilans og líkamans; Vöðvafrumur – a) mynda vöðvana</li>
+<li>Gömul fruma skiptir sér í tvær</li>
+<li>Rétt</li>
+</ol>
+<h3>2. Beinagrindin</h3><ol start='4'>
+<li>1. lærleggur; 2. sköflungur; 3. dálkur</li>
+<li>206</li>
+<li>Lærleggurinn</li>
+<li>Inni í eyranu</li>
+<li>Að halda okkur uppi og vernda mikilvæg líffæri</li>
+<li>Hjöruliður – b) beinin hreyfast bara fram og aftur; Kúluliður – a) beinin hreyfast í allar áttir</li>
+<li>Beinmergur</li>
+<li>Rétt</li>
+</ol>
+<h3>3. Vöðvar</h3><ol start='12'>
+<li>Um helmingur</li>
+<li>Við stjórnum honum: Tvíhöfði í upphandleggnum, Vöðvar í fótleggjunum; Við stjórnum honum ekki: Hjartað, Vöðvar í maganum, Vöðvar í þörmunum</li>
+<li>Mörgum vöðvaþráðum</li>
+<li>Þeir rýrna (minnka)</li>
+<li>Þind</li>
+<li>Rétt</li>
+</ol>
+<h3>4. Blóðið</h3><ol start='18'>
+<li>Um 5 lítrar</li>
+<li>Rauðkorn – d) taka súrefni í lungunum og flytja það um líkamann; Hvítkorn – a) vernda okkur gegn sjúkdómum; Blóðflögur – c) stöðva blæðingu úr litlum sárum; Blóðvökvi – b) blóðkornin fljóta í honum</li>
+<li>Næringu og súrefni</li>
+<li>ónæmiskerfi líkamans</li>
+<li>Blóðrásarkerfið: Blóð, Æðar, Hjarta; Ekki blóðrásarkerfið: Maginn, Lærleggurinn</li>
+<li>Rangt. Blóðflögur eru enn minni en rauðkorn og hvítkorn (bls. 21).</li>
+</ol>
+<h3>5. Hjartað og æðarnar</h3><ol start='24'>
+<li>1. hægri gátt; 2. hægra hvolf; 3. vinstri gátt; 4. vinstra hvolf; 5. lokur; 6. lokur; 7. lokur; 8. ósæð</li>
+<li>Á stærð við krepptan hnefa</li>
+<li>Um 90 sinnum</li>
+<li>Fjögur</li>
+<li>Slagæðar – a) flytja blóð frá hjartanu; Bláæðar – b) flytja blóð til hjartans; Háræðar – c) minnstu æðarnar</li>
+<li>Ósæðin</li>
+<li>Hjartað dælir blóðinu → til lungnanna og sækir súrefni → aftur til hjartans → út um allan líkamann</li>
+<li>Rangt. Hjartað hvílist aldrei – það dælir jafnt á nóttu sem degi (bls. 26).</li>
+</ol>
+<h3>6. Öndun</h3><ol start='32'>
+<li>1. nef; 2. kok; 3. barkakýli; 4. barki; 5. berkjur; 6. lunga; 7. lungnablöðrur</li>
+<li>Að hreinsa blóðið og gefa því súrefni</li>
+<li>Koltvíoxíð</li>
+<li>Súrefni</li>
+<li>Í lungnablöðrunum</li>
+<li>nef eða munnur → kok → barkakýli → barki → berkjur → lungu</li>
+</ol>
+<h3>7. Hreinsistöðvar</h3><ol start='38'>
+<li>Lifrin og nýrun</li>
+<li>Lifrin</li>
+<li>Hjálpar til við að melta fitu</li>
+<li>Hreinsa úrgangsefni úr blóðinu</li>
+<li>Losar úrgang: Pissa, Kúka, Svitna, Æla; Losar ekki úrgang: Borða, Sofa</li>
+<li>Rétt</li>
+</ol>
+<h3>8. Húðin</h3><ol start='44'>
+<li>Húðin</li>
+<li>1. hörund (húðþekja); 2. leður (leðurhúð); 3. húðbeð (undirhúð)</li>
+<li>1. hár; 2. fitukirtill; 3. hárreisivöðvi; 4. skynfæri í húð; 5. taugaþráður; 6. svitakirtill; 7. hársekkur</li>
+<li>Húðin gerir þetta: Heldur á okkur réttum hita, Verndar gegn óhreinindum, Er vatnsþétt, Endurnýjar sig, Getur teygst; Húðin gerir þetta ekki: Dælir blóði, Meltir matinn</li>
+<li>Húðbeð (undirhúð)</li>
+<li>Melanín</li>
+</ol>
+<h3>9. Matur og næring</h3><ol start='50'>
+<li>Prótín – c) byggingarefni; Kolvetni – b) orka svo frumurnar geti unnið; Fita – d) góður orkugjafi og heldur á okkur hita; Vítamín – e) nauðsynleg svo líkaminn vaxi; Steinefni – a) gegna ýmsum hlutverkum</li>
+<li>Prótín: Baunir; Kolvetni: Brauð, Pasta, Kartöflur; Fita: Smjör, Matarolía; Vítamín: Ber, Grænmeti; Steinefni: Spínat, Spergilkál</li>
+<li>Prótín</li>
+<li>Rangt. Kolvetni fáum við úr brauði, kartöflum, pasta og hrísgrjónum. Smjör og matarolía eru fita.</li>
+</ol>
+<h3>10. Meltingin</h3><ol start='54'>
+<li>Munnurinn → Vélindað → Maginn → Smáþarmarnir → Ristillinn → Endaþarmurinn</li>
+<li>Munnurinn – d) tennurnar mala matinn og munnvatn blandast honum; Vélindað – b) löng slanga niður í magann; Maginn – f) magasafi brýtur matinn niður; Smáþarmarnir – c) líkaminn tekur til sín næringuna; Ristillinn – a) líkaminn tekur til sín vatn; Endaþarmurinn – e) afgangurinn fer út sem kúkur</li>
+</ol>
+<h3>11. Heilinn og taugarnar</h3><ol start='56'>
+<li>1. stóri heili; 2. litli heili; 3. heilastofn; 4. mæna</li>
+<li>Taugakerfi</li>
+<li>Að senda boð til og frá heilanum</li>
+<li>Litli heili</li>
+<li>Rétt. Þetta kallast taugaviðbragð (bls. 53).</li>
+</ol>
+<h3>12. Upprifjun: rétt eða rangt?</h3><ol start='61'>
+<li>Rangt. Þau eru um 206.</li>
+<li>Rétt</li>
+<li>Rangt. Það heitir ístað og er inni í eyranu.</li>
+<li>Rangt. Það eru rauðkornin sem flytja súrefni. Hvítkornin verja okkur gegn sjúkdómum.</li>
+<li>Rangt. Bláæðar flytja blóð TIL hjartans, slagæðar FRÁ því.</li>
+<li>Rangt. Við öndum frá okkur koltvíoxíði.</li>
+<li>Rétt</li>
+<li>Rétt</li>
+<li>Rangt. Það er litli heili sem stýrir jafnvæginu.</li>
+<li>Rétt</li>
+<li>Rétt</li>
+<li>Rétt</li>
+</ol>
+</section>
+
+</body>
+</html>
