@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="UTF-8">
+<title>ENSKA 6. bekkur – Together Again</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 16mm;
+  }
+  :root {
+    --ink: #000;
+    --paper: #fff;
+    --rule: #000;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 12pt;
+    line-height: 1.45;
+  }
+  body {
+    max-width: 170mm;
+    margin: 0 auto;
+    padding: 0;
+  }
+  h1 {
+    text-align: center;
+    font-size: 18pt;
+    margin: 0 0 0.3rem;
+    font-weight: 700;
+  }
+  .subtitle {
+    text-align: center;
+    font-style: italic;
+    margin: 0 0 1.5rem;
+    font-size: 11pt;
+  }
+  h2 {
+    font-size: 14pt;
+    margin: 1.4rem 0 0.6rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1.5px solid var(--rule);
+  }
+  h3 {
+    font-size: 12pt;
+    margin: 1rem 0 0.4rem;
+    font-style: italic;
+  }
+  .question {
+    margin: 0.8rem 0;
+    padding: 0.4rem 0 0.4rem 0.6rem;
+    border-left: 1.5px solid var(--rule);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .q-num { font-weight: 700; margin-right: 0.3rem; }
+  .prompt { margin-bottom: 0.4rem; }
+  .subq { margin: 0.3rem 0 0.3rem 1.2rem; }
+  .subq-label { font-weight: 700; margin-right: 0.3rem; }
+  .figure {
+    margin: 0.4rem 0 0.6rem;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .figure svg {
+    max-width: 360px;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+  }
+  .figure svg text {
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 11pt;
+    fill: #000;
+  }
+  .figure svg .stroke { fill: none; stroke: #000; stroke-width: 1.2; stroke-linejoin: round; }
+  .figure svg .dashed { fill: none; stroke: #000; stroke-width: 1; stroke-dasharray: 3 2; }
+  .figure svg .fill-light { fill: #f0f0f0; stroke: #000; stroke-width: 1.2; }
+  .figure svg .arc { fill: none; stroke: #000; stroke-width: 1.5; }
+  .figure svg .red { fill: #000; }
+  .figure svg .pt { fill: #000; }
+
+  .note { font-style: italic; font-size: 10.5pt; }
+  hr { border: none; border-top: 1px solid var(--rule); margin: 1.2rem 0; }
+
+  .answerline {
+    margin-top: 0.6rem;
+    border-top: 1px dotted #000;
+    padding-top: 0.4rem;
+    font-size: 11pt;
+  }
+  .answerline-blank {
+    margin-top: 0.4rem;
+    border-bottom: 1px solid #000;
+    height: 1.2rem;
+  }
+
+  .solutions {
+    page-break-before: always;
+    break-before: page;
+  }
+  .solutions h2 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 16pt;
+  }
+  .solutions ol { padding-left: 1.4rem; }
+  .solutions li {
+    margin: 0.3rem 0;
+    page-break-inside: avoid;
+  }
+  .solutions .working {
+    color: #000;
+    font-size: 10.5pt;
+    font-style: italic;
+    margin-left: 0.4rem;
+  }
+
+  /* hide anything explicitly marked as on-screen-only */
+  .screen-only { display: none !important; }
+
+  @media screen {
+    body {
+      max-width: 800px;
+      padding: 2rem 1rem 4rem;
+      background: #fafaf7;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>ENSKA 6. bekkur – Together Again</h1>
+<p class="subtitle">Æfing fyrir enskukönnunina vikuna 12.–16. október · orðalisti kennarans úr Yes we can 6, kafla 1, og nútíð/þátíð</p>
+
+<p class="note">Nafn: ______________________________</p>
+
+<style>
+  .opts span { display: inline-block; margin: .15rem 1.2rem .15rem 0; }
+  table.m { border-collapse: collapse; width: 100%; } table.m td { padding: .25rem .4rem; vertical-align: top; }
+  table.bins { border-collapse: collapse; width: 100%; margin-top: .3rem; }
+  table.bins th, table.bins td { border: 1px solid #000; padding: .3rem; height: 3rem; vertical-align: top; }
+  .mundu { border: 1px dashed #000; padding: .3rem .6rem; margin: .4rem 0 .6rem; font-size: 10.5pt; }
+  .mundu ul { margin: .2rem 0; padding-left: 1.1rem; }
+</style>
+<h2>1. Orðin</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Könnunin er úr orðalistanum í kafla 1, <i>Together Again</i>. Lærðu orðin utanbókar, bæði ensku → íslensku og íslensku → ensku.</li><li>Skólinn: subject, PE, ICT, canteen, assembly, lunch break, boarding school, tag.</li><li>Dermot Milligan og skólabúningurinn: expected, plum, stapler.</li><li>Innbrotið í skólann: break-in, quiet, solve.</li><li>Draumastörf: chef, programmer, difficult, embarrassing. Og svo: almost, grow.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">1.</span> Paraðu saman ensku orðin og íslensku merkinguna (1–5).</div><table class="m"><tr><td>subject ___</td><td>a) kokkur</td></tr><tr><td>chef ___</td><td>b) heimavistarskóli</td></tr><tr><td>canteen ___</td><td>c) erfitt</td></tr><tr><td>difficult ___</td><td>d) mötuneyti</td></tr><tr><td>boarding school ___</td><td>e) fag</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">2.</span> Paraðu saman ensku orðin og íslensku merkinguna (6–10).</div><table class="m"><tr><td>embarrassing ___</td><td>a) samverustund</td></tr><tr><td>PE ___</td><td>b) leysa</td></tr><tr><td>programmer ___</td><td>c) forritari</td></tr><tr><td>assembly ___</td><td>d) vandræðalegt</td></tr><tr><td>solve ___</td><td>e) íþróttir</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">3.</span> Paraðu saman ensku orðin og íslensku merkinguna (11–15).</div><table class="m"><tr><td>ICT ___</td><td>a) plóma</td></tr><tr><td>stapler ___</td><td>b) átti von á</td></tr><tr><td>expected ___</td><td>c) heftari</td></tr><tr><td>tag ___</td><td>d) tölvu- og upplýsingatækni</td></tr><tr><td>plum ___</td><td>e) eltingaleikur</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">4.</span> Paraðu saman ensku orðin og íslensku merkinguna (16–20).</div><table class="m"><tr><td>grow ___</td><td>a) innbrot</td></tr><tr><td>quiet ___</td><td>b) hljóðlega</td></tr><tr><td>lunch break ___</td><td>c) vaxa</td></tr><tr><td>break-in ___</td><td>d) hádegishlé</td></tr><tr><td>almost ___</td><td>e) næstum því</td></tr></table></div>
+<h2>2. Orð í setningum</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Krakkarnir í kaflanum: Madison (Bandaríkin), Harry (heimavistarskóli í Englandi), Tom (Ástralía), Jessica (Nýja-Sjáland), Zaheer (My School Day), Dermot Milligan, Max og Martin (innbrotið), Ava og Oliver (draumastörf).</li><li>Lestu alla setninguna áður en þú velur orð.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">5.</span> Maths is my favourite <b>_____</b> at school.</div><div class="opts"><span>◯ assembly</span><span>◯ subject</span><span>◯ programmer</span><span>◯ almost</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">6.</span> I want to work in a restaurant as a <b>_____</b>. I love cooking.</div><div class="opts"><span>◯ expected</span><span>◯ boarding school</span><span>◯ chef</span><span>◯ ICT</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">7.</span> Madison has lunch in the school <b>_____</b> at 12 o&#x27;clock.</div><div class="opts"><span>◯ PE</span><span>◯ difficult</span><span>◯ subject</span><span>◯ canteen</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">8.</span> Ava thinks it is <b>_____</b> to become a professional gamer.</div><div class="opts"><span>◯ plum</span><span>◯ difficult</span><span>◯ canteen</span><span>◯ quiet</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">9.</span> Harry sleeps and eats all his meals at school. He goes to a <b>_____</b>.</div><div class="opts"><span>◯ quiet</span><span>◯ canteen</span><span>◯ tag</span><span>◯ boarding school</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">10.</span> Oliver doesn&#x27;t tell people he wants to be an actor. He thinks it&#x27;s a bit <b>_____</b>.</div><div class="opts"><span>◯ assembly</span><span>◯ canteen</span><span>◯ embarrassing</span><span>◯ programmer</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">11.</span> Tom plays rugby or tennis every day. His favourite subject is <b>_____</b>.</div><div class="opts"><span>◯ grow</span><span>◯ solve</span><span>◯ lunch break</span><span>◯ PE</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">12.</span> Jack loves computers. He wants to make games, so he wants to be a <b>_____</b>.</div><div class="opts"><span>◯ difficult</span><span>◯ lunch break</span><span>◯ programmer</span><span>◯ quiet</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">13.</span> On Mondays and Thursdays Zaheer goes to <b>_____</b> in the main hall.</div><div class="opts"><span>◯ canteen</span><span>◯ expected</span><span>◯ assembly</span><span>◯ PE</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">14.</span> The police officers hope they can <b>_____</b> the mystery.</div><div class="opts"><span>◯ solve</span><span>◯ programmer</span><span>◯ expected</span><span>◯ subject</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">15.</span> Zaheer&#x27;s favourite subjects are <b>_____</b> and science.</div><div class="opts"><span>◯ expected</span><span>◯ stapler</span><span>◯ solve</span><span>◯ ICT</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">16.</span> Dermot&#x27;s shoes look like they belong to the guy who refills the office <b>_____</b>.</div><div class="opts"><span>◯ assembly</span><span>◯ stapler</span><span>◯ tag</span><span>◯ ICT</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">17.</span> The shirt was too big, but Dermot <b>_____</b> that.</div><div class="opts"><span>◯ plum</span><span>◯ assembly</span><span>◯ expected</span><span>◯ almost</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">18.</span> In the break Zaheer and Rob play football or games like <b>_____</b>.</div><div class="opts"><span>◯ plum</span><span>◯ tag</span><span>◯ boarding school</span><span>◯ stapler</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">19.</span> In his purple blazer Dermot looked like a giant <b>_____</b>.</div><div class="opts"><span>◯ chef</span><span>◯ solve</span><span>◯ difficult</span><span>◯ plum</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">20.</span> Learning together, helping each other <b>_____</b>.</div><div class="opts"><span>◯ quiet</span><span>◯ grow</span><span>◯ almost</span><span>◯ stapler</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">21.</span> Martin didn&#x27;t hear any cars last night. It was really <b>_____</b>.</div><div class="opts"><span>◯ difficult</span><span>◯ programmer</span><span>◯ assembly</span><span>◯ quiet</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">22.</span> Jessica has a <b>_____</b> at noon. She eats sandwiches and an apple.</div><div class="opts"><span>◯ almost</span><span>◯ canteen</span><span>◯ PE</span><span>◯ lunch break</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">23.</span> All the computers were stolen. There was a <b>_____</b> at the school.</div><div class="opts"><span>◯ canteen</span><span>◯ break-in</span><span>◯ boarding school</span><span>◯ almost</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">24.</span> The girls wear <b>_____</b> the same uniform as the boys.</div><div class="opts"><span>◯ boarding school</span><span>◯ lunch break</span><span>◯ almost</span><span>◯ difficult</span></div></div>
+<h2>3. Skrifaðu á ensku</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Nú skrifarðu orðin sjálfur. Stafsetningin skiptir máli á könnuninni.</li><li>Ef svarið er rangt færðu vísbendingu: fyrst fyrsta stafinn, svo helminginn af stöfunum.</li><li>Erfið orð: embaRRaSSing, prograMMer, diFFicult, aSSembly, break-in (með bandstriki), lunch break (ekki brake).</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">25.</span> Hvað er <b>hljóðlega</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">26.</span> Hvað er <b>heimavistarskóli</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">27.</span> Hvað er <b>samverustund</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">28.</span> Hvað er <b>plóma</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">29.</span> Hvað er <b>íþróttir</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">30.</span> Hvað er <b>tölvu- og upplýsingatækni</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">31.</span> Hvað er <b>vaxa</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">32.</span> Hvað er <b>næstum því</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">33.</span> Hvað er <b>hádegishlé</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">34.</span> Hvað er <b>leysa</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">35.</span> Hvað er <b>heftari</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">36.</span> Hvað er <b>mötuneyti</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">37.</span> Hvað er <b>kokkur</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">38.</span> Hvað er <b>eltingaleikur</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">39.</span> Hvað er <b>fag</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">40.</span> Hvað er <b>vandræðalegt</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">41.</span> Hvað er <b>erfitt</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">42.</span> Hvað er <b>átti von á</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">43.</span> Hvað er <b>innbrot</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">44.</span> Hvað er <b>forritari</b> á ensku?</div><div>______________________</div></div>
+<h2>4. Nútíð og þátíð</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Nútíð með <b>he, she, it</b> (líka Madison, Zaheer, school …): bættu <b>-s</b> við. I play – he play<b>s</b>.</li><li><b>have</b> verður <b>has</b> með he, she, it: Jessica <b>has</b> a twin brother.</li><li><b>I am</b> · you, we, they <b>are</b> · he, she, it <b>is</b>.</li><li>Þátíð (yesterday, last week): bættu <b>-ed</b> við. play → play<b>ed</b>, like → like<b>d</b>.</li><li>Óreglulegar sagnir lærir maður utanbókar: be → was/were, have → had, do → did, go → went, take → took, come → came.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">45.</span> Madison <b>_____</b> the school bus every morning.</div><div class="opts"><span>◯ take</span><span>◯ takes</span><span>◯ took</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">46.</span> Tom and his sisters <b>_____</b> with their mum in Sydney.</div><div class="opts"><span>◯ lives</span><span>◯ live</span><span>◯ lived</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">47.</span> Zaheer <b>_____</b> to school every day.</div><div class="opts"><span>◯ walks</span><span>◯ walked</span><span>◯ walk</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">48.</span> I <b>_____</b> rugby on Saturdays.</div><div class="opts"><span>◯ plays</span><span>◯ played</span><span>◯ play</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">49.</span> School <b>_____</b> at 9 o&#x27;clock.</div><div class="opts"><span>◯ started</span><span>◯ start</span><span>◯ starts</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">50.</span> Jessica <b>_____</b> a twin brother called Jordan.</div><div class="opts"><span>◯ has</span><span>◯ have</span><span>◯ had</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">51.</span> We <b>_____</b> assembly on Mondays and Thursdays.</div><div class="opts"><span>◯ had</span><span>◯ have</span><span>◯ has</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">52.</span> Dermot <b>_____</b> a purple blazer.</div><div class="opts"><span>◯ had</span><span>◯ have</span><span>◯ has</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">53.</span> I <b>_____</b> eleven years old.</div><div class="opts"><span>◯ are</span><span>◯ am</span><span>◯ is</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">54.</span> Martin and Max <b>_____</b> in year 5.</div><div class="opts"><span>◯ are</span><span>◯ is</span><span>◯ am</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">55.</span> My school uniform <b>_____</b> purple!</div><div class="opts"><span>◯ is</span><span>◯ are</span><span>◯ am</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">56.</span> <b>_____</b> you happy with your school uniform?</div><div class="opts"><span>◯ is</span><span>◯ am</span><span>◯ are</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">57.</span> Er sögnin í nútíð eða þátíð?</div><div>is · has · took · went · was · had · goes · takes · played · plays</div><table class='bins'><tr><th>Nútíð (í dag)</th><th>Þátíð (í gær)</th></tr><tr><td></td><td></td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">58.</span> Skrifaðu þátíð af <b>play</b>. <i>Yesterday I ___ …</i></div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">59.</span> Skrifaðu þátíð af <b>like</b>. <i>Yesterday I ___ …</i></div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">60.</span> Skrifaðu þátíð af <b>start</b>. <i>Yesterday I ___ …</i></div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">61.</span> Skrifaðu þátíð af <b>want</b>. <i>Yesterday I ___ …</i></div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">62.</span> Yesterday I <b>_____</b> the bus to school.</div><div class="opts"><span>◯ take</span><span>◯ took</span><span>◯ takes</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">63.</span> Last night it <b>_____</b> really quiet.</div><div class="opts"><span>◯ is</span><span>◯ were</span><span>◯ was</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">64.</span> On Monday morning the police <b>_____</b> to the school.</div><div class="opts"><span>◯ come</span><span>◯ comes</span><span>◯ came</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">65.</span> Last week we <b>_____</b> to the museum.</div><div class="opts"><span>◯ goes</span><span>◯ go</span><span>◯ went</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">66.</span> When he first started, Harry <b>_____</b> his family.</div><div class="opts"><span>◯ miss</span><span>◯ misses</span><span>◯ missed</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">67.</span> Yesterday Zaheer <b>_____</b> his homework after school.</div><div class="opts"><span>◯ do</span><span>◯ did</span><span>◯ does</span></div></div>
+
+<section class="solutions"><h2>Lausnir</h2><h3>1. Orðin</h3><ol start='1'>
+<li>subject – e) fag, chef – a) kokkur, canteen – d) mötuneyti, difficult – c) erfitt, boarding school – b) heimavistarskóli</li>
+<li>embarrassing – d) vandræðalegt, PE – e) íþróttir, programmer – c) forritari, assembly – a) samverustund, solve – b) leysa</li>
+<li>ICT – d) tölvu- og upplýsingatækni, stapler – c) heftari, expected – b) átti von á, tag – e) eltingaleikur, plum – a) plóma</li>
+<li>grow – c) vaxa, quiet – b) hljóðlega, lunch break – d) hádegishlé, break-in – a) innbrot, almost – e) næstum því</li>
+</ol>
+<h3>2. Orð í setningum</h3><ol start='5'>
+<li>subject</li>
+<li>chef</li>
+<li>canteen</li>
+<li>difficult</li>
+<li>boarding school</li>
+<li>embarrassing</li>
+<li>PE</li>
+<li>programmer</li>
+<li>assembly</li>
+<li>solve</li>
+<li>ICT</li>
+<li>stapler</li>
+<li>expected</li>
+<li>tag</li>
+<li>plum</li>
+<li>grow</li>
+<li>quiet</li>
+<li>lunch break</li>
+<li>break-in</li>
+<li>almost</li>
+</ol>
+<h3>3. Skrifaðu á ensku</h3><ol start='25'>
+<li>quiet</li>
+<li>boarding school</li>
+<li>assembly</li>
+<li>plum</li>
+<li>PE</li>
+<li>ICT</li>
+<li>grow</li>
+<li>almost</li>
+<li>lunch break</li>
+<li>solve</li>
+<li>stapler</li>
+<li>canteen</li>
+<li>chef</li>
+<li>tag</li>
+<li>subject</li>
+<li>embarrassing</li>
+<li>difficult</li>
+<li>expected</li>
+<li>break-in</li>
+<li>programmer</li>
+</ol>
+<h3>4. Nútíð og þátíð</h3><ol start='45'>
+<li>takes</li>
+<li>live</li>
+<li>walks</li>
+<li>play</li>
+<li>starts</li>
+<li>has</li>
+<li>have</li>
+<li>has</li>
+<li>am</li>
+<li>are</li>
+<li>is</li>
+<li>are</li>
+<li>Nútíð (í dag): plays, takes, is, goes, has | Þátíð (í gær): played, took, was, went, had</li>
+<li>played</li>
+<li>liked</li>
+<li>started</li>
+<li>wanted</li>
+<li>took</li>
+<li>was</li>
+<li>came</li>
+<li>went</li>
+<li>missed</li>
+<li>did</li>
+</ol></section>
+
+</body>
+</html>

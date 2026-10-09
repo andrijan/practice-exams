@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENSKA 6. bekkur – Together Again</title>
+<style>
+  :root {
+    --bg: #f6f4ef; --card: #fff; --ink: #222; --muted: #666; --line: #e2ddd2;
+    --good: #2e9e5b; --good-bg: #e3f6ea; --bad: #d64545; --bad-bg: #fde8e8;
+    --pick: #2f6fd6; --pick-bg: #e6efff; --note: #fff6d6; --note-line: #f0d77a;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 19px/1.45 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px 80px; }
+  header.top { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .top-in { max-width: 860px; margin: 0 auto; padding: 10px 16px 8px; }
+  .score { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+  .bar { flex: 1; height: 14px; background: #e6e1d6; border-radius: 7px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--good); transition: width .3s; }
+  .stars { display: inline-flex; align-items: center; gap: 4px; color: #c98a00; white-space: nowrap; }
+  .stars svg { width: 22px; height: 22px; fill: #f5b301; }
+  nav.secs { display: flex; gap: 6px; overflow-x: auto; padding-top: 8px; scrollbar-width: none; }
+  nav.secs a { flex: none; font-size: 14px; padding: 5px 10px; border-radius: 999px; background: #fff;
+               border: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  nav.secs a.done { background: var(--good-bg); border-color: var(--good); }
+  h1 { font-size: 30px; margin: 22px 0 4px; }
+  .subtitle { color: var(--muted); margin: 0 0 8px; }
+  .how { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; margin: 14px 0; }
+  .how b { color: var(--pick); }
+  section.sec { margin-top: 34px; scroll-margin-top: 110px; }
+  .sec-head { display: flex; align-items: center; gap: 12px; color: #fff; border-radius: 14px 14px 0 0;
+              padding: 12px 16px; }
+  .sec-head h2 { margin: 0; font-size: 24px; }
+  .sec-head .pg { margin-left: auto; font-size: 15px; opacity: .9; }
+  .sec-head .pg a { color: #fff; }
+  .mundu { background: var(--note); border: 2px solid var(--note-line); border-top: 0; border-radius: 0 0 14px 14px;
+           padding: 10px 16px 12px; }
+  .mundu h3 { margin: 0 0 4px; font-size: 18px; }
+  .mundu ul { margin: 0; padding-left: 22px; }
+  .mundu li { margin: 3px 0; }
+  .task { background: var(--card); border-radius: 14px; margin: 16px 0; padding: 14px 16px 16px;
+          box-shadow: 0 1px 3px rgba(0,0,0,.08); border-left: 6px solid #ccc; }
+  .task.ok { border-left-color: var(--good); }
+  .task.meh { border-left-color: #e0a800; }
+  .t-head { display: flex; gap: 8px; align-items: baseline; font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+  .t-head .hint { margin-left: auto; }
+  .q { font-size: 21px; font-weight: 600; margin: 2px 0 12px; }
+  .opts { display: grid; gap: 10px; }
+  @media (min-width: 640px) { .opts.two { grid-template-columns: 1fr 1fr; } }
+  button.opt, button.chip, button.slot, .bin, button.side {
+    font: inherit; color: inherit; background: #fff; border: 2px solid #cfc8b8; border-radius: 12px;
+    padding: 12px 14px; min-height: 52px; text-align: left; cursor: pointer; touch-action: manipulation; }
+  button.opt:active, button.chip:active { transform: scale(.98); }
+  .tf { display: flex; gap: 12px; }
+  .tf button { flex: 1; text-align: center; font-weight: 700; font-size: 22px; }
+  .picked { border-color: var(--pick) !important; background: var(--pick-bg) !important; box-shadow: 0 0 0 3px #b9d0fb; }
+  .good { border-color: var(--good) !important; background: var(--good-bg) !important; }
+  .bad { border-color: var(--bad) !important; background: var(--bad-bg) !important; animation: shake .35s; }
+  .gone { opacity: .35; pointer-events: none; }
+  @keyframes shake { 0%,100% { transform: none; } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 6px #ffd54a; } }
+  .pulse { animation: pulse .6s 3; }
+  .bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .bank button.chip { min-height: 46px; padding: 8px 14px; border-radius: 999px; }
+  .figure { text-align: center; }
+  svg.dia { width: 100%; max-width: 560px; height: auto; background: #fff; border-radius: 10px; }
+  svg.dia .bub { fill: #fff; stroke: #333; cursor: pointer; }
+  svg.dia text { font-weight: 800; fill: #222; pointer-events: none; font-family: inherit; }
+  svg.dia .ld { stroke: #333; }
+  svg.dia .dot { fill: #333; }
+  svg.dia .mk.on .bub { fill: #cfe0ff; stroke: var(--pick); }
+  svg.dia .mk.ok .bub { fill: #7fd39b; stroke: var(--good); }
+  svg.dia .mk.no .bub { fill: #f6a5a5; stroke: var(--bad); }
+  .slots { display: grid; gap: 8px; margin-top: 10px; }
+  @media (min-width: 640px) { .slots { grid-template-columns: 1fr 1fr; } }
+  button.slot { display: flex; gap: 10px; align-items: center; padding: 8px 12px; }
+  button.slot .n { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 2px solid #333;
+                   display: grid; place-items: center; font-weight: 800; }
+  button.slot .w { color: var(--muted); }
+  button.slot.good .w { color: var(--ink); font-weight: 700; }
+  .match { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+  .match .col { display: grid; gap: 10px; align-content: start; }
+  button.side { width: 100%; }
+  .bins { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin-top: 6px; }
+  .bin { cursor: pointer; min-height: 110px; background: #faf8f3; border-style: dashed; }
+  .bin h4 { margin: 0 0 6px; font-size: 17px; }
+  .bin .in { display: flex; flex-wrap: wrap; gap: 6px; }
+  .bin .in span { background: var(--good-bg); border: 1px solid var(--good); border-radius: 999px; padding: 2px 10px; font-size: 16px; }
+  ol.seq { margin: 8px 0; padding: 0; list-style: none; display: grid; gap: 6px; counter-reset: s; }
+  ol.seq li { counter-increment: s; border: 2px dashed #cfc8b8; border-radius: 12px; padding: 8px 12px; min-height: 46px; color: var(--muted); }
+  ol.seq li::before { content: counter(s) ". "; font-weight: 800; color: var(--ink); }
+  ol.seq li.good { border-style: solid; color: var(--ink); font-weight: 600; }
+  .typ { display: flex; gap: 10px; }
+  .typ input { flex: 1; min-width: 0; font: inherit; font-size: 22px; padding: 10px 14px; border: 2px solid #cfc8b8;
+               border-radius: 12px; background: #fff; color: var(--ink); }
+  .typ input:focus { outline: none; border-color: var(--pick); }
+  .typ button.go { flex: none; text-align: center; font-weight: 700; }
+  .clue { margin-top: 10px; font-size: 22px; letter-spacing: .08em; font-family: ui-monospace, Menlo, monospace; }
+  .fb { margin-top: 12px; font-size: 17px; display: none; padding: 10px 12px; border-radius: 10px; }
+  .fb.show { display: block; }
+  .fb.yes { background: var(--good-bg); }
+  .fb.try { background: var(--bad-bg); }
+  .fb a { color: var(--pick); }
+  .end { background: #fff; border-radius: 14px; padding: 18px; margin-top: 30px; text-align: center; }
+  .end .big { font-size: 26px; font-weight: 800; }
+  .end button { font: inherit; font-weight: 700; padding: 12px 18px; margin: 8px; border-radius: 12px; border: 0;
+                background: var(--pick); color: #fff; cursor: pointer; }
+  .end button.alt { background: #888; }
+  footer { text-align: center; color: var(--muted); font-size: 14px; margin-top: 30px; }
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <div class="score"><span id="prog">0 / 0</span><div class="bar"><i id="barfill"></i></div>
+    <span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3 7 7 .6-5.3 4.6 1.6 7-6.3-3.8L5.7 21l1.6-7L2 9.6 9 9z"/></svg><span id="stars">0</span></span></div>
+  <nav class="secs" id="nav"></nav>
+</div></header>
+<div class="wrap">
+  <h1>ENSKA 6. bekkur – Together Again</h1>
+  <p class="subtitle">Æfing fyrir enskukönnunina vikuna 12.–16. október · orðalisti kennarans úr Yes we can 6, kafla 1, og nútíð/þátíð</p>
+  <div class="how">Lestu fyrst gula <b>Mundu!</b>-kassann í hverjum kafla. Svo pikkarðu á svörin.
+    Þegar þú átt að skrifa, skrifarðu svarið og ýtir á <b>Athuga</b>. Ef það er rangt færðu vísbendingu.
+    Þú færð <b>stjörnu</b> fyrir hvert verkefni sem þú klárar án villu.</div>
+  <div id="app"></div>
+  <div class="end" id="end"></div>
+  <footer>Byggt á gátlista kennarans og Yes we can 6, nemendabók og verkefnabók (Menntamálastofnun)</footer>
+</div>
+<script>
+const DATA = {"sections": [{"title": "Orðin", "pages": "6–17", "color": "#2f6fd6", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/7/", "items": [{"t": "match", "q": "Paraðu saman ensku orðin og íslensku merkinguna (1–5).", "pairs": [["subject", "fag"], ["chef", "kokkur"], ["canteen", "mötuneyti"], ["difficult", "erfitt"], ["boarding school", "heimavistarskóli"]], "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/7/", "linkText": "bls. 6–17"}, {"t": "match", "q": "Paraðu saman ensku orðin og íslensku merkinguna (6–10).", "pairs": [["embarrassing", "vandræðalegt"], ["PE", "íþróttir"], ["programmer", "forritari"], ["assembly", "samverustund"], ["solve", "leysa"]], "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/7/", "linkText": "bls. 6–17"}, {"t": "match", "q": "Paraðu saman ensku orðin og íslensku merkinguna (11–15).", "pairs": [["ICT", "tölvu- og upplýsingatækni"], ["stapler", "heftari"], ["expected", "átti von á"], ["tag", "eltingaleikur"], ["plum", "plóma"]], "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/7/", "linkText": "bls. 6–17"}, {"t": "match", "q": "Paraðu saman ensku orðin og íslensku merkinguna (16–20).", "pairs": [["grow", "vaxa"], ["quiet", "hljóðlega"], ["lunch break", "hádegishlé"], ["break-in", "innbrot"], ["almost", "næstum því"]], "why": "", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/7/", "linkText": "bls. 6–17"}], "mundu": ["Könnunin er úr orðalistanum í kafla 1, <i>Together Again<\/i>. Lærðu orðin utanbókar, bæði ensku → íslensku og íslensku → ensku.", "Skólinn: subject, PE, ICT, canteen, assembly, lunch break, boarding school, tag.", "Dermot Milligan og skólabúningurinn: expected, plum, stapler.", "Innbrotið í skólann: break-in, quiet, solve.", "Draumastörf: chef, programmer, difficult, embarrassing. Og svo: almost, grow.", "Viltu æfa fyrst? <a href=\"../enska6_ordaspjold/enska6_ordaspjold_ipad.html\">Orðaspjöldin<\/a> eru með sömu 20 orðin."]}, {"title": "Orð í setningum", "pages": "6–17", "color": "#7b4fd6", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/7/", "items": [{"t": "mc", "q": "Maths is my favourite <b>_____<\/b> at school.", "a": "subject", "opts": ["subject", "assembly", "programmer", "almost"], "why": "<b>subject<\/b> = fag. Madison: My favourite subject is English.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/7/", "linkText": "bls. 6"}, {"t": "mc", "q": "I want to work in a restaurant as a <b>_____<\/b>. I love cooking.", "a": "chef", "opts": ["chef", "boarding school", "expected", "ICT"], "why": "<b>chef<\/b> = kokkur. Bls. 5 og 16.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/17/", "linkText": "bls. 16"}, {"t": "mc", "q": "Madison has lunch in the school <b>_____<\/b> at 12 o&#x27;clock.", "a": "canteen", "opts": ["canteen", "PE", "subject", "difficult"], "why": "<b>canteen<\/b> = mötuneyti. Madison borðar í mötuneytinu.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/7/", "linkText": "bls. 6"}, {"t": "mc", "q": "Ava thinks it is <b>_____<\/b> to become a professional gamer.", "a": "difficult", "opts": ["difficult", "plum", "quiet", "canteen"], "why": "<b>difficult<\/b> = erfitt. Ava: But I think it&#x27;s difficult.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/18/", "linkText": "bls. 17"}, {"t": "mc", "q": "Harry sleeps and eats all his meals at school. He goes to a <b>_____<\/b>.", "a": "boarding school", "opts": ["boarding school", "tag", "quiet", "canteen"], "why": "<b>boarding school<\/b> = heimavistarskóli. Harry býr í skólanum sínum.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/8/", "linkText": "bls. 7"}, {"t": "mc", "q": "Oliver doesn&#x27;t tell people he wants to be an actor. He thinks it&#x27;s a bit <b>_____<\/b>.", "a": "embarrassing", "opts": ["embarrassing", "canteen", "assembly", "programmer"], "why": "<b>embarrassing<\/b> = vandræðalegt. Oliver: It&#x27;s a bit embarrassing.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/18/", "linkText": "bls. 17"}, {"t": "mc", "q": "Tom plays rugby or tennis every day. His favourite subject is <b>_____<\/b>.", "a": "PE", "opts": ["PE", "grow", "lunch break", "solve"], "why": "<b>PE<\/b> = íþróttir. PE = íþróttir.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/9/", "linkText": "bls. 8"}, {"t": "mc", "q": "Jack loves computers. He wants to make games, so he wants to be a <b>_____<\/b>.", "a": "programmer", "opts": ["programmer", "quiet", "lunch break", "difficult"], "why": "<b>programmer<\/b> = forritari. Bls. 16: I want to be a programmer.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/17/", "linkText": "bls. 16"}, {"t": "mc", "q": "On Mondays and Thursdays Zaheer goes to <b>_____<\/b> in the main hall.", "a": "assembly", "opts": ["assembly", "expected", "canteen", "PE"], "why": "<b>assembly<\/b> = samverustund. Þar syngja þau og hlusta á sögu.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/12/", "linkText": "bls. 11"}, {"t": "mc", "q": "The police officers hope they can <b>_____<\/b> the mystery.", "a": "solve", "opts": ["solve", "expected", "programmer", "subject"], "why": "<b>solve<\/b> = leysa. A Job for Experts!", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/15/", "linkText": "bls. 14"}, {"t": "mc", "q": "Zaheer&#x27;s favourite subjects are <b>_____<\/b> and science.", "a": "ICT", "opts": ["ICT", "expected", "solve", "stapler"], "why": "<b>ICT<\/b> = tölvu- og upplýsingatækni. ICT = tölvu- og upplýsingatækni.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/12/", "linkText": "bls. 11"}, {"t": "mc", "q": "Dermot&#x27;s shoes look like they belong to the guy who refills the office <b>_____<\/b>.", "a": "stapler", "opts": ["stapler", "ICT", "assembly", "tag"], "why": "<b>stapler<\/b> = heftari. Dermot Milligan, bls. 13.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/13/", "linkText": "bls. 12"}, {"t": "mc", "q": "The shirt was too big, but Dermot <b>_____<\/b> that.", "a": "expected", "opts": ["expected", "plum", "almost", "assembly"], "why": "<b>expected<\/b> = átti von á. The shirt I kind of expected.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/13/", "linkText": "bls. 12"}, {"t": "mc", "q": "In the break Zaheer and Rob play football or games like <b>_____<\/b>.", "a": "tag", "opts": ["tag", "stapler", "plum", "boarding school"], "why": "<b>tag<\/b> = eltingaleikur. tag = eltingaleikur.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/12/", "linkText": "bls. 11"}, {"t": "mc", "q": "In his purple blazer Dermot looked like a giant <b>_____<\/b>.", "a": "plum", "opts": ["plum", "difficult", "solve", "chef"], "why": "<b>plum<\/b> = plóma. I looked like a giant plum.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/13/", "linkText": "bls. 12"}, {"t": "mc", "q": "Learning together, helping each other <b>_____<\/b>.", "a": "grow", "opts": ["grow", "quiet", "almost", "stapler"], "why": "<b>grow<\/b> = vaxa. Cool School Rap, bls. 10.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/11/", "linkText": "bls. 10"}, {"t": "mc", "q": "Martin didn&#x27;t hear any cars last night. It was really <b>_____<\/b>.", "a": "quiet", "opts": ["quiet", "difficult", "assembly", "programmer"], "why": "<b>quiet<\/b> = hljóðlega. It was really quiet.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/15/", "linkText": "bls. 14"}, {"t": "mc", "q": "Jessica has a <b>_____<\/b> at noon. She eats sandwiches and an apple.", "a": "lunch break", "opts": ["lunch break", "canteen", "almost", "PE"], "why": "<b>lunch break<\/b> = hádegishlé. We have a lunch break at noon.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/10/", "linkText": "bls. 9"}, {"t": "mc", "q": "All the computers were stolen. There was a <b>_____<\/b> at the school.", "a": "break-in", "opts": ["break-in", "canteen", "boarding school", "almost"], "why": "<b>break-in<\/b> = innbrot. I think we have had a break-in.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/15/", "linkText": "bls. 14"}, {"t": "mc", "q": "The girls wear <b>_____<\/b> the same uniform as the boys.", "a": "almost", "opts": ["almost", "difficult", "lunch break", "boarding school"], "why": "<b>almost<\/b> = næstum því. Harry: The girls wear almost the same.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/8/", "linkText": "bls. 7"}], "mundu": ["Krakkarnir í kaflanum: Madison (Bandaríkin), Harry (heimavistarskóli í Englandi), Tom (Ástralía), Jessica (Nýja-Sjáland), Zaheer (My School Day), Dermot Milligan, Max og Martin (innbrotið), Ava og Oliver (draumastörf).", "Lestu alla setninguna áður en þú velur orð."]}, {"title": "Skrifaðu á ensku", "pages": "6–17", "color": "#c8102e", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/7/", "items": [{"t": "type", "q": "Hvað er <b>hljóðlega<\/b> á ensku?", "a": ["quiet"], "why": "<b>quiet<\/b> = hljóðlega. quiet (hljóðlegt) – ekki quite (frekar).", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/15/", "linkText": "bls. 14"}, {"t": "type", "q": "Hvað er <b>heimavistarskóli<\/b> á ensku?", "a": ["boarding school"], "why": "<b>boarding school<\/b> = heimavistarskóli. Tvö orð: boarding school.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/8/", "linkText": "bls. 7"}, {"t": "type", "q": "Hvað er <b>samverustund<\/b> á ensku?", "a": ["assembly"], "why": "<b>assembly<\/b> = samverustund. Tvö s: aSSembly.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/12/", "linkText": "bls. 11"}, {"t": "type", "q": "Hvað er <b>plóma<\/b> á ensku?", "a": ["plum"], "why": "<b>plum<\/b> = plóma.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/13/", "linkText": "bls. 12"}, {"t": "type", "q": "Hvað er <b>íþróttir<\/b> á ensku?", "a": ["PE", "P.E.", "physical education"], "why": "<b>PE<\/b> = íþróttir. Stórir stafir: PE.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/9/", "linkText": "bls. 8"}, {"t": "type", "q": "Hvað er <b>tölvu- og upplýsingatækni<\/b> á ensku?", "a": ["ICT", "I.C.T."], "why": "<b>ICT<\/b> = tölvu- og upplýsingatækni. Stórir stafir: ICT.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/12/", "linkText": "bls. 11"}, {"t": "type", "q": "Hvað er <b>vaxa<\/b> á ensku?", "a": ["grow"], "why": "<b>grow<\/b> = vaxa.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/11/", "linkText": "bls. 10"}, {"t": "type", "q": "Hvað er <b>næstum því<\/b> á ensku?", "a": ["almost"], "why": "<b>almost<\/b> = næstum því.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/8/", "linkText": "bls. 7"}, {"t": "type", "q": "Hvað er <b>hádegishlé<\/b> á ensku?", "a": ["lunch break"], "why": "<b>lunch break<\/b> = hádegishlé. break eins og frímínútur – ekki brake (bremsa).", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/10/", "linkText": "bls. 9"}, {"t": "type", "q": "Hvað er <b>leysa<\/b> á ensku?", "a": ["solve"], "why": "<b>solve<\/b> = leysa.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/15/", "linkText": "bls. 14"}, {"t": "type", "q": "Hvað er <b>heftari<\/b> á ensku?", "a": ["stapler"], "why": "<b>stapler<\/b> = heftari. Bara eitt p: stapler.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/13/", "linkText": "bls. 12"}, {"t": "type", "q": "Hvað er <b>mötuneyti<\/b> á ensku?", "a": ["canteen"], "why": "<b>canteen<\/b> = mötuneyti. Tvö e: cantEEn.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/7/", "linkText": "bls. 6"}, {"t": "type", "q": "Hvað er <b>kokkur<\/b> á ensku?", "a": ["chef"], "why": "<b>chef<\/b> = kokkur. ch eins og í chips, en borið fram „sjeff“.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/17/", "linkText": "bls. 16"}, {"t": "type", "q": "Hvað er <b>eltingaleikur<\/b> á ensku?", "a": ["tag"], "why": "<b>tag<\/b> = eltingaleikur.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/12/", "linkText": "bls. 11"}, {"t": "type", "q": "Hvað er <b>fag<\/b> á ensku?", "a": ["subject"], "why": "<b>subject<\/b> = fag.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/7/", "linkText": "bls. 6"}, {"t": "type", "q": "Hvað er <b>vandræðalegt<\/b> á ensku?", "a": ["embarrassing"], "why": "<b>embarrassing<\/b> = vandræðalegt. Tvö r og tvö s: embaRRaSSing.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/18/", "linkText": "bls. 17"}, {"t": "type", "q": "Hvað er <b>erfitt<\/b> á ensku?", "a": ["difficult"], "why": "<b>difficult<\/b> = erfitt. Tvö f: diFFicult.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/18/", "linkText": "bls. 17"}, {"t": "type", "q": "Hvað er <b>átti von á<\/b> á ensku?", "a": ["expected"], "why": "<b>expected<\/b> = átti von á.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/13/", "linkText": "bls. 12"}, {"t": "type", "q": "Hvað er <b>innbrot<\/b> á ensku?", "a": ["break-in", "break in"], "why": "<b>break-in<\/b> = innbrot. Með bandstriki: break-in.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/15/", "linkText": "bls. 14"}, {"t": "type", "q": "Hvað er <b>forritari<\/b> á ensku?", "a": ["programmer"], "why": "<b>programmer<\/b> = forritari. Tvö m: prograMMer.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_nem/17/", "linkText": "bls. 16"}], "mundu": ["Nú skrifarðu orðin sjálfur. Stafsetningin skiptir máli á könnuninni.", "Ef svarið er rangt færðu vísbendingu: fyrst fyrsta stafinn, svo helminginn af stöfunum.", "Erfið orð: embaRRaSSing, prograMMer, diFFicult, aSSembly, break-in (með bandstriki), lunch break (ekki brake)."]}, {"title": "Nútíð og þátíð", "pages": "vb. 4–5", "color": "#2e9e5b", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "items": [{"t": "mc", "q": "Madison <b>_____<\/b> the school bus every morning.", "a": "takes", "opts": ["takes", "take", "took"], "why": "Með he, she, it bætum við -s við.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "Tom and his sisters <b>_____<\/b> with their mum in Sydney.", "a": "live", "opts": ["live", "lives", "lived"], "why": "Með I, you, we, they er ekkert -s.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "Zaheer <b>_____<\/b> to school every day.", "a": "walks", "opts": ["walks", "walk", "walked"], "why": "Með he, she, it bætum við -s við.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "I <b>_____<\/b> rugby on Saturdays.", "a": "play", "opts": ["play", "plays", "played"], "why": "Með I, you, we, they er ekkert -s.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "School <b>_____<\/b> at 9 o&#x27;clock.", "a": "starts", "opts": ["starts", "start", "started"], "why": "Með he, she, it bætum við -s við.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "Jessica <b>_____<\/b> a twin brother called Jordan.", "a": "has", "opts": ["has", "have", "had"], "why": "has með he, she, it – have með I, you, we, they.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "We <b>_____<\/b> assembly on Mondays and Thursdays.", "a": "have", "opts": ["have", "has", "had"], "why": "has með he, she, it – have með I, you, we, they.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "Dermot <b>_____<\/b> a purple blazer.", "a": "has", "opts": ["has", "have", "had"], "why": "has með he, she, it – have með I, you, we, they.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "I <b>_____<\/b> eleven years old.", "a": "am", "opts": ["am", "is", "are"], "why": "I am · you, we, they are · he, she, it is.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "Martin and Max <b>_____<\/b> in year 5.", "a": "are", "opts": ["am", "is", "are"], "why": "I am · you, we, they are · he, she, it is.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "My school uniform <b>_____<\/b> purple!", "a": "is", "opts": ["am", "is", "are"], "why": "I am · you, we, they are · he, she, it is.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "<b>_____<\/b> you happy with your school uniform?", "a": "are", "opts": ["am", "is", "are"], "why": "I am · you, we, they are · he, she, it is.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "sort", "q": "Er sögnin í nútíð eða þátíð?", "bins": ["Nútíð (í dag)", "Þátíð (í gær)"], "items": [["plays", 0], ["played", 1], ["takes", 0], ["took", 1], ["is", 0], ["was", 1], ["goes", 0], ["went", 1], ["has", 0], ["had", 1]], "why": "plays, takes, is, goes, has eru nútíð. played, took, was, went, had eru þátíð.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "type", "q": "Skrifaðu þátíð af <b>play<\/b>. <i>Yesterday I ___ …<\/i>", "a": ["played"], "why": "play → <b>played<\/b>. Reglulegar sagnir fá -ed (eða bara -d ef þær enda á e).", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "type", "q": "Skrifaðu þátíð af <b>like<\/b>. <i>Yesterday I ___ …<\/i>", "a": ["liked"], "why": "like → <b>liked<\/b>. Reglulegar sagnir fá -ed (eða bara -d ef þær enda á e).", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "type", "q": "Skrifaðu þátíð af <b>start<\/b>. <i>Yesterday I ___ …<\/i>", "a": ["started"], "why": "start → <b>started<\/b>. Reglulegar sagnir fá -ed (eða bara -d ef þær enda á e).", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "type", "q": "Skrifaðu þátíð af <b>want<\/b>. <i>Yesterday I ___ …<\/i>", "a": ["wanted"], "why": "want → <b>wanted<\/b>. Reglulegar sagnir fá -ed (eða bara -d ef þær enda á e).", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "Yesterday I <b>_____<\/b> the bus to school.", "a": "took", "opts": ["took", "take", "takes"], "why": "take → <b>took<\/b> í þátíð. Þessa þarf að læra utanbókar.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "Last night it <b>_____<\/b> really quiet.", "a": "was", "opts": ["was", "is", "were"], "why": "be → <b>was<\/b> í þátíð. Þessa þarf að læra utanbókar.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "On Monday morning the police <b>_____<\/b> to the school.", "a": "came", "opts": ["came", "come", "comes"], "why": "come → <b>came<\/b> í þátíð. Þessa þarf að læra utanbókar.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "Last week we <b>_____<\/b> to the museum.", "a": "went", "opts": ["went", "go", "goes"], "why": "go → <b>went<\/b> í þátíð. Þessa þarf að læra utanbókar.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "When he first started, Harry <b>_____<\/b> his family.", "a": "missed", "opts": ["missed", "miss", "misses"], "why": "miss → <b>missed<\/b> í þátíð.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}, {"t": "mc", "q": "Yesterday Zaheer <b>_____<\/b> his homework after school.", "a": "did", "opts": ["did", "do", "does"], "why": "do → <b>did<\/b> í þátíð. Þessa þarf að læra utanbókar.", "link": "https://vefir.mms.is/flettibaekur/namsefni/yes_we_can_6_vb/5/", "linkText": "vb. bls. 4–5"}], "mundu": ["Nútíð með <b>he, she, it<\/b> (líka Madison, Zaheer, school …): bættu <b>-s<\/b> við. I play – he play<b>s<\/b>.", "<b>have<\/b> verður <b>has<\/b> með he, she, it: Jessica <b>has<\/b> a twin brother.", "<b>I am<\/b> · you, we, they <b>are<\/b> · he, she, it <b>is<\/b>.", "Þátíð (yesterday, last week): bættu <b>-ed<\/b> við. play → play<b>ed<\/b>, like → like<b>d<\/b>.", "Óreglulegar sagnir lærir maður utanbókar: be → was/were, have → had, do → did, go → went, take → took, come → came."]}]};
+const $ = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const HINTS = { mc: "Pikkaðu á rétta svarið", tf: "Rétt eða rangt?", label: "Orð → númer á myndinni",
+  match: "Pikkaðu á eitt í hvorum dálki", sort: "Pikkaðu á orð, svo á körfu", order: "Pikkaðu í réttri röð", type: "Skrifaðu svarið" };
+const tasks = [];  // {el, sec, state: null|'ok'|'meh', reset}
+
+function flash(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls);
+  setTimeout(() => el.classList.remove(cls), 700); }
+
+function feedback(box, it, clean) {
+  const fb = box.querySelector('.fb');
+  fb.className = 'fb show yes';
+  fb.innerHTML = (clean ? '<b>Vel gert!</b> ' : '<b>Komið!</b> ') + (it.why || '') +
+    (it.link ? ` <a href="${it.link}" target="_blank" rel="noopener">Skoða í bókinni (${it.linkText})</a>` : '');
+}
+function tryAgain(box, msg) { const fb = box.querySelector('.fb'); fb.className = 'fb show try'; fb.innerHTML = msg; }
+
+function finish(t, clean) {
+  t.state = clean ? 'ok' : 'meh';
+  t.el.classList.add(clean ? 'ok' : 'meh');
+  feedback(t.el, t.it, clean);
+  update();
+}
+
+function build(t) {
+  const it = t.it, box = t.el;
+  box.className = 'task'; box.innerHTML = '';
+  box.append($('div', 't-head', `<span>Verkefni ${t.no}</span><span class="hint">${HINTS[it.t]}</span>`));
+  box.append($('div', 'q', it.q));
+  const body = $('div'); box.append(body); box.append($('div', 'fb'));
+  let miss = 0;
+  const done = () => finish(t, miss === 0);
+
+  if (it.t === 'mc' || it.t === 'tf') {
+    const opts = it.t === 'tf' ? [['Rétt', true], ['Rangt', false]] : shuffle(it.opts).map(o => [o, o]);
+    const wrap = $('div', it.t === 'tf' ? 'tf' : 'opts' + (opts.length === 4 ? ' two' : ''));
+    const btns = opts.map(([txt, val]) => {
+      const b = $('button', 'opt', txt);
+      b.onclick = () => {
+        if (t.state) return;
+        if (val === it.a) {
+          b.classList.add('good'); btns.forEach(x => x !== b && x.classList.add('gone')); done();
+        } else {
+          miss++; b.classList.add('bad', 'gone');
+          if (it.t === 'tf' || miss >= 2) {
+            btns.forEach(x => { if (x.dataset.v === String(it.a)) x.classList.add('good'); else x.classList.add('gone'); });
+            done();
+          } else tryAgain(box, 'Ekki alveg – reyndu aftur!');
+        }
+      };
+      b.dataset.v = String(val); wrap.append(b); return b;
+    });
+    body.append(wrap);
+  }
+
+  if (it.t === 'label') {
+    const fig = $('div', 'figure', it.svg); body.append(fig);
+    const bank = $('div', 'bank'); const slots = $('div', 'slots');
+    let chip = null, slot = null; const left = new Set(it.slots.map((_, i) => i));
+    const tries = it.slots.map(() => 0);
+    const chips = shuffle(it.slots.concat(it.extra)).map(w => {
+      const c = $('button', 'chip', w); c.dataset.w = w;
+      c.onclick = () => { if (c.classList.contains('gone')) return;
+        if (slot !== null) return attempt(c, slot);
+        chips.forEach(x => x.classList.remove('picked')); chip = c; c.classList.add('picked'); };
+      bank.append(c); return c; });
+    const sbtn = it.slots.map((w, i) => {
+      const s = $('button', 'slot', `<span class="n">${i + 1}</span><span class="w">…</span>`);
+      s.onclick = () => pick(i); slots.append(s); return s; });
+    fig.querySelectorAll('.mk').forEach(g => g.addEventListener('click', () => pick(+g.dataset.n - 1)));
+    const mk = i => fig.querySelector(`.mk[data-n="${i + 1}"]`);
+    function pick(i) {
+      if (!left.has(i)) return;
+      if (chip) return attempt(chip, i);
+      sbtn.forEach(x => x.classList.remove('picked')); fig.querySelectorAll('.mk').forEach(g => g.classList.remove('on'));
+      slot = i; sbtn[i].classList.add('picked'); mk(i).classList.add('on');
+    }
+    function attempt(c, i) {
+      sbtn.forEach(x => x.classList.remove('picked')); fig.querySelectorAll('.mk').forEach(g => g.classList.remove('on'));
+      chips.forEach(x => x.classList.remove('picked')); chip = null; slot = null;
+      if (c.dataset.w === it.slots[i]) {
+        left.delete(i); c.classList.add('gone'); sbtn[i].classList.add('good');
+        sbtn[i].querySelector('.w').textContent = it.slots[i]; mk(i).classList.add('ok');
+        box.querySelector('.fb').className = 'fb';
+        if (!left.size) done();
+      } else {
+        miss++; tries[i]++; flash(sbtn[i], 'bad'); flash(c, 'bad');
+        mk(i).classList.add('no'); setTimeout(() => mk(i).classList.remove('no'), 600);
+        if (tries[i] >= 2) {
+          const right = chips.find(x => x.dataset.w === it.slots[i] && !x.classList.contains('gone'));
+          if (right) flash(right, 'pulse');
+          tryAgain(box, `Vísbending: rétta orðið fyrir númer ${i + 1} blikkar.`);
+        } else tryAgain(box, 'Ekki alveg – reyndu annað orð!');
+      }
+    }
+    body.append(bank, slots);
+  }
+
+  if (it.t === 'match') {
+    const m = $('div', 'match'), L = $('div', 'col'), R = $('div', 'col');
+    let a = null, b = null, left = it.pairs.length;
+    const mk = (txt, key, side) => { const x = $('button', 'side', txt); x.dataset.k = key;
+      x.onclick = () => { if (x.classList.contains('good')) return;
+        const cur = side === 'L' ? a : b; if (cur) cur.classList.remove('picked');
+        if (side === 'L') a = x; else b = x; x.classList.add('picked'); check(); }; return x; };
+    shuffle(it.pairs.map((p, i) => [p[0], i])).forEach(([t0, i]) => L.append(mk(t0, i, 'L')));
+    shuffle(it.pairs.map((p, i) => [p[1], i])).forEach(([t1, i]) => R.append(mk(t1, i, 'R')));
+    function check() {
+      if (!a || !b) return;
+      const x = a, y = b; a = b = null; x.classList.remove('picked'); y.classList.remove('picked');
+      if (x.dataset.k === y.dataset.k) { x.classList.add('good'); y.classList.add('good'); box.querySelector('.fb').className = 'fb'; if (!--left) done(); }
+      else { miss++; flash(x, 'bad'); flash(y, 'bad'); tryAgain(box, 'Þetta passar ekki saman – reyndu aftur!'); }
+    }
+    m.append(L, R); body.append(m);
+  }
+
+  if (it.t === 'sort') {
+    const bank = $('div', 'bank'), bins = $('div', 'bins');
+    let chip = null, left = it.items.length;
+    const chips = shuffle(it.items).map(([w, k]) => { const c = $('button', 'chip', w); c.dataset.k = k;
+      c.onclick = () => { if (c.classList.contains('gone')) return; chips.forEach(x => x.classList.remove('picked')); chip = c; c.classList.add('picked'); };
+      bank.append(c); return c; });
+    it.bins.forEach((name, k) => { const bn = $('div', 'bin', `<h4>${name}</h4><div class="in"></div>`);
+      bn.onclick = () => { if (!chip) { tryAgain(box, 'Pikkaðu fyrst á orð, svo á körfuna.'); return; }
+        const c = chip; chip = null; c.classList.remove('picked');
+        if (+c.dataset.k === k) { c.classList.add('gone'); c.style.display = 'none';
+          bn.querySelector('.in').append($('span', '', c.textContent)); box.querySelector('.fb').className = 'fb'; if (!--left) done(); }
+        else { miss++; flash(c, 'bad'); flash(bn, 'bad'); tryAgain(box, 'Ekki þessi karfa – reyndu hina!'); } };
+      bins.append(bn); });
+    body.append(bank, bins);
+  }
+
+  if (it.t === 'order') {
+    const seq = $('ol', 'seq'), bank = $('div', 'bank'); let next = 0;
+    const lis = it.steps.map(() => { const li = $('li', '', '…'); seq.append(li); return li; });
+    shuffle(it.steps).forEach(w => { const c = $('button', 'chip', w);
+      c.onclick = () => { if (c.classList.contains('gone')) return;
+        if (w === it.steps[next]) { c.classList.add('gone'); c.style.display = 'none'; lis[next].textContent = w; lis[next].classList.add('good');
+          box.querySelector('.fb').className = 'fb'; if (++next === it.steps.length) done(); }
+        else { miss++; flash(c, 'bad'); tryAgain(box, `Ekki alveg – hvað kemur nr. ${next + 1}?`); } };
+      bank.append(c); });
+    body.append(seq, bank);
+  }
+
+  if (it.t === 'type') {
+    // Misses reveal the answer step by step, but he always has to type it himself to finish.
+    const row = $('div', 'typ'), inp = $('input'), go = $('button', 'opt go', 'Athuga'), clue = $('div', 'clue');
+    inp.type = 'text'; inp.autocomplete = 'off'; inp.spellcheck = false;
+    inp.setAttribute('autocapitalize', 'off'); inp.setAttribute('autocorrect', 'off');
+    row.append(inp, go); body.append(row, clue);
+    const norm = s => s.toLowerCase().replace(/[‐-—]/g, '-').replace(/\s*-\s*/g, '-')
+      .replace(/[.!?]+$/, '').replace(/\s+/g, ' ').trim();
+    const ok = it.a.map(norm), main = it.a[0];
+    const close = (x, y) => { if (Math.abs(x.length - y.length) > 1) return false;
+      const d = Array.from({ length: x.length + 1 }, (_, i) => [i]);
+      for (let j = 1; j <= y.length; j++) d[0][j] = j;
+      for (let i = 1; i <= x.length; i++) for (let j = 1; j <= y.length; j++)
+        d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (x[i - 1] === y[j - 1] ? 0 : 1));
+      return d[x.length][y.length] <= 1; };
+    const letters = [...main].filter(c => /[a-z]/i.test(c)).length;
+    const mask = k => { let n = 0; return [...main].map(c => c === ' ' ? ' ' : !/[a-z]/i.test(c) ? c : (n++ < k ? c : '_')).join(' '); };
+    function check() {
+      if (t.state) return;
+      const v = norm(inp.value);
+      if (!v) return;
+      if (ok.includes(v)) { inp.value = main; inp.disabled = true; inp.classList.add('good'); go.classList.add('gone'); clue.textContent = ''; done(); return; }
+      miss++; flash(inp, 'bad');
+      const near = ok.some(o => close(v, o)) ? 'Næstum því – athugaðu stafsetninguna! ' : 'Ekki alveg. ';
+      if (miss === 1) { clue.textContent = mask(1); tryAgain(box, `${near}Vísbending: byrjar á <b>${main[0]}</b> og er ${letters} stafir.`); }
+      else if (miss === 2) { clue.textContent = mask(Math.ceil(letters / 2)); tryAgain(box, `${near}Hér er helmingurinn af stöfunum.`); }
+      else { clue.textContent = mask(letters); tryAgain(box, 'Svona er það skrifað. Skrifaðu það núna sjálfur.'); }
+      inp.select();
+    }
+    go.onclick = check;
+    inp.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); check(); } };
+  }
+}
+
+function update() {
+  const n = tasks.length, d = tasks.filter(t => t.state).length, s = tasks.filter(t => t.state === 'ok').length;
+  document.getElementById('prog').textContent = `${d} / ${n}`;
+  document.getElementById('stars').textContent = s;
+  document.getElementById('barfill').style.width = (100 * d / n) + '%';
+  DATA.sections.forEach((sec, i) => { const all = tasks.filter(t => t.sec === i);
+    document.getElementById('nav-' + i).classList.toggle('done', all.every(t => t.state)); });
+  const end = document.getElementById('end');
+  if (d < n) { end.innerHTML = `<div>Þú ert búinn með <b>${d}</b> af <b>${n}</b> verkefnum.</div>`; return; }
+  const hard = tasks.filter(t => t.state === 'meh').length;
+  const star = s % 10 === 1 && s % 100 !== 11 ? 'stjarna' : 'stjörnur';
+  const msg = hard === 1 ? 'Eitt verkefni var erfitt. Æfðu það aftur þangað til þú færð stjörnu fyrir það.'
+    : hard ? `${hard} verkefni voru erfið. Æfðu þau aftur þangað til þú færð stjörnu fyrir þau öll.` : 'Fullkomið – þú kannt þetta!';
+  end.innerHTML = `<div class="big">Búið! ${s} ${star} af ${n}</div><p>${msg}</p>`;
+  if (hard) { const b = $('button', '', 'Æfa erfiðu verkefnin aftur'); b.onclick = () => redo(t => t.state === 'meh'); end.append(b); }
+  const all = $('button', 'alt', 'Byrja upp á nýtt'); all.onclick = () => redo(() => true); end.append(all);
+}
+
+function redo(which) {
+  const list = tasks.filter(which);
+  list.forEach(t => { t.state = null; build(t); });
+  update();
+  if (list[0]) list[0].el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+(function init() {
+  const app = document.getElementById('app'), nav = document.getElementById('nav');
+  let no = 0;
+  DATA.sections.forEach((sec, i) => {
+    const s = $('section', 'sec'); s.id = 'k' + i;
+    s.append($('div', 'sec-head', `<h2>${i + 1}. ${sec.title}</h2><span class="pg"><a href="${sec.link}" target="_blank" rel="noopener">bls. ${sec.pages}</a></span>`));
+    s.lastChild.style.background = sec.color;
+    s.append($('div', 'mundu', '<h3>Mundu!</h3><ul>' + sec.mundu.map(m => `<li>${m}</li>`).join('') + '</ul>'));
+    sec.items.forEach(it => { const el = $('div'); s.append(el); const t = { it, el, sec: i, no: ++no, state: null }; tasks.push(t); build(t); });
+    app.append(s);
+    const a = $('a', '', sec.title); a.href = '#k' + i; a.id = 'nav-' + i; nav.append(a);
+  });
+  update();
+})();
+</script>
+</body>
+</html>
