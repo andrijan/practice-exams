@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="UTF-8">
+<title>ENSKA 2204 – Texti 3 og 4</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 16mm;
+  }
+  :root {
+    --ink: #000;
+    --paper: #fff;
+    --rule: #000;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 12pt;
+    line-height: 1.45;
+  }
+  body {
+    max-width: 170mm;
+    margin: 0 auto;
+    padding: 0;
+  }
+  h1 {
+    text-align: center;
+    font-size: 18pt;
+    margin: 0 0 0.3rem;
+    font-weight: 700;
+  }
+  .subtitle {
+    text-align: center;
+    font-style: italic;
+    margin: 0 0 1.5rem;
+    font-size: 11pt;
+  }
+  h2 {
+    font-size: 14pt;
+    margin: 1.4rem 0 0.6rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1.5px solid var(--rule);
+  }
+  h3 {
+    font-size: 12pt;
+    margin: 1rem 0 0.4rem;
+    font-style: italic;
+  }
+  .question {
+    margin: 0.8rem 0;
+    padding: 0.4rem 0 0.4rem 0.6rem;
+    border-left: 1.5px solid var(--rule);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .q-num { font-weight: 700; margin-right: 0.3rem; }
+  .prompt { margin-bottom: 0.4rem; }
+  .subq { margin: 0.3rem 0 0.3rem 1.2rem; }
+  .subq-label { font-weight: 700; margin-right: 0.3rem; }
+  .figure {
+    margin: 0.4rem 0 0.6rem;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .figure svg {
+    max-width: 360px;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+  }
+  .figure svg text {
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 11pt;
+    fill: #000;
+  }
+  .figure svg .stroke { fill: none; stroke: #000; stroke-width: 1.2; stroke-linejoin: round; }
+  .figure svg .dashed { fill: none; stroke: #000; stroke-width: 1; stroke-dasharray: 3 2; }
+  .figure svg .fill-light { fill: #f0f0f0; stroke: #000; stroke-width: 1.2; }
+  .figure svg .arc { fill: none; stroke: #000; stroke-width: 1.5; }
+  .figure svg .red { fill: #000; }
+  .figure svg .pt { fill: #000; }
+
+  .note { font-style: italic; font-size: 10.5pt; }
+  hr { border: none; border-top: 1px solid var(--rule); margin: 1.2rem 0; }
+
+  .answerline {
+    margin-top: 0.6rem;
+    border-top: 1px dotted #000;
+    padding-top: 0.4rem;
+    font-size: 11pt;
+  }
+  .answerline-blank {
+    margin-top: 0.4rem;
+    border-bottom: 1px solid #000;
+    height: 1.2rem;
+  }
+
+  .solutions {
+    page-break-before: always;
+    break-before: page;
+  }
+  .solutions h2 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 16pt;
+  }
+  .solutions ol { padding-left: 1.4rem; }
+  .solutions li {
+    margin: 0.3rem 0;
+    page-break-inside: avoid;
+  }
+  .solutions .working {
+    color: #000;
+    font-size: 10.5pt;
+    font-style: italic;
+    margin-left: 0.4rem;
+  }
+
+  /* hide anything explicitly marked as on-screen-only */
+  .screen-only { display: none !important; }
+
+  @media screen {
+    body {
+      max-width: 800px;
+      padding: 2rem 1rem 4rem;
+      background: #fafaf7;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>ENSKA 2204 – Texti 3 og 4</h1>
+<p class="subtitle">Æfing fyrir enskuprófið 22. október · „The Teenage Brain“ (kafli 7) og „Star Trek Technology“ (kafli 9) · merking, orðmyndir, orðasambönd, orðalistar kennarans og lesskilningur</p>
+
+<p class="note">Nafn: ______________________________</p>
+
+<style>
+  .opts span { display: block; margin: .15rem 0; }
+  table.m { border-collapse: collapse; width: 100%; } table.m td { padding: .25rem .4rem; vertical-align: top; }
+  .mundu { border: 1px dashed #000; padding: .3rem .6rem; margin: .4rem 0 .6rem; font-size: 10.5pt; }
+  .mundu ul { margin: .2rem 0; padding-left: 1.1rem; }
+</style>
+<h2>1. Merking orða</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Veldu merkinguna sem passar í samhenginu.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">1.</span> Since he started tenth grade, Ýmir has been so moody that nobody at home knows if he will laugh or slam the door.<br><br>What does <b>moody</b> mean here?</div><div class="opts"><span>◯ tired all the time</span><span>◯ very quiet and shy</span><span>◯ often changing quickly from one feeling to another, often bad-tempered</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">2.</span> Checking her phone the moment she wakes up is a habit she would like to break.<br><br>What does <b>habit</b> mean here?</div><div class="opts"><span>◯ an activity you enjoy in your free time</span><span>◯ something you do regularly, often without thinking</span><span>◯ a rule your parents make</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">3.</span> Football fans love to speculate about which players the club will buy next summer.<br><br>What does <b>speculate</b> mean here?</div><div class="opts"><span>◯ to complain loudly</span><span>◯ to guess without knowing all the facts</span><span>◯ to pay too much for something</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">4.</span> After three nights of sleep deprivation, he could hardly keep his eyes open in maths.<br><br>What does <b>deprivation</b> mean here?</div><div class="opts"><span>◯ a bad dream</span><span>◯ too much of something</span><span>◯ a lack of something you need</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">5.</span> The coach lost his temper when the team gave away a second penalty.<br><br>What does <b>temper</b> mean here?</div><div class="opts"><span>◯ the way you feel, especially when you get angry</span><span>◯ a plan for the match</span><span>◯ a high body temperature</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">6.</span> One consequence of the later school start was that students got better grades.<br><br>What does <b>consequence</b> mean here?</div><div class="opts"><span>◯ the reason something happens</span><span>◯ a rule everyone must follow</span><span>◯ something that happens as a result of something else</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">7.</span> The teacher told us to prune our essays so that each one was under 500 words.<br><br>What does <b>prune</b> mean here?</div><div class="opts"><span>◯ to print and hand in</span><span>◯ to add more examples</span><span>◯ to cut out what is not needed</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">8.</span> Most of his leisure time goes into golf at the weekend.<br><br>What does <b>leisure</b> mean here?</div><div class="opts"><span>◯ time spent doing homework</span><span>◯ time when you are not working or studying</span><span>◯ time spent travelling to school</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">9.</span> The lamp would not light up because there was a break in the circuit.<br><br>What does <b>circuit</b> mean here?</div><div class="opts"><span>◯ the plug at the end of a cable</span><span>◯ a type of light bulb</span><span>◯ the complete path that an electric current travels through</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">10.</span> The front part of the brain handles executive functions such as planning ahead.<br><br>What does <b>executive</b> mean here?</div><div class="opts"><span>◯ concerned with storing memories</span><span>◯ concerned with feelings and emotions</span><span>◯ concerned with making decisions and making sure they are carried out</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">11.</span> Doctors caution parents against giving young children phones at bedtime.<br><br>What does <b>caution</b> mean here?</div><div class="opts"><span>◯ to encourage someone to do something</span><span>◯ to warn that something might be dangerous or harmful</span><span>◯ to forbid something by law</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">12.</span> Hard work at practice does not always translate into goals on match day.<br><br>What does <b>translate</b> mean here?</div><div class="opts"><span>◯ to change into a different form or result</span><span>◯ to forget about something</span><span>◯ to say something in another language</span></div></div>
+<h2>2. Hvaða setning er röng?</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Ein setning af þremur notar orðið vitlaust.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">13.</span> Which sentence uses <b>alert</b> wrongly? <i>(awake and paying attention)</i></div><div class="opts"><span>◯ A short walk at lunchtime helps me stay alert in the afternoon.</span><span>◯ The dog was alert to every sound outside the house.</span><span>◯ She was so alert after the long match that she fell asleep on the bus.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">14.</span> Which sentence uses <b>alien</b> wrongly? <i>(strange and unfamiliar; a creature from another world)</i></div><div class="opts"><span>◯ Life in a big city felt completely alien to him at first.</span><span>◯ In the film, an alien spaceship lands in the middle of Reykjavík.</span><span>◯ My grandmother is very alien; she visits us every Sunday.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">15.</span> Which sentence uses <b>aggravation</b> wrongly? <i>(something that annoys you or makes a problem worse)</i></div><div class="opts"><span>◯ He gave his aunt a big aggravation to thank her for the present.</span><span>◯ Running on the injured knee led to an aggravation of the injury.</span><span>◯ The noise from the building site next door was a daily aggravation.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">16.</span> Which sentence uses <b>hobby</b> wrongly? <i>(an activity you do for fun in your free time)</i></div><div class="opts"><span>◯ Ásgeir's hobby is building model planes.</span><span>◯ Brushing my teeth twice a day is my most important hobby.</span><span>◯ Photography started as a hobby, but now she earns money from it.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">17.</span> Which sentence uses <b>laboratory</b> wrongly? <i>(a room or building where scientists do experiments)</i></div><div class="opts"><span>◯ We kicked a ball around in the laboratory during break.</span><span>◯ The students wore safety glasses in the chemistry laboratory.</span><span>◯ The new medicine was tested in a laboratory for years.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">18.</span> Which sentence uses <b>caretaker</b> wrongly? <i>(a person who looks after someone or something)</i></div><div class="opts"><span>◯ When their mother was ill, she became the caretaker of her two little brothers.</span><span>◯ The caretaker of the match was a free kick in the last minute.</span><span>◯ The school caretaker unlocked the gym for us on Saturday.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">19.</span> Which sentence uses <b>enthusiasm</b> wrongly? <i>(a strong feeling of interest and enjoyment)</i></div><div class="opts"><span>◯ The new teacher's enthusiasm for poetry was hard to resist.</span><span>◯ Their enthusiasm for the project faded when they saw how much work it was.</span><span>◯ He showed his enthusiasm for the film by yawning all the way through it.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">20.</span> Which sentence uses <b>constructive</b> wrongly? <i>(useful and helpful, leading to good results)</i></div><div class="opts"><span>◯ The storm was very constructive and destroyed three houses.</span><span>◯ The coach gave everyone constructive feedback after the game.</span><span>◯ We had a constructive meeting and agreed on a plan.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">21.</span> Which sentence uses <b>provisional</b> wrongly? <i>(for now, likely to be changed later)</i></div><div class="opts"><span>◯ We made a provisional booking and can cancel it until Friday.</span><span>◯ These grades are provisional until the teachers have checked them.</span><span>◯ Her grandfather has had a provisional love of fishing for sixty years.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">22.</span> Which sentence uses <b>prompt</b> wrongly? <i>(to cause something to happen)</i></div><div class="opts"><span>◯ He prompted the ball into the net with his left foot.</span><span>◯ What prompted you to start learning Spanish?</span><span>◯ The cold weather prompted us to cancel the trip.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">23.</span> Which sentence uses <b>rehearse</b> wrongly? <i>(to practise something before you do it for real)</i></div><div class="opts"><span>◯ I rehearsed what I was going to say before I called the coach.</span><span>◯ The band rehearsed every evening before the concert.</span><span>◯ She rehearsed her lunch quickly because she was late for class.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">24.</span> Which sentence uses <b>trim</b> wrongly? <i>(to make something smaller by cutting a little off it)</i></div><div class="opts"><span>◯ He asked the barber to just trim his hair a little.</span><span>◯ The school had to trim its budget for trips this year.</span><span>◯ They trimmed the house by adding two new bedrooms.</span></div></div>
+<h2>3. Orðmyndir</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Skrifaðu orðmyndina sem beðið er um.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">25.</span> Skrifaðu <b>sögn</b> af orðinu <b>deprivation</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">26.</span> Skrifaðu <b>lýsingarorð</b> af orðinu <b>deprivation</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">27.</span> Skrifaðu <b>nafnorð</b> af orðinu <b>rehearse</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">28.</span> Skrifaðu <b>nafnorð</b> af orðinu <b>moody</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">29.</span> Skrifaðu <b>atviksorð</b> af orðinu <b>moody</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">30.</span> Skrifaðu <b>lýsingarorð</b> af orðinu <b>caution</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">31.</span> Skrifaðu <b>atviksorð</b> af orðinu <b>caution</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">32.</span> Skrifaðu <b>lýsingarorð</b> af orðinu <b>enthusiasm</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">33.</span> Skrifaðu <b>atviksorð</b> af orðinu <b>enthusiasm</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">34.</span> Skrifaðu <b>sögn</b> af orðinu <b>enthusiasm</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">35.</span> Skrifaðu <b>lýsingarorð</b> af orðinu <b>habit</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">36.</span> Skrifaðu <b>nafnorð</b> af orðinu <b>speculate</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">37.</span> Skrifaðu <b>lýsingarorð</b> af orðinu <b>speculate</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">38.</span> Skrifaðu <b>sögn</b> af orðinu <b>aggravation</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">39.</span> Skrifaðu <b>nafnorð</b> af orðinu <b>translate</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">40.</span> Skrifaðu <b>sögn</b> af orðinu <b>refrigerator</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">41.</span> Skrifaðu <b>lýsingarorð</b> af orðinu <b>refrigerator</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">42.</span> Skrifaðu <b>nafnorð</b> af orðinu <b>feasible</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">43.</span> Skrifaðu <b>atviksorð</b> af orðinu <b>dubious</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">44.</span> Skrifaðu <b>sögn</b> af orðinu <b>global</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">45.</span> Skrifaðu <b>nafnorð</b> af orðinu <b>magnetic</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">46.</span> Skrifaðu <b>nafnorð</b> af orðinu <b>viable</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">47.</span> Skrifaðu <b>nafnorð</b> af orðinu <b>convenient</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">48.</span> Skrifaðu <b>nafnorð</b> af orðinu <b>portable</b>.</div><div>______________________</div></div>
+<h2>4. Rétt mynd í setningu</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Átta setningar nota ranga orðmynd, tvær eru réttar. Ef hún er rétt skrifarðu hana aftur.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">49.</span> Children who are <b>deprivation</b> of sleep find it hard to concentrate.<br><br>Skrifaðu rétta mynd feitletraða orðsins.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">50.</span> The new timetable is only <b>provision</b>; it may change after the first week.<br><br>Skrifaðu rétta mynd feitletraða orðsins.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">51.</span> Our guide was very <b>enthusiasm</b> and told funny stories all day.<br><br>Skrifaðu rétta mynd feitletraða orðsins.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">52.</span> Please drive <b>caution</b> – the roads are icy tonight.<br><br>Skrifaðu rétta mynd feitletraða orðsins.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">53.</span> Being <b>cautious</b> about strangers online is sensible.<br><br>Skrifaðu rétta mynd feitletraða orðsins.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">54.</span> The cast had one last <b>rehearse</b> before the show.<br><br>Skrifaðu rétta mynd feitletraða orðsins.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">55.</span> Her <b>moody</b> spoiled the whole birthday party.<br><br>Skrifaðu rétta mynd feitletraða orðsins.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">56.</span> Ásgeir <b>habit</b> forgets his PE kit on Mondays.<br><br>Skrifaðu rétta mynd feitletraða orðsins.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">57.</span> The teachers are <b>speculation</b> about who will win the school quiz.<br><br>Skrifaðu rétta mynd feitletraða orðsins.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">58.</span> The <b>translation</b> of the old letters took months.<br><br>Skrifaðu rétta mynd feitletraða orðsins.</div><div>______________________</div></div>
+<h2>5. Veldu orðmyndina</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Breyttu orðinu í sviganum svo það passi í setninguna.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">59.</span> (convenient) The hotel is <b>_____</b> located right next to the bus station.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">60.</span> (dubious) The referee looked <b>_____</b> at the player rolling around on the grass.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">61.</span> (feasible) Engineers are studying the <b>_____</b> of a tunnel to the Westman Islands.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">62.</span> (global) The film was released <b>_____</b> on the same day.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">63.</span> (graphic) My cousin wants to study <b>_____</b> design and make posters for bands.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">64.</span> (magnetic) A compass needle moves because of the Earth's <b>_____</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">65.</span> (portable) Laptops are popular because of their <b>_____</b>.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">66.</span> (refrigerator) Milk must be kept <b>_____</b> once it has been opened.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">67.</span> (scan) <b>_____</b> a barcode at the self-checkout takes less than a second.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">68.</span> (viable) Nobody doubts the <b>_____</b> of electric cars any more.</div><div>______________________</div></div>
+<h2>6. Orðasambönd</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Veldu orðasambandið sem passar.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">69.</span> In the game, players have to defend the city from an <b>_____</b> that comes from outer space.</div><div class="opts"><span>◯ alien attack</span><span>◯ alien abduction</span><span>◯ alien worlds</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">70.</span> Losing sleep is an almost <b>_____</b> of having a newborn baby in the house.</div><div class="opts"><span>◯ direct consequence</span><span>◯ inevitable consequence</span><span>◯ natural consequence</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">71.</span> Instead of shouting at each other, the two clubs began a <b>_____</b> about sharing the pitch.</div><div class="opts"><span>◯ constructive criticism</span><span>◯ constructive approach</span><span>◯ constructive dialogue</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">72.</span> Our coach has such <b>_____</b> for the game that even the laziest players start running.</div><div class="opts"><span>◯ initial enthusiasm</span><span>◯ infectious enthusiasm</span><span>◯ youthful enthusiasm</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">73.</span> When the volcano erupted, the government took fast <b>_____</b> to move people out of the town.</div><div class="opts"><span>◯ executive power</span><span>◯ executive action</span><span>◯ executive decision</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">74.</span> Leaving his wet towel on the bedroom floor is Grétar's most <b>_____</b>.</div><div class="opts"><span>◯ eating habit</span><span>◯ nervous habit</span><span>◯ annoying habit</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">75.</span> The town has built a new swimming pool, a skate park and other <b>_____</b>.</div><div class="opts"><span>◯ leisure activities</span><span>◯ leisure time</span><span>◯ leisure facilities</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">76.</span> Complaints about cheating <b>_____</b> by the school into how the exam was run.</div><div class="opts"><span>◯ prompted an investigation</span><span>◯ prompted the decision</span><span>◯ prompted the question</span></div></div>
+<h2>7. Pörun</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Paraðu saman orð og merkingu.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">77.</span> Paraðu saman orðin og merkinguna (sett 1).</div><table class="m"><tr><td>trek ___</td><td>a) to make something start or happen</td></tr><tr><td>spark ___</td><td>b) affecting or including the whole world</td></tr><tr><td>feasible ___</td><td>c) a long, hard journey, often on foot</td></tr><tr><td>dubious ___</td><td>d) able to move or be moved from place to place</td></tr><tr><td>mobile ___</td><td>e) making you doubt whether it is true or good</td></tr><tr><td>convenient ___</td><td>f) useful and easy, saving you time or trouble</td></tr><tr><td>global ___</td><td>g) possible and practical to do</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">78.</span> Paraðu saman orðin og merkinguna (sett 2).</div><table class="m"><tr><td>dissolve ___</td><td>a) a device that stores electricity and powers a phone, car or toy</td></tr><tr><td>cope ___</td><td>b) a local form of a language with its own words and grammar</td></tr><tr><td>oral ___</td><td>c) to deal successfully with something difficult</td></tr><tr><td>accent ___</td><td>d) the way people from one place pronounce words</td></tr><tr><td>dialect ___</td><td>e) the programs that run on a computer or phone</td></tr><tr><td>battery ___</td><td>f) spoken, not written</td></tr><tr><td>software ___</td><td>g) to mix into a liquid until it disappears</td></tr></table></div>
+<h2>8. Hvert orðanna passar ekki?</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Þrjú orð þýða það sama og feitletraða orðið. Finndu það sem gerir það ekki.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">79.</span> Which one is <b>NOT</b> a synonym for <b>viable</b>?</div><div class="opts"><span>◯ expensive</span><span>◯ workable</span><span>◯ practical</span><span>◯ possible</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">80.</span> Which one is <b>NOT</b> a synonym for <b>flip</b>?</div><div class="opts"><span>◯ turn over</span><span>◯ sink</span><span>◯ flick</span><span>◯ toss</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">81.</span> Which one is <b>NOT</b> a synonym for <b>portable</b>?</div><div class="opts"><span>◯ movable</span><span>◯ handheld</span><span>◯ built-in</span><span>◯ easy to carry</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">82.</span> Which one is <b>NOT</b> a synonym for <b>graphic</b>?</div><div class="opts"><span>◯ visual</span><span>◯ spoken</span><span>◯ pictorial</span><span>◯ illustrated</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">83.</span> Which one is <b>NOT</b> a synonym for <b>magnetic</b>?</div><div class="opts"><span>◯ drawing in</span><span>◯ pulling</span><span>◯ attracting</span><span>◯ pushing away</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">84.</span> Which one is <b>NOT</b> a synonym for <b>mission</b>?</div><div class="opts"><span>◯ mistake</span><span>◯ task</span><span>◯ assignment</span><span>◯ job</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">85.</span> Which one is <b>NOT</b> a synonym for <b>scan</b>?</div><div class="opts"><span>◯ screen</span><span>◯ check</span><span>◯ examine</span><span>◯ ignore</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">86.</span> Which one is <b>NOT</b> a synonym for <b>crew</b>?</div><div class="opts"><span>◯ staff</span><span>◯ team</span><span>◯ passengers</span><span>◯ workers</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">87.</span> Which one is <b>NOT</b> a synonym for <b>dialect</b>?</div><div class="opts"><span>◯ local language</span><span>◯ vernacular</span><span>◯ pronunciation</span><span>◯ regional speech</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">88.</span> Which one is <b>NOT</b> a synonym for <b>accent</b>?</div><div class="opts"><span>◯ pronunciation</span><span>◯ way of speaking</span><span>◯ vocabulary</span><span>◯ intonation</span></div></div>
+<h2>9. Orðalistar kennarans</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Orð úr orðalistum kennarans og krossgátunni. Stafsetningin skiptir máli.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">89.</span> Paraðu saman enska orðið og íslensku merkinguna.</div><table class="m"><tr><td>circadian clock ___</td><td>a) að halda sér vakandi</td></tr><tr><td>out of sync ___</td><td>b) úr takti</td></tr><tr><td>sleep debt ___</td><td>c) líkamsklukka</td></tr><tr><td>to stay alert ___</td><td>d) svefnskuld</td></tr><tr><td>bad-tempered ___</td><td>e) skapvondur</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">90.</span> Paraðu saman enska orðið og íslensku merkinguna.</div><table class="m"><tr><td>exploratory ___</td><td>a) dómgreind</td></tr><tr><td>facial expressions ___</td><td>b) svipbrigði</td></tr><tr><td>gut reactions ___</td><td>c) tískubóla</td></tr><tr><td>judgment ___</td><td>d) ósjálfráð viðbrögð</td></tr><tr><td>a fad ___</td><td>e) könnunar-, til að kanna</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">91.</span> Paraðu saman enska orðið og íslensku merkinguna.</div><table class="m"><tr><td>dubious ___</td><td>a) fjölhæfur</td></tr><tr><td>to summon ___</td><td>b) greining (t.d. raddgreining)</td></tr><tr><td>recognition ___</td><td>c) að kalla á</td></tr><tr><td>versatile ___</td><td>d) vafasamur</td></tr><tr><td>noninvasive ___</td><td>e) án inngrips (án skurðar)</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">92.</span> Paraðu saman enska orðið og íslensku merkinguna.</div><table class="m"><tr><td>simultaneous ___</td><td>a) að smækka</td></tr><tr><td>gradually ___</td><td>b) algengur, hversdagslegur</td></tr><tr><td>commonplace ___</td><td>c) smám saman</td></tr><tr><td>to miniaturize ___</td><td>d) samtímis</td></tr><tr><td>foretold ___</td><td>e) spáð fyrir um</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">93.</span> Hvað er <b>kynþroskaaldur</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">94.</span> Hvað er <b>spenningur</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">95.</span> Hvað er <b>valda</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">96.</span> Hvað er <b>rannsóknarstofa</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">97.</span> Hvað er <b>frístundir</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">98.</span> Hvað er <b>mislyndur</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">99.</span> Hvað er <b>afleiðingar</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">100.</span> Hvað er <b>skerðing</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">101.</span> Hvað er <b>uppbyggjandi</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">102.</span> Hvað er <b>ísskápur</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">103.</span> Hvað er <b>vafasamur</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">104.</span> Hvað er <b>framkvæmanlegur</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">105.</span> Hvað er <b>færanlegur</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">106.</span> Hvað er <b>mállýska</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">107.</span> Hvað er <b>hreimur</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">108.</span> Hvað er <b>áhöfn</b> á ensku?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">109.</span> Hvað er <b>útskýring</b> á ensku?</div><div>______________________</div></div>
+<h2>10. Lesskilningur</h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Spurningar úr <i>The Teenage Brain</i> og <i>Star Trek Technology</i>.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">110.</span> How far does the body clock shift forward during the teenage years?</div><div class="opts"><span>◯ about four hours</span><span>◯ about one hour</span><span>◯ about two hours</span><span>◯ about eight hours</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">111.</span> A child used to get up at 6 a.m. As a teenager, until when does he want to sleep in?</div><div class="opts"><span>◯ until 10 a.m.</span><span>◯ until 8 a.m.</span><span>◯ until noon</span><span>◯ until 2 p.m.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">112.</span> What do teens build up when they are forced to get up as early as everyone else?</div><div class="opts"><span>◯ a bad habit</span><span>◯ a new circadian clock</span><span>◯ a sleep debt</span><span>◯ more brain cells</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">113.</span> What does the brain do with the day's learning while we sleep?</div><div class="opts"><span>◯ translates it into emotions</span><span>◯ sends it to the circadian clock</span><span>◯ rehearses it and assigns it to long-term memory</span><span>◯ deletes it to make room for new learning</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">114.</span> What happens to brain cells that are not used during the teenage years?</div><div class="opts"><span>◯ they grow larger</span><span>◯ they move to the prefrontal part</span><span>◯ they become executive cells</span><span>◯ they are pruned away</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">115.</span> In the McLean Hospital study, how did the teens' brains react to the pictures of faces?</div><div class="opts"><span>◯ no reaction at all</span><span>◯ more activity in the prefrontal part</span><span>◯ more activity in the circuits that respond emotionally</span><span>◯ the same as the adults' brains</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">116.</span> Which part of the brain handles planning, reasoning and judgment?</div><div class="opts"><span>◯ the circadian clock</span><span>◯ the prefrontal part</span><span>◯ the emotional region</span><span>◯ the gut</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">117.</span> According to the text, what is the most constructive thing adults can do?</div><div class="opts"><span>◯ make school start later</span><span>◯ spend loving, quality time with their children</span><span>◯ ban video games</span><span>◯ treat teenagers like adults</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">118.</span> When was the original Star Trek series first broadcast?</div><div class="opts"><span>◯ 1976 to 1979</span><span>◯ 1966 to 1969</span><span>◯ 1956 to 1959</span><span>◯ 1986 to 1989</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">119.</span> Which two Star Trek technologies does the text say are not currently feasible?</div><div class="opts"><span>◯ holodecks and MRI</span><span>◯ scanners and touch screens</span><span>◯ transporters and time-travel machines</span><span>◯ mobile phones and tablets</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">120.</span> Which Star Trek device started Martin Cooper thinking about a mobile phone?</div><div class="opts"><span>◯ the tricorder</span><span>◯ the transporter</span><span>◯ the flip-open communicator</span><span>◯ the computerized tablet</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">121.</span> What was wrong with the first mobile phones?</div><div class="opts"><span>◯ they had no battery at all</span><span>◯ they could only send text messages</span><span>◯ they only worked inside buildings</span><span>◯ they weighed 2.2 pounds and the battery lasted 35 minutes</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">122.</span> Which modern technology scans patients the way the tricorder did?</div><div class="opts"><span>◯ MRI and CAT scans</span><span>◯ GPS devices</span><span>◯ e-book readers</span><span>◯ smart refrigerators</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">123.</span> Why is translating speech harder than translating written text?</div><div class="opts"><span>◯ speech is too fast for computers</span><span>◯ there are too many languages</span><span>◯ computers cannot hear</span><span>◯ people speak with many dialects and accents</span></div></div>
+
+<section class="solutions"><h2>Lausnir</h2><h3>1. Merking orða</h3><ol start='1'>
+<li>often changing quickly from one feeling to another, often bad-tempered</li>
+<li>something you do regularly, often without thinking</li>
+<li>to guess without knowing all the facts</li>
+<li>a lack of something you need</li>
+<li>the way you feel, especially when you get angry</li>
+<li>something that happens as a result of something else</li>
+<li>to cut out what is not needed</li>
+<li>time when you are not working or studying</li>
+<li>the complete path that an electric current travels through</li>
+<li>concerned with making decisions and making sure they are carried out</li>
+<li>to warn that something might be dangerous or harmful</li>
+<li>to change into a different form or result</li>
+</ol>
+<h3>2. Hvaða setning er röng?</h3><ol start='13'>
+<li>She was so alert after the long match that she fell asleep on the bus.</li>
+<li>My grandmother is very alien; she visits us every Sunday.</li>
+<li>He gave his aunt a big aggravation to thank her for the present.</li>
+<li>Brushing my teeth twice a day is my most important hobby.</li>
+<li>We kicked a ball around in the laboratory during break.</li>
+<li>The caretaker of the match was a free kick in the last minute.</li>
+<li>He showed his enthusiasm for the film by yawning all the way through it.</li>
+<li>The storm was very constructive and destroyed three houses.</li>
+<li>Her grandfather has had a provisional love of fishing for sixty years.</li>
+<li>He prompted the ball into the net with his left foot.</li>
+<li>She rehearsed her lunch quickly because she was late for class.</li>
+<li>They trimmed the house by adding two new bedrooms.</li>
+</ol>
+<h3>3. Orðmyndir</h3><ol start='25'>
+<li>deprive</li>
+<li>deprived</li>
+<li>rehearsal</li>
+<li>moodiness / mood</li>
+<li>moodily</li>
+<li>cautious / cautionary</li>
+<li>cautiously</li>
+<li>enthusiastic</li>
+<li>enthusiastically</li>
+<li>enthuse</li>
+<li>habitual</li>
+<li>speculation</li>
+<li>speculative</li>
+<li>aggravate</li>
+<li>translation</li>
+<li>refrigerate</li>
+<li>refrigerated</li>
+<li>feasibility</li>
+<li>dubiously</li>
+<li>globalize / globalise</li>
+<li>magnet / magnetism</li>
+<li>viability</li>
+<li>convenience</li>
+<li>portability</li>
+</ol>
+<h3>4. Rétt mynd í setningu</h3><ol start='49'>
+<li>deprived</li>
+<li>provisional</li>
+<li>enthusiastic</li>
+<li>cautiously</li>
+<li>cautious</li>
+<li>rehearsal</li>
+<li>moodiness / mood</li>
+<li>habitually</li>
+<li>speculating</li>
+<li>translation</li>
+</ol>
+<h3>5. Veldu orðmyndina</h3><ol start='59'>
+<li>conveniently</li>
+<li>dubiously</li>
+<li>feasibility</li>
+<li>globally</li>
+<li>graphic</li>
+<li>magnetism</li>
+<li>portability</li>
+<li>refrigerated</li>
+<li>scanning</li>
+<li>viability</li>
+</ol>
+<h3>6. Orðasambönd</h3><ol start='69'>
+<li>alien attack</li>
+<li>inevitable consequence</li>
+<li>constructive dialogue</li>
+<li>infectious enthusiasm</li>
+<li>executive action</li>
+<li>annoying habit</li>
+<li>leisure facilities</li>
+<li>prompted an investigation</li>
+</ol>
+<h3>7. Pörun</h3><ol start='77'>
+<li>trek – c, spark – a, feasible – g, dubious – e, mobile – d, convenient – f, global – b</li>
+<li>dissolve – g, cope – c, oral – f, accent – d, dialect – b, battery – a, software – e</li>
+</ol>
+<h3>8. Hvert orðanna passar ekki?</h3><ol start='79'>
+<li>expensive</li>
+<li>sink</li>
+<li>built-in</li>
+<li>spoken</li>
+<li>pushing away</li>
+<li>mistake</li>
+<li>ignore</li>
+<li>passengers</li>
+<li>pronunciation</li>
+<li>vocabulary</li>
+</ol>
+<h3>9. Orðalistar kennarans</h3><ol start='89'>
+<li>circadian clock – c, out of sync – b, sleep debt – d, to stay alert – a, bad-tempered – e</li>
+<li>exploratory – e, facial expressions – b, gut reactions – d, judgment – a, a fad – c</li>
+<li>dubious – d, to summon – c, recognition – b, versatile – a, noninvasive – e</li>
+<li>simultaneous – d, gradually – c, commonplace – b, to miniaturize – a, foretold – e</li>
+<li>puberty</li>
+<li>enthusiasm</li>
+<li>prompt</li>
+<li>laboratory</li>
+<li>leisure</li>
+<li>moody</li>
+<li>consequences / consequence</li>
+<li>deprivation</li>
+<li>constructive</li>
+<li>refrigerator</li>
+<li>dubious</li>
+<li>feasible</li>
+<li>portable</li>
+<li>dialect</li>
+<li>accent</li>
+<li>crew</li>
+<li>explanation</li>
+</ol>
+<h3>10. Lesskilningur</h3><ol start='110'>
+<li>about four hours</li>
+<li>until 10 a.m.</li>
+<li>a sleep debt</li>
+<li>rehearses it and assigns it to long-term memory</li>
+<li>they are pruned away</li>
+<li>more activity in the circuits that respond emotionally</li>
+<li>the prefrontal part</li>
+<li>spend loving, quality time with their children</li>
+<li>1966 to 1969</li>
+<li>transporters and time-travel machines</li>
+<li>the flip-open communicator</li>
+<li>they weighed 2.2 pounds and the battery lasted 35 minutes</li>
+<li>MRI and CAT scans</li>
+<li>people speak with many dialects and accents</li>
+</ol></section>
+
+</body>
+</html>
