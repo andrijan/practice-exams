@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Enska 2204 Orðalisti</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #F1F4F8;
+    --surface: #FFFFFF;
+    --surface-2: #E4EAF2;
+    --ink: #16202C;
+    --muted: #5F6C7D;
+    --line: #CDD6E1;
+    --en: #1E3F8A;
+    --en-soft: #E2E9F9;
+    --is: #C2233A;
+    --is-soft: #FBE3E7;
+    --def: #6B7686;
+    --ok: #24744F;
+    --ok-ink: #FFFFFF;
+    --ok-soft: #DDF0E6;
+    --again: #A0620F;
+    --again-soft: #FBEBD2;
+    --focus: #1E3F8A;
+    --shadow: 0 12px 32px rgba(22, 32, 44, .10), 0 1px 3px rgba(22, 32, 44, .08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #0F151E;
+      --surface: #1A2331;
+      --surface-2: #232E3F;
+      --ink: #E9EEF5;
+      --muted: #9AA7B8;
+      --line: #34405280;
+      --en: #9DB4F5;
+      --en-soft: #22304F;
+      --is: #F28B99;
+      --is-soft: #4A2029;
+      --def: #A7B2C2;
+      --ok: #6FCB9A;
+      --ok-ink: #0F151E;
+      --ok-soft: #1E3A2D;
+      --again: #E4B15C;
+      --again-soft: #3F2F16;
+      --focus: #9DB4F5;
+      --shadow: 0 12px 32px rgba(0, 0, 0, .45), 0 1px 3px rgba(0, 0, 0, .4);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0F151E;
+    --surface: #1A2331;
+    --surface-2: #232E3F;
+    --ink: #E9EEF5;
+    --muted: #9AA7B8;
+    --line: #34405280;
+    --en: #9DB4F5;
+    --en-soft: #22304F;
+    --is: #F28B99;
+    --is-soft: #4A2029;
+    --def: #A7B2C2;
+    --ok: #6FCB9A;
+    --ok-ink: #0F151E;
+    --ok-soft: #1E3A2D;
+    --again: #E4B15C;
+    --again-soft: #3F2F16;
+    --focus: #9DB4F5;
+    --shadow: 0 12px 32px rgba(0, 0, 0, .45), 0 1px 3px rgba(0, 0, 0, .4);
+  }
+
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Atkinson Hyperlegible", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.45;
+    min-height: 100vh;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  button:focus-visible, [tabindex]:focus-visible, input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  .app {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 1rem 1rem calc(1.5rem + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+  }
+
+  /* header */
+  .top { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
+  .eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-family: "Fraunces", Georgia, "Times New Roman", serif; font-weight: 600; font-size: 1.7rem; line-height: 1.05; margin: .1rem 0 0; letter-spacing: -.01em; }
+  .ghost {
+    background: var(--surface); border: 1.5px solid var(--line); color: var(--ink);
+    padding: .5rem .95rem; border-radius: 10px; font-weight: 700; font-size: .92rem; white-space: nowrap;
+  }
+  .ghost:hover { border-color: var(--muted); }
+
+  /* segmented controls */
+  .controls { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .seg { display: inline-flex; background: var(--surface-2); border-radius: 12px; padding: 3px; gap: 2px; }
+  .seg button {
+    border: 0; background: transparent; color: var(--muted);
+    padding: .5rem .85rem; border-radius: 9px; font-weight: 700; font-size: .92rem; white-space: nowrap;
+  }
+  .seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.14); }
+  .seg .en { color: var(--en); }
+  .seg .is { color: var(--is); }
+  .seg button:not([aria-pressed="true"]) .en, .seg button:not([aria-pressed="true"]) .is { color: inherit; }
+
+  /* progress */
+  .progress { display: flex; flex-direction: column; gap: .35rem; }
+  .bar { height: 6px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+  .fill { height: 100%; width: 0; background: var(--ok); border-radius: 999px; transition: width .3s ease; }
+  .counts { display: flex; justify-content: space-between; font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .counts b { color: var(--ink); font-weight: 700; }
+
+  /* card */
+  .scene { perspective: 1400px; }
+  .card {
+    position: relative;
+    height: clamp(300px, 52vh, 540px);
+    cursor: pointer;
+    touch-action: pan-y;
+    user-select: none; -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .22s ease, opacity .22s ease;
+    outline: none;
+  }
+  .card:focus-visible .face { box-shadow: var(--shadow), 0 0 0 3px var(--focus); }
+  .inner { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .45s cubic-bezier(.2, .7, .2, 1); }
+  .card.flipped .inner { transform: rotateY(180deg); }
+  .face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    background: var(--surface); border-radius: 18px; box-shadow: var(--shadow);
+    padding: 1rem 1.3rem 1rem; display: flex; flex-direction: column; overflow: hidden;
+  }
+  .face::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--edge, var(--line)); }
+  .face.en { --edge: var(--en); }
+  .face.is { --edge: var(--is); }
+  .face.def { --edge: var(--def); }
+  .back { transform: rotateY(180deg); }
+  .card.leave-right { transform: translateX(110px) rotate(4deg); opacity: 0; }
+  .card.leave-left { transform: translateX(-110px) rotate(-4deg); opacity: 0; }
+  .card.enter { transform: translateY(14px); opacity: 0; }
+  .card.no-anim, .card.no-anim .inner { transition: none !important; }
+
+  .meta { display: flex; justify-content: space-between; align-items: baseline; gap: .8rem; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: var(--muted); }
+  .meta .lang { white-space: nowrap; }
+  .meta .lang.en { color: var(--en); }
+  .meta .lang.is { color: var(--is); }
+  .meta .lang.def { color: var(--def); }
+  .meta .tab { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .body { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: .55rem; overflow: auto; padding: .4rem 0; }
+  .word {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-weight: 500; font-size: clamp(2rem, 7vw, 3.4rem); line-height: 1.1; letter-spacing: -.01em;
+    text-wrap: balance; max-width: 16ch; color: var(--ink);
+  }
+  .word.en { color: var(--en); }
+  .word.is { color: var(--is); }
+  .word.def { font-style: italic; font-weight: 400; font-size: clamp(1.25rem, 3.6vw, 1.7rem); line-height: 1.35; max-width: 30ch; color: var(--ink); }
+  .alt { font-style: italic; color: var(--muted); font-size: .98rem; }
+  .rule { width: min(60%, 260px); height: 0; border: 0; border-top: 1px solid var(--line); margin: .4rem 0; }
+  .gloss { color: var(--ink); font-size: 1.05rem; line-height: 1.45; max-width: 36ch; text-wrap: pretty; }
+  .gloss .k { color: var(--muted); font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-right: .35rem; }
+  .gloss .is { color: var(--is); font-weight: 700; }
+  .gloss .en { color: var(--en); font-weight: 700; }
+  .tip { text-align: center; font-size: .8rem; color: var(--muted); }
+  .back .tip { visibility: hidden; }
+
+  /* actions */
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+  .btn { border: 0; border-radius: 14px; min-height: 58px; padding: .7rem 1rem; font-weight: 700; font-size: 1.05rem; display: inline-flex; align-items: center; justify-content: center; gap: .5rem; transition: transform .08s ease, filter .15s ease; }
+  .btn:active { transform: scale(.985); }
+  .btn.ok { background: var(--ok); color: var(--ok-ink); }
+  .btn.ok:hover { filter: brightness(1.06); }
+  .btn.again { background: var(--again-soft); color: var(--again); border: 1.5px solid var(--again); }
+  .btn.again:hover { filter: brightness(.98); }
+  .btn svg { width: 1.1em; height: 1.1em; }
+  .hint { margin: 0; text-align: center; font-size: .82rem; color: var(--muted); }
+  .hint .kbd { display: none; }
+  @media (hover: hover) and (pointer: fine) { .hint .touch { display: none; } .hint .kbd { display: inline; } }
+  kbd { font: inherit; font-size: .78rem; background: var(--surface-2); padding: .05rem .4rem; border-radius: 5px; border: 1px solid var(--line); }
+  .foot { text-align: center; }
+  .linkish { background: none; border: 0; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; font-size: .88rem; padding: .3rem .5rem; }
+  .linkish:hover { color: var(--ink); }
+
+  /* round summary */
+  .done { background: var(--surface); border-radius: 18px; box-shadow: var(--shadow); padding: 1.4rem 1.4rem 1.3rem; position: relative; overflow: hidden; }
+  .done::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--ok); }
+  .done .big { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: clamp(2.4rem, 8vw, 3.6rem); line-height: 1; color: var(--ok); font-variant-numeric: tabular-nums; margin: .3rem 0 .2rem; }
+  .done p { margin: .2rem 0; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .9rem; }
+  .chip { background: var(--again-soft); color: var(--ink); border-radius: 999px; padding: .3rem .75rem; font-size: .9rem; }
+  .chip .is { color: var(--is); font-weight: 700; }
+
+  /* list view */
+  #search { width: 100%; padding: .7rem .95rem; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; }
+  #search::placeholder { color: var(--muted); }
+  .group { margin-top: 1.1rem; }
+  .group h2 { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.25rem; margin: 0 0 .5rem; }
+  .group h2 small { font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 400; color: var(--muted); font-size: .85rem; margin-left: .5rem; }
+  .tablewrap { overflow-x: auto; background: var(--surface); border-radius: 14px; box-shadow: var(--shadow); }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: .6rem .8rem; vertical-align: top; border-top: 1px solid var(--line); }
+  th { border-top: 0; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  td.w { font-weight: 700; color: var(--en); width: 24%; }
+  td.d { color: var(--ink); }
+  td.i { width: 26%; }
+  td.i .is { color: var(--is); font-weight: 700; }
+  td.i .alt { display: block; font-size: .85rem; }
+  .empty { color: var(--muted); padding: 1rem; text-align: center; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card, .inner, .fill, .btn { transition: none !important; }
+  }
+  @media (max-width: 420px) {
+    .seg button { padding: .45rem .6rem; font-size: .85rem; }
+    .face { padding: .85rem 1rem; }
+  }
+</style>
+</head>
+<body>
+<a id="back-to-list" href="../index.html" style="display:inline-block;margin:10px 0 0 12px;padding:6px 14px;border-radius:999px;background:#fff;border:1px solid #ccc;color:#c8102e;font:600 15px -apple-system,'Helvetica Neue',Arial,sans-serif;text-decoration:none;position:relative;z-index:50">← Öll prófin</a><style>@media print{#back-to-list{display:none!important}}</style>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <div class="eyebrow">Enska 2204</div>
+      <h1>Orðalisti · Texti 3 og 4</h1>
+    </div>
+    <button class="ghost" id="listToggle" type="button" aria-pressed="false">Orðalisti</button>
+  </header>
+
+  <div class="controls">
+    <div class="seg" id="deckSeg" role="group" aria-label="Kafli">
+      <button type="button" data-deck="t3" aria-pressed="false">Texti 3</button>
+      <button type="button" data-deck="t4" aria-pressed="false">Texti 4</button>
+      <button type="button" data-deck="all" aria-pressed="false">Allt</button>
+    </div>
+    <div class="seg" id="modeSeg" role="group" aria-label="Átt">
+      <button type="button" data-mode="en-is" aria-pressed="false"><span class="en">EN</span> → <span class="is">ÍS</span></button>
+      <button type="button" data-mode="is-en" aria-pressed="false"><span class="is">ÍS</span> → <span class="en">EN</span></button>
+      <button type="button" data-mode="def-en" aria-pressed="false">Skýring → <span class="en">EN</span></button>
+    </div>
+  </div>
+
+  <section id="study">
+    <div class="progress">
+      <div class="bar" aria-hidden="true"><div class="fill" id="fill"></div></div>
+      <div class="counts" aria-live="polite"><span id="countKnown"></span><span id="countLeft"></span></div>
+    </div>
+
+    <div class="scene" style="margin-top:.9rem">
+      <div class="card" id="card" role="button" tabindex="0" aria-label="Spjald. Bankaðu til að snúa.">
+        <div class="inner">
+          <div class="face front" id="front"></div>
+          <div class="face back" id="back"></div>
+        </div>
+      </div>
+      <div class="done" id="done" hidden></div>
+    </div>
+
+    <div class="actions" id="actions" style="margin-top:.9rem">
+      <button type="button" class="btn again" id="btnAgain">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+        Æfa aftur
+      </button>
+      <button type="button" class="btn ok" id="btnKnow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        Kunni það
+      </button>
+    </div>
+    <div class="actions" id="doneActions" hidden style="margin-top:.9rem">
+      <button type="button" class="btn again" id="btnMissed"></button>
+      <button type="button" class="btn ok" id="btnAll">Öll orð aftur</button>
+    </div>
+
+    <p class="hint" style="margin-top:.8rem">
+      <span class="touch">Bankaðu á spjaldið til að snúa því · strjúktu til hægri = kunni, til vinstri = æfa aftur</span>
+      <span class="kbd"><kbd>Bil</kbd> snúa · <kbd>→</kbd> kunni · <kbd>←</kbd> æfa aftur</span>
+    </p>
+    <div class="foot"><button class="linkish" id="btnReset" type="button">Stokka og byrja upp á nýtt</button></div>
+  </section>
+
+  <section id="list" hidden>
+    <input id="search" type="search" placeholder="Leita að orði…" autocomplete="off" aria-label="Leita í orðalista">
+    <div id="listBody"></div>
+  </section>
+</div>
+
+<script>
+(function () {
+  const DATA = {"chapters":[{"id":"t3","label":"Texti 3","title":"The Teenage Brain"},{"id":"t4","label":"Texti 4","title":"Star Trek Technology"}],"words":[{"ch":"t3","en":"moody","def":"Having unpredictable or fluctuating moods.","is":"mislyndur","alt":"skapstyggur"},{"ch":"t3","en":"alien","def":"A foreign or unfamiliar person, thing, or concept. A being from outer space.","is":"framandi","alt":"geimvera"},{"ch":"t3","en":"behavior","def":"The way in which a person or organism acts or conducts themselves.","is":"hegðun"},{"ch":"t3","en":"to play havoc with","def":"To cause chaos or disorder.","is":"að valda usla í","alt":"að rugla"},{"ch":"t3","en":"conflict","def":"A disagreement or clash between individuals or groups.","is":"ágreiningur","alt":"átök"},{"ch":"t3","en":"aggravation","def":"The act of making a situation worse or more irritating.","is":"gerir illt verra","alt":"pirringur"},{"ch":"t3","en":"to govern","def":"To rule or control a group, organization, or territory.","is":"að stjórna","alt":"að ráða yfir"},{"ch":"t3","en":"circadian clock","def":"The internal biological clock that regulates daily cycles of sleep, wakefulness, and other physiological processes.","is":"líkamsklukka","alt":"dægursveifla"},{"ch":"t3","en":"to determine","def":"To find out or establish a fact or result.","is":"að ákveða","alt":"að ákvarða"},{"ch":"t3","en":"p.m.","def":"An abbreviation for post meridiem, referring to the afternoon and evening hours.","is":"eftir hádegi"},{"ch":"t3","en":"a.m.","def":"An abbreviation for ante meridiem, referring to the morning hours.","is":"fyrir hádegi"},{"ch":"t3","en":"out of sync","def":"Not synchronized or coordinated with something else.","is":"úr takti"},{"ch":"t3","en":"habits","def":"Regularly repeated behaviors or actions.","is":"venjur","alt":"vani"},{"ch":"t3","en":"debt","def":"Money owed to someone or something, typically with an obligation to repay.","is":"skuld"},{"ch":"t3","en":"to speculate","def":"To make guesses or conjectures about something without complete information.","is":"að geta sér til","alt":"að velta vöngum yfir"},{"ch":"t3","en":"deprivation","def":"The state of lacking or being deprived of something essential or desirable.","is":"skerðing","alt":"skortur"},{"ch":"t3","en":"to provide","def":"To supply or make available something that is needed.","is":"að veita"},{"ch":"t3","en":"explanation","def":"A statement or description that clarifies a concept or situation.","is":"útskýring","alt":"skýring"},{"ch":"t3","en":"concentrate","def":"To focus one's attention or efforts on a specific task or goal.","is":"að einbeita sér"},{"ch":"t3","en":"to stay alert","def":"To remain attentive and aware.","is":"að halda sér vakandi","alt":"að vera á varðbergi"},{"ch":"t3","en":"generally","def":"Usually or typically.","is":"almennt","alt":"yfirleitt"},{"ch":"t3","en":"bad-tempered","def":"Easily irritated or prone to anger.","is":"skapvondur"},{"ch":"t3","en":"consequences","def":"The results or outcomes of actions or events.","is":"afleiðingar"},{"ch":"t3","en":"with respect to","def":"In relation to or concerning.","is":"með tilliti til"},{"ch":"t3","en":"to rehearse","def":"To practice or repeat in preparation for a performance or event.","is":"að æfa"},{"ch":"t3","en":"assign to","def":"To allocate or designate someone or something to a specific task or role.","is":"að úthluta","alt":"að fela (verkefni)"},{"ch":"t3","en":"effectively","def":"In a way that produces the desired results or outcomes.","is":"á áhrifaríkan hátt"},{"ch":"t3","en":"provisional","def":"Temporary or subject to change.","is":"bráðabirgða-","alt":"tímabundinn"},{"ch":"t3","en":"development","def":"The process of growth, progress, or advancement.","is":"þróun","alt":"þroski"},{"ch":"t3","en":"womb","def":"The organ in which a fetus develops during pregnancy.","is":"móðurkviður","alt":"leg"},{"ch":"t3","en":"adolescents","def":"Individuals in the stage of life between childhood and adulthood.","is":"unglingar"},{"ch":"t3","en":"puberty","def":"The stage of development during which sexual maturity is reached.","is":"kynþroskaaldur"},{"ch":"t3","en":"to prune away","def":"To trim or remove unnecessary or unwanted parts.","is":"að fjarlægja","alt":"að skera burt"},{"ch":"t3","en":"to trim","def":"To cut or remove excess or unwanted portions.","is":"að snyrta","alt":"að skera niður"},{"ch":"t3","en":"to prompt","def":"To encourage or stimulate action or response.","is":"að valda","alt":"að hvetja til"},{"ch":"t3","en":"to propose (a theory)","def":"To put forward a theory or idea for consideration.","is":"að setja fram"},{"ch":"t3","en":"leisure activities","def":"Recreational pursuits and hobbies engaged in during free time.","is":"frístundir","alt":"tómstundastarf"},{"ch":"t3","en":"participate in","def":"To take part in or be involved in an activity or event.","is":"að taka þátt í"},{"ch":"t3","en":"hobbies","def":"Personal interests or pastimes pursued for enjoyment.","is":"áhugamál"},{"ch":"t3","en":"adulthood","def":"The stage of life that follows adolescence and marks full maturity.","is":"fullorðinsár"},{"ch":"t3","en":"laboratories","def":"Controlled environments for scientific experiments and research.","is":"rannsóknarstofur"},{"ch":"t3","en":"exploratory","def":"Involving investigation or discovery.","is":"könnunar-","alt":"rannsóknar-"},{"ch":"t3","en":"to process","def":"To perform a series of actions or operations on something.","is":"að vinna úr"},{"ch":"t3","en":"facial expressions","def":"The non-verbal communication conveyed through the muscles of the face.","is":"svipbrigði"},{"ch":"t3","en":"variety","def":"A diverse range of different things.","is":"fjölbreytni"},{"ch":"t3","en":"emotions","def":"Feelings and states of mind, often accompanied by physiological changes.","is":"tilfinningar"},{"ch":"t3","en":"to express","def":"To convey or communicate thoughts, feelings, or ideas.","is":"að tjá"},{"ch":"t3","en":"activation","def":"The process of making something active or operational.","is":"virkjun"},{"ch":"t3","en":"circuits","def":"Electrical or electronic pathways for the flow of current.","is":"rafrásir","alt":"rásir (t.d. í heila)"},{"ch":"t3","en":"gut reactions","def":"Immediate and instinctive responses to a situation.","is":"ósjálfráð viðbrögð","alt":"fyrstu viðbrögð"},{"ch":"t3","en":"prefrontal","def":"Pertaining to the frontal part of the brain.","is":"framheila-"},{"ch":"t3","en":"responsible for","def":"Accountable for or in charge of.","is":"ábyrgur fyrir"},{"ch":"t3","en":"executive functions","def":"High-level cognitive processes, including reasoning and judgment.","is":"stýrifærni","alt":"æðri hugarstarfsemi"},{"ch":"t3","en":"reasoning","def":"The process of thinking logically and making conclusions.","is":"rökhugsun"},{"ch":"t3","en":"judgment","def":"The ability to make decisions and assess situations.","is":"dómgreind"},{"ch":"t3","en":"regulate","def":"To control or manage according to rules or standards.","is":"að stýra","alt":"að hafa stjórn á"},{"ch":"t3","en":"caretakers","def":"Individuals responsible for the well-being of others.","is":"umönnunaraðilar"},{"ch":"t3","en":"enthusiasm","def":"Eagerness and passion for a particular activity or goal.","is":"spenningur","alt":"áhugi, eldmóður"},{"ch":"t3","en":"to caution against","def":"To advise against or warn of potential risks.","is":"að vara við"},{"ch":"t3","en":"to translate","def":"To convert text or speech from one language to another.","is":"að þýða"},{"ch":"t3","en":"policies","def":"Official rules or guidelines established by an organization or government.","is":"stefnur","alt":"reglur"},{"ch":"t3","en":"a fad","def":"A temporary and popular trend or fashion.","is":"tískubóla"},{"ch":"t3","en":"to consider","def":"To think about or contemplate.","is":"að íhuga"},{"ch":"t3","en":"justified","def":"Having a valid reason or rationale.","is":"réttlætanlegur","alt":"réttmætur"},{"ch":"t3","en":"constructive","def":"Positive and helpful in achieving a desired outcome.","is":"uppbyggjandi"},{"ch":"t4","en":"successful","def":"Achieving goals with positive outcomes.","is":"árangursríkur","alt":"farsæll"},{"ch":"t4","en":"science fiction","def":"A genre of speculative fiction exploring imaginative and futuristic concepts.","is":"vísindaskáldskapur"},{"ch":"t4","en":"to spark","def":"To ignite or initiate something.","is":"að kveikja","alt":"að hrinda af stað"},{"ch":"t4","en":"phenomenon","def":"An observable event or occurrence.","is":"fyrirbæri"},{"ch":"t4","en":"popularity","def":"The state of being widely liked or admired.","is":"vinsældir"},{"ch":"t4","en":"futuristic","def":"Related to the future or having a forward-looking quality.","is":"framtíðarlegur","alt":"framúrstefnulegur"},{"ch":"t4","en":"gadget","def":"A small, cleverly designed device or tool.","is":"græja","alt":"tæki"},{"ch":"t4","en":"episode","def":"A single installment or part of a series.","is":"þáttur"},{"ch":"t4","en":"transporter","def":"A device capable of instantaneously moving objects or people from one place to another.","is":"flutningstæki"},{"ch":"t4","en":"currently","def":"At the present time; now.","is":"nú","alt":"sem stendur"},{"ch":"t4","en":"feasible","def":"Capable of being accomplished or done.","is":"framkvæmanlegur"},{"ch":"t4","en":"equipment","def":"Tools, machinery, or materials used for a specific purpose.","is":"búnaður"},{"ch":"t4","en":"viable","def":"Capable of working successfully; feasible.","is":"raunhæfur","alt":"lífvænlegur"},{"ch":"t4","en":"advanced","def":"Highly developed or sophisticated.","is":"háþróaður"},{"ch":"t4","en":"hologram","def":"A three-dimensional image created using laser light.","is":"heilmynd"},{"ch":"t4","en":"simulated","def":"Created to imitate or replicate something.","is":"hermdur","alt":"eftirlíking"},{"ch":"t4","en":"realities","def":"The state of things as they actually exist.","is":"veruleiki"},{"ch":"t4","en":"tele-immersion","def":"A technology that enables users to interact in a shared virtual environment.","is":"fjarnærvera"},{"ch":"t4","en":"application","def":"A program or software designed for a specific task or purpose.","is":"forrit","alt":"app"},{"ch":"t4","en":"virtual","def":"Existing or occurring primarily in a digital or simulated environment.","is":"sýndar-"},{"ch":"t4","en":"dubious","def":"Doubtful or uncertain; questionable.","is":"vafasamur"},{"ch":"t4","en":"communicator","def":"A device used for communication.","is":"samskiptatæki"},{"ch":"t4","en":"to summon","def":"To call or invite someone or something.","is":"að kalla á","alt":"að kalla saman"},{"ch":"t4","en":"crew","def":"A group of people working together on a common task, especially on a ship or spacecraft.","is":"áhöfn"},{"ch":"t4","en":"portable","def":"Easily carried or moved; not fixed in one place.","is":"færanlegur"},{"ch":"t4","en":"mobile (phone)","def":"A handheld device used for wireless communication.","is":"farsími"},{"ch":"t4","en":"convenient","def":"Suitable for one's needs; easy to use or access.","is":"þægilegur","alt":"hentugur"},{"ch":"t4","en":"to miniaturize","def":"To make something smaller in size.","is":"að smækka"},{"ch":"t4","en":"graphic","def":"Visual, often referring to images, charts, or design elements.","is":"myndrænn"},{"ch":"t4","en":"commonplace","def":"Something that is ordinary or commonly found.","is":"algengur","alt":"hversdagslegur"},{"ch":"t4","en":"to computerize","def":"To automate or convert to digital format.","is":"að tölvuvæða"},{"ch":"t4","en":"to feature","def":"To include or highlight as a prominent aspect.","is":"að skarta","alt":"að innihalda"},{"ch":"t4","en":"refrigerator","def":"A household appliance used for cooling food.","is":"ísskápur"},{"ch":"t4","en":"foretold","def":"Predicted or prophesied in advance.","is":"spáð fyrir um"},{"ch":"t4","en":"tablet","def":"A flat, portable device with a touchscreen.","is":"spjaldtölva"},{"ch":"t4","en":"mission","def":"A specific task or assignment.","is":"leiðangur","alt":"verkefni"},{"ch":"t4","en":"scanner","def":"A device used to capture images or data.","is":"skanni"},{"ch":"t4","en":"global","def":"Pertaining to the entire world or planet.","is":"alþjóðlegur","alt":"hnattrænn"},{"ch":"t4","en":"surgery","def":"Medical procedure involving incisions or operations.","is":"skurðaðgerð"},{"ch":"t4","en":"internal","def":"Located inside or within.","is":"innri"},{"ch":"t4","en":"procedure","def":"A series of steps or actions performed in a particular order.","is":"aðgerð","alt":"ferli"},{"ch":"t4","en":"radiation","def":"The emission of energy as electromagnetic waves or particles.","is":"geislun"},{"ch":"t4","en":"precisely","def":"Exactly or accurately.","is":"nákvæmlega"},{"ch":"t4","en":"to dissolve","def":"To become or cause to become liquid or disintegrate.","is":"að leysast upp"},{"ch":"t4","en":"to eliminate","def":"To completely remove or get rid of.","is":"að útrýma","alt":"að eyða"},{"ch":"t4","en":"diseased","def":"Afflicted with a medical condition or illness.","is":"sjúkur","alt":"sýktur"},{"ch":"t4","en":"noninvasive","def":"Not requiring surgery or invasive procedures.","is":"án inngrips"},{"ch":"t4","en":"infection","def":"The invasion of the body by harmful microorganisms.","is":"sýking"},{"ch":"t4","en":"versatile","def":"Capable of adapting to various uses or functions.","is":"fjölhæfur"},{"ch":"t4","en":"tricorder","def":"A fictional handheld device with various scanning and analysis capabilities.","is":"fjölnota skanni (í Star Trek)"},{"ch":"t4","en":"magnetic","def":"Attracted to or influenced by magnetism.","is":"segul-","alt":"seguldreginn"},{"ch":"t4","en":"resonance","def":"The reinforcement or intensification of a sound, vibration, or signal.","is":"ómun"},{"ch":"t4","en":"dialect","def":"A regional or specific form of a language.","is":"mállýska"},{"ch":"t4","en":"accent","def":"A distinctive way of pronouncing words.","is":"hreimur"},{"ch":"t4","en":"recognition","def":"The process of identifying or acknowledging.","is":"greining","alt":"viðurkenning"},{"ch":"t4","en":"to cope","def":"To deal effectively with a difficult situation.","is":"að ráða við","alt":"að takast á við"},{"ch":"t4","en":"software","def":"Programs and data used by a computer.","is":"hugbúnaður"},{"ch":"t4","en":"improvements","def":"Enhancements to make something better.","is":"endurbætur"},{"ch":"t4","en":"gradually","def":"Happening slowly or over time.","is":"smám saman"},{"ch":"t4","en":"sufficiently","def":"Adequately or enough to meet a requirement.","is":"nægilega"},{"ch":"t4","en":"simultaneous","def":"Occurring at the same time or concurrently.","is":"samtímis"},{"ch":"t4","en":"oral","def":"Spoken or relating to the mouth and spoken communication.","is":"munnlegur"},{"ch":"t4","en":"telepathic","def":"Relating to communication through thoughts or mind-to-mind.","is":"fjarskynjunar-","alt":"hugsanaflutnings-"},{"ch":"t4","en":"mind-meld","def":"A fictional technique for merging thoughts or consciousness.","is":"hugarsamruni"}]};
+  const CH = Object.fromEntries(DATA.chapters.map(c => [c.id, c]));
+  const WORDS = DATA.words.map((w, i) => Object.assign({ id: w.ch + ':' + i }, w));
+  const byId = Object.fromEntries(WORDS.map(w => [w.id, w]));
+  const STORE = 'enska2204-ordalisti-t34-v1';
+  const RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const $ = id => document.getElementById(id);
+  const card = $('card'), front = $('front'), back = $('back'), done = $('done');
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function deckIds(deck) {
+    if (deck === 'all') {
+      const seen = new Set();
+      return WORDS.filter(w => { const k = w.en.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map(w => w.id);
+    }
+    return WORDS.filter(w => w.ch === deck).map(w => w.id);
+  }
+  function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  let state = { deck: 't3', mode: 'en-is', sessions: {} };
+  try { const raw = localStorage.getItem(STORE); if (raw) { const s = JSON.parse(raw); if (s && s.sessions && s.deck && s.mode) state = s; } } catch (e) { }
+  if (!['t3', 't4', 'all'].includes(state.deck)) state.deck = 't3';
+  if (!['en-is', 'is-en', 'def-en'].includes(state.mode)) state.mode = 'en-is';
+  function save() { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { } }
+
+  function newSession(ids, round, subset) { return { queue: shuffle(ids), known: [], missed: [], round: round || 1, subset: !!subset, flipped: false }; }
+  const key = () => state.deck + '|' + state.mode;
+  function session() {
+    const all = deckIds(state.deck), set = new Set(all);
+    let s = state.sessions[key()];
+    if (!s || !Array.isArray(s.queue)) { s = state.sessions[key()] = newSession(all); return s; }
+    s.queue = s.queue.filter(id => set.has(id));
+    s.known = (s.known || []).filter(id => set.has(id));
+    s.missed = (s.missed || []).filter(id => set.has(id));
+    if (!s.subset) { const have = new Set([...s.queue, ...s.known]); all.forEach(id => { if (!have.has(id)) s.queue.push(id); }); }
+    if (!s.queue.length && !s.known.length) s = state.sessions[key()] = newSession(all);
+    return s;
+  }
+
+  /* ---- rendering ---- */
+  function tab(w) { const c = CH[w.ch]; return esc(c.label + ' · ' + c.title); }
+  function faceHTML(w, side) {
+    const m = state.mode;
+    let lang, cls, main, extra = '';
+    if (side === 'front') {
+      if (m === 'en-is') { lang = 'Enska'; cls = 'en'; main = `<div class="word en">${esc(w.en)}</div>`; }
+      else if (m === 'is-en') { lang = 'Íslenska'; cls = 'is'; main = `<div class="word is">${esc(w.is)}</div>` + (w.alt ? `<div class="alt">einnig: ${esc(w.alt)}</div>` : ''); }
+      else { lang = 'Skýring'; cls = 'def'; main = `<div class="word def">${esc(w.def)}</div>`; }
+    } else {
+      if (m === 'en-is') {
+        lang = 'Íslenska'; cls = 'is';
+        main = `<div class="word is">${esc(w.is)}</div>` + (w.alt ? `<div class="alt">einnig: ${esc(w.alt)}</div>` : '');
+        extra = `<hr class="rule"><div class="gloss">${esc(w.def)}</div>`;
+      } else if (m === 'is-en') {
+        lang = 'Enska'; cls = 'en';
+        main = `<div class="word en">${esc(w.en)}</div>`;
+        extra = `<hr class="rule"><div class="gloss">${esc(w.def)}</div>`;
+      } else {
+        lang = 'Enska'; cls = 'en';
+        main = `<div class="word en">${esc(w.en)}</div>`;
+        extra = `<hr class="rule"><div class="gloss"><span class="k">ÍS</span><span class="is">${esc(w.is)}</span>${w.alt ? ` <span class="alt">(${esc(w.alt)})</span>` : ''}</div>`;
+      }
+    }
+    return { cls, html: `<div class="meta"><span class="tab">${tab(w)}</span><span class="lang ${cls}">${lang}</span></div><div class="body">${main}${extra}</div><div class="tip">bankaðu til að snúa</div>` };
+  }
+
+  function renderControls() {
+    document.querySelectorAll('#deckSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.deck === state.deck)));
+    document.querySelectorAll('#modeSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === state.mode)));
+  }
+
+  function render() {
+    renderControls();
+    const s = session();
+    const total = s.queue.length + s.known.length;
+    const known = s.known.length;
+    $('fill').style.width = (total ? (known / total) * 100 : 0) + '%';
+    $('countKnown').innerHTML = `Kunni <b>${known}</b> af ${total}`;
+    $('countLeft').innerHTML = (s.round > 1 ? `Umferð ${s.round} · ` : '') + `Eftir <b>${s.queue.length}</b>`;
+
+    if (!s.queue.length) {
+      card.hidden = true; $('actions').hidden = true;
+      done.hidden = false; $('doneActions').hidden = false;
+      const n = s.missed.length;
+      const chips = s.missed.map(id => byId[id]).filter(Boolean).map(w => `<span class="chip">${esc(w.en)} · <span class="is">${esc(w.is)}</span></span>`).join('');
+      done.innerHTML = `<div class="eyebrow">${s.round > 1 ? 'Umferð ' + s.round + ' lokið' : 'Umferð lokið'}</div>
+        <div class="big">${total - n} <span style="font-size:.5em;color:var(--muted);font-weight:500">af ${total}</span></div>
+        <p>${n === 0 ? 'Allt rétt í fyrstu tilraun. Vel gert!' : 'rétt í fyrstu tilraun'}</p>
+        ${n ? `<p style="margin-top:.8rem"><b style="color:var(--ink)">Þessi þurfa meiri æfingu:</b></p><div class="chips">${chips}</div>` : ''}`;
+      $('btnMissed').hidden = n === 0;
+      $('btnMissed').textContent = `Æfa þau sem ég missti af (${n})`;
+      return;
+    }
+    done.hidden = true; $('doneActions').hidden = true;
+    card.hidden = false; $('actions').hidden = false;
+
+    const w = byId[s.queue[0]];
+    const f = faceHTML(w, 'front'), b = faceHTML(w, 'back');
+    front.className = 'face front ' + f.cls; front.innerHTML = f.html;
+    back.className = 'face back ' + b.cls; back.innerHTML = b.html;
+    card.classList.toggle('flipped', !!s.flipped);
+  }
+
+  /* ---- actions ---- */
+  function flip() {
+    const s = session(); if (!s.queue.length) return;
+    s.flipped = !s.flipped; save();
+    card.classList.toggle('flipped', s.flipped);
+  }
+  let busy = false;
+  function mark(knew) {
+    const s = session(); if (!s.queue.length || busy) return;
+    busy = true;
+    const dur = RM ? 0 : 220;
+    card.classList.add(knew ? 'leave-right' : 'leave-left');
+    setTimeout(() => {
+      const id = s.queue.shift();
+      if (knew) s.known.push(id);
+      else { s.queue.push(id); if (!s.missed.includes(id)) s.missed.push(id); }
+      s.flipped = false; save();
+      card.classList.add('no-anim');
+      card.classList.remove('leave-right', 'leave-left', 'flipped');
+      if (!RM) card.classList.add('enter');
+      render();
+      void card.offsetWidth;
+      requestAnimationFrame(() => { card.classList.remove('no-anim'); requestAnimationFrame(() => { card.classList.remove('enter'); busy = false; }); });
+    }, dur);
+  }
+  function resetAll() { state.sessions[key()] = newSession(deckIds(state.deck)); save(); render(); }
+  function practiceMissed() { const s = session(); if (!s.missed.length) return resetAll(); state.sessions[key()] = newSession(s.missed, s.round + 1, true); save(); render(); }
+
+  /* ---- events ---- */
+  let ignoreClickUntil = 0;
+  card.addEventListener('click', () => { if (Date.now() < ignoreClickUntil) return; flip(); });
+  card.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flip(); } });
+  let tx = 0, ty = 0, tt = 0;
+  card.addEventListener('touchstart', e => { const t = e.changedTouches[0]; tx = t.clientX; ty = t.clientY; tt = Date.now(); }, { passive: true });
+  card.addEventListener('touchend', e => {
+    const t = e.changedTouches[0]; const dx = t.clientX - tx, dy = t.clientY - ty;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && Date.now() - tt < 800) {
+      ignoreClickUntil = Date.now() + 400;
+      mark(dx > 0);
+    }
+  }, { passive: true });
+  $('btnKnow').addEventListener('click', () => mark(true));
+  $('btnAgain').addEventListener('click', () => mark(false));
+  $('btnReset').addEventListener('click', resetAll);
+  $('btnAll').addEventListener('click', resetAll);
+  $('btnMissed').addEventListener('click', practiceMissed);
+  document.querySelectorAll('#deckSeg button').forEach(b => b.addEventListener('click', () => { state.deck = b.dataset.deck; save(); render(); renderList(); }));
+  document.querySelectorAll('#modeSeg button').forEach(b => b.addEventListener('click', () => { state.mode = b.dataset.mode; save(); render(); }));
+
+  document.addEventListener('keydown', e => {
+    if (!$('list').hidden) return;
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); mark(true); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); mark(false); }
+    else if ((e.key === ' ' || e.key === 'Enter') && e.target !== card) { e.preventDefault(); flip(); }
+  });
+
+  /* ---- list view ---- */
+  function renderList() {
+    const q = $('search').value.trim().toLowerCase();
+    const chapters = state.deck === 'all' ? DATA.chapters : DATA.chapters.filter(c => c.id === state.deck);
+    let html = '';
+    chapters.forEach(c => {
+      const rows = WORDS.filter(w => w.ch === c.id && (!q || [w.en, w.def, w.is, w.alt || ''].some(x => x.toLowerCase().includes(q))));
+      if (!rows.length && q) return;
+      html += `<div class="group"><h2>${esc(c.label)}: ${esc(c.title)}<small>${rows.length} orð</small></h2><div class="tablewrap"><table>
+        <thead><tr><th>Orð</th><th>Skýring</th><th>Íslenska</th></tr></thead><tbody>` +
+        rows.map(w => `<tr><td class="w">${esc(w.en)}</td><td class="d">${esc(w.def)}</td><td class="i"><span class="is">${esc(w.is)}</span>${w.alt ? `<span class="alt">${esc(w.alt)}</span>` : ''}</td></tr>`).join('') +
+        `</tbody></table></div></div>`;
+    });
+    $('listBody').innerHTML = html || `<p class="empty">Ekkert orð fannst fyrir „${esc(q)}“.</p>`;
+  }
+  $('search').addEventListener('input', renderList);
+  $('listToggle').addEventListener('click', () => {
+    const showList = $('list').hidden;
+    $('list').hidden = !showList; $('study').hidden = showList;
+    $('listToggle').textContent = showList ? 'Spjöld' : 'Orðalisti';
+    $('listToggle').setAttribute('aria-pressed', String(showList));
+    if (showList) { renderList(); $('search').focus({ preventScroll: true }); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

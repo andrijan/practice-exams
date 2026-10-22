@@ -1,0 +1,129 @@
+[
+ {
+  "dir": "stae225_practice",
+  "page": "stae225_practice/stae225_practice_ipad.html",
+  "title": "STÆ 225 – Mengi, ójöfnur og algildi",
+  "desc": "Æfingar 1.1, 1.2, 2.2, 2.3, 3.2, 3.3 og fjórar aukaæfingar um rauntalnabil · 52 dæmi",
+  "boy": "Lexi",
+  "subject": "Stærðfræði",
+  "created": "2026-09-05T15:24",
+  "print": "stae225_practice/stae225_practice_print.html"
+ },
+ {
+  "dir": "stae225_beinlina",
+  "page": "stae225_beinlina/stae225_beinlina_ipad.html",
+  "title": "STÆ 225 – Bein lína í hnitakerfi",
+  "desc": "Æfingar 1.3, 1.4, 1.6, 1.7, 1.8, 1.9, 1.10, 1.11 og upprifjunardæmi · 96 dæmi",
+  "boy": "Lexi",
+  "subject": "Stærðfræði",
+  "created": "2026-09-20T17:28",
+  "print": "stae225_beinlina/stae225_beinlina_print.html"
+ },
+ {
+  "dir": "stae225_beinlina_2",
+  "page": "stae225_beinlina_2/stae225_beinlina_2_ipad.html",
+  "title": "STÆ 225 – Bein lína í hnitakerfi (2)",
+  "desc": "Sömu 96 dæmi, allar tölur nýjar",
+  "boy": "Lexi",
+  "subject": "Stærðfræði",
+  "created": "2026-09-20T19:06",
+  "print": "stae225_beinlina_2/stae225_beinlina_2_print.html"
+ },
+ {
+  "dir": "stae225_beinlina_3",
+  "page": "stae225_beinlina_3/stae225_beinlina_3_ipad.html",
+  "title": "STÆ 225 – Bein lína í hnitakerfi (3)",
+  "desc": "Sömu 96 dæmi, allar tölur nýjar",
+  "boy": "Lexi",
+  "subject": "Stærðfræði",
+  "created": "2026-09-20T19:06",
+  "print": "stae225_beinlina_3/stae225_beinlina_3_print.html"
+ },
+ {
+  "dir": "danska_ordaspjold",
+  "page": "danska_ordaspjold/danska_ordaspjold_ipad.html",
+  "title": "DANSKA – Orðaspjöld, Lota 1: Skoleliv",
+  "desc": "Orðalistar kennaranna, námsgreinar, sagnirnar til prófs, tímahugtök og orðasambönd · 256 orð · danska ↔ íslenska · framvinda vistast í vafranum",
+  "boy": "Lexi",
+  "subject": "Danska",
+  "created": "2026-10-03T10:31"
+ },
+ {
+  "dir": "enska2204_ordaspjold",
+  "page": "enska2204_ordaspjold/enska2204_ordaspjold_ipad.html",
+  "title": "ENSKA 2204 – Orðaspjöld, Texti 1–4",
+  "desc": "„Why are you happy?“, „Into the Flow“, „The Teenage Brain“ og „Star Trek Technology“ · 260 orð · enska ↔ íslenska, skýring → orð · framvinda vistast í vafranum",
+  "boy": "Lexi",
+  "subject": "Enska",
+  "created": "2026-09-06T21:27",
+  "updated": "2026-10-22T17:36"
+ },
+ {
+  "dir": "dan1003_skoleliv",
+  "page": "dan1003_skoleliv/dan1003_skoleliv_ipad.html",
+  "title": "DANSKA – Lota 1: Skoleliv",
+  "desc": "Fyrir prófið 7. október · orðaforði, sagnir, tímahugtök, en/et, fleirtala, lille/små og „Kære dagbog“ · allar 24 prófsagnirnar · 133 atriði",
+  "boy": "Lexi",
+  "subject": "Danska",
+  "created": "2026-10-03T10:23",
+  "print": "dan1003_skoleliv/dan1003_skoleliv_print.html"
+ },
+ {
+  "dir": "mhh_madurinn",
+  "page": "mhh_madurinn/mhh_madurinn_ipad.html",
+  "title": "NÁTTÚRUFRÆÐI 6. bekkur – Maðurinn, hugur og heilsa",
+  "desc": "Fyrir könnunina 7. október · bls. 6–53 og allur gátlistinn · myndir úr bókinni til að merkja, pikkaðu á svörin · 72 verkefni",
+  "boy": "Brynjar",
+  "subject": "Náttúrufræði",
+  "created": "2026-10-04T12:53",
+  "print": "mhh_madurinn/mhh_madurinn_print.html"
+ },
+ {
+  "dir": "enska6_together_again",
+  "page": "enska6_together_again/enska6_together_again_ipad.html",
+  "title": "ENSKA 6. bekkur – Yes we can 6: Together Again",
+  "desc": "Fyrir enskukönnunina vikuna 12.–16. október · öll 20 orðin á gátlistanum, orð í setningum, stafsetning og nútíð/þátíð · pikkaðu og skrifaðu svörin · 67 verkefni",
+  "boy": "Brynjar",
+  "subject": "Enska",
+  "created": "2026-10-09T23:08",
+  "print": "enska6_together_again/enska6_together_again_print.html"
+ },
+ {
+  "dir": "enska6_ordaspjold",
+  "page": "enska6_ordaspjold/enska6_ordaspjold_ipad.html",
+  "title": "ENSKA 6. bekkur – Orðaspjöld, Together Again",
+  "desc": "Orðalisti kennarans úr kafla 1 · 20 orð · enska ↔ íslenska og setning → orð · framvinda vistast í vafranum",
+  "boy": "Brynjar",
+  "subject": "Enska",
+  "created": "2026-10-09T23:08"
+ },
+ {
+  "dir": "stae6_stika2a_likur",
+  "page": "stae6_stika2a_likur/stae6_stika2a_likur_ipad.html",
+  "title": "STÆRÐFRÆÐI 6. bekkur – Stika 2a: Líkur",
+  "desc": "Fyrir könnunina 22. október · kafli 2, bls. 42–59 · lukkuhjól, kúlur í poka, teningar, krónur og sanngjörn spil · skrifaðu brotin og pikkaðu á svörin · 41 verkefni",
+  "boy": "Brynjar",
+  "subject": "Stærðfræði",
+  "created": "2026-10-16T15:47",
+  "print": "stae6_stika2a_likur/stae6_stika2a_likur_print.html"
+ },
+ {
+  "dir": "enska2204_malfraedi",
+  "page": "enska2204_malfraedi/enska2204_malfraedi_ipad.html",
+  "title": "ENSKA 2204 – Málfræði",
+  "desc": "Málfræðipakki 2 · aðal- og aukasetningar, stórir stafir, greinarmerki, þolmynd, óreglulegar sagnir og sögn + forsetning + -ing · 188 verkefni",
+  "boy": "Lexi",
+  "subject": "Enska",
+  "created": "2026-10-22T17:40",
+  "print": "enska2204_malfraedi/enska2204_malfraedi_print.html"
+ },
+ {
+  "dir": "enska2204_ordalisti_texti3-4",
+  "page": "enska2204_ordalisti_texti3-4/enska2204_ordalisti_texti3-4_ipad.html",
+  "title": "ENSKA 2204 – Orðalisti, Texti 3 og 4",
+  "desc": "Fyrir enskuprófið · „The Teenage Brain“ og „Star Trek Technology“ · 129 orð · enska ↔ íslenska, skýring → orð · framvinda vistast í vafranum",
+  "boy": "Lexi",
+  "subject": "Enska",
+  "created": "2026-10-22T18:46"
+ }
+]
