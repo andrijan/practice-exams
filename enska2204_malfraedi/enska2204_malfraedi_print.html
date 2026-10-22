@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="UTF-8">
+<title>ENSKA 2204 – Málfræði</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 16mm;
+  }
+  :root {
+    --ink: #000;
+    --paper: #fff;
+    --rule: #000;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 12pt;
+    line-height: 1.45;
+  }
+  body {
+    max-width: 170mm;
+    margin: 0 auto;
+    padding: 0;
+  }
+  h1 {
+    text-align: center;
+    font-size: 18pt;
+    margin: 0 0 0.3rem;
+    font-weight: 700;
+  }
+  .subtitle {
+    text-align: center;
+    font-style: italic;
+    margin: 0 0 1.5rem;
+    font-size: 11pt;
+  }
+  h2 {
+    font-size: 14pt;
+    margin: 1.4rem 0 0.6rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1.5px solid var(--rule);
+  }
+  h3 {
+    font-size: 12pt;
+    margin: 1rem 0 0.4rem;
+    font-style: italic;
+  }
+  .question {
+    margin: 0.8rem 0;
+    padding: 0.4rem 0 0.4rem 0.6rem;
+    border-left: 1.5px solid var(--rule);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .q-num { font-weight: 700; margin-right: 0.3rem; }
+  .prompt { margin-bottom: 0.4rem; }
+  .subq { margin: 0.3rem 0 0.3rem 1.2rem; }
+  .subq-label { font-weight: 700; margin-right: 0.3rem; }
+  .figure {
+    margin: 0.4rem 0 0.6rem;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .figure svg {
+    max-width: 360px;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+  }
+  .figure svg text {
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 11pt;
+    fill: #000;
+  }
+  .figure svg .stroke { fill: none; stroke: #000; stroke-width: 1.2; stroke-linejoin: round; }
+  .figure svg .dashed { fill: none; stroke: #000; stroke-width: 1; stroke-dasharray: 3 2; }
+  .figure svg .fill-light { fill: #f0f0f0; stroke: #000; stroke-width: 1.2; }
+  .figure svg .arc { fill: none; stroke: #000; stroke-width: 1.5; }
+  .figure svg .red { fill: #000; }
+  .figure svg .pt { fill: #000; }
+
+  .note { font-style: italic; font-size: 10.5pt; }
+  hr { border: none; border-top: 1px solid var(--rule); margin: 1.2rem 0; }
+
+  .answerline {
+    margin-top: 0.6rem;
+    border-top: 1px dotted #000;
+    padding-top: 0.4rem;
+    font-size: 11pt;
+  }
+  .answerline-blank {
+    margin-top: 0.4rem;
+    border-bottom: 1px solid #000;
+    height: 1.2rem;
+  }
+
+  .solutions {
+    page-break-before: always;
+    break-before: page;
+  }
+  .solutions h2 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 16pt;
+  }
+  .solutions ol { padding-left: 1.4rem; }
+  .solutions li {
+    margin: 0.3rem 0;
+    page-break-inside: avoid;
+  }
+  .solutions .working {
+    color: #000;
+    font-size: 10.5pt;
+    font-style: italic;
+    margin-left: 0.4rem;
+  }
+
+  /* hide anything explicitly marked as on-screen-only */
+  .screen-only { display: none !important; }
+
+  @media screen {
+    body {
+      max-width: 800px;
+      padding: 2rem 1rem 4rem;
+      background: #fafaf7;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>ENSKA 2204 – Málfræði</h1>
+<p class="subtitle">Æfing úr Málfræðipakka 2 · aðal- og aukasetningar, stórir stafir, greinarmerki, þolmynd, óreglulegar sagnir og sögn + forsetning + -ing</p>
+
+<p class="note">Nafn: ______________________________</p>
+
+<style>
+  .opts span { display: block; margin: .15rem 0; }
+  table.m { border-collapse: collapse; width: 100%; } table.m td { padding: .25rem .4rem; vertical-align: top; }
+  table.bins { border-collapse: collapse; width: 100%; margin-top: .3rem; }
+  table.bins th, table.bins td { border: 1px solid #000; padding: .3rem; height: 3rem; vertical-align: top; }
+</style>
+<h2>1. Aðalsetningar og aukasetningar</h2>
+<div class="question"><div class="prompt"><span class="q-num">1.</span> Although the bus was late, Bubbi got to school on time.<br><br>Hver hlutinn er <b>aðalsetningin</b> (independent clause)?</div><div class="opts"><span>◯ Although the bus was late</span><span>◯ Bubbi got to school on time</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">2.</span> We stayed inside because the wind was too strong.<br><br>Hver hlutinn er <b>aðalsetningin</b> (independent clause)?</div><div class="opts"><span>◯ We stayed inside</span><span>◯ because the wind was too strong</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">3.</span> When the film ended, everyone clapped.<br><br>Hver hlutinn er <b>aðalsetningin</b> (independent clause)?</div><div class="opts"><span>◯ everyone clapped</span><span>◯ When the film ended</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">4.</span> Aron will lend you his bike if you bring it back tonight.<br><br>Hver hlutinn er <b>aðalsetningin</b> (independent clause)?</div><div class="opts"><span>◯ Aron will lend you his bike</span><span>◯ if you bring it back tonight</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">5.</span> Since it was Siggi's birthday, we bought a cake.<br><br>Hver hlutinn er <b>aðalsetningin</b> (independent clause)?</div><div class="opts"><span>◯ Since it was Siggi's birthday</span><span>◯ we bought a cake</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">6.</span> The cat hid under the bed when the thunder started.<br><br>Hver hlutinn er <b>aðalsetningin</b> (independent clause)?</div><div class="opts"><span>◯ The cat hid under the bed</span><span>◯ when the thunder started</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">7.</span> Even though Pablo was tired, he finished his essay.<br><br>Hver hlutinn er <b>aðalsetningin</b> (independent clause)?</div><div class="opts"><span>◯ he finished his essay</span><span>◯ Even though Pablo was tired</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">8.</span> I can't come to the match because I have a dentist appointment.<br><br>Hver hlutinn er <b>aðalsetningin</b> (independent clause)?</div><div class="opts"><span>◯ I can't come to the match</span><span>◯ because I have a dentist appointment</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">9.</span> If the shop is closed, we will order pizza instead.<br><br>Hver hlutinn er <b>aðalsetningin</b> (independent clause)?</div><div class="opts"><span>◯ If the shop is closed</span><span>◯ we will order pizza instead</span></div></div>
+<h2>2. Setningar tengdar saman</h2>
+<div class="question"><div class="prompt"><span class="q-num">10.</span> <i>I was cold. I forgot my jacket.</i><br><br>Which is the best way to combine them?</div><div class="opts"><span>◯ Because I was cold, I forgot my jacket.</span><span>◯ I was cold because I forgot my jacket.</span><span>◯ I was cold although I forgot my jacket.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">11.</span> <i>Aron missed the bus. He overslept.</i><br><br>Which is the best way to combine them?</div><div class="opts"><span>◯ Aron missed the bus although he overslept.</span><span>◯ Because Aron missed the bus, he overslept.</span><span>◯ Aron missed the bus because he overslept.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">12.</span> <i>The game will start. The referee blows the whistle.</i><br><br>Which is the best way to combine them?</div><div class="opts"><span>◯ When the game will start the referee blows the whistle.</span><span>◯ The game will start although the referee blows the whistle.</span><span>◯ The game will start when the referee blows the whistle.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">13.</span> <i>She practised every day. She lost the final.</i><br><br>Which is the best way to combine them?</div><div class="opts"><span>◯ Because she practised every day, she lost the final.</span><span>◯ Although she practised every day, she lost the final.</span><span>◯ Although she practised every day she lost, the final.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">14.</span> <i>You can borrow my charger. You give it back tomorrow.</i><br><br>Which is the best way to combine them?</div><div class="opts"><span>◯ You can borrow my charger if you give it back tomorrow.</span><span>◯ You can borrow my charger although you give it back tomorrow.</span><span>◯ If you can borrow my charger, you give it back tomorrow.</span></div></div>
+<h2>3. Stórir stafir</h2>
+<div class="question"><div class="prompt"><span class="q-num">15.</span> <i>the book the hunger games is my brother's favourite.</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ The book the hunger games is my brother's favourite.</span><span>◯ The Book The Hunger Games Is My Brother's Favourite.</span><span>◯ The book The Hunger Games is my brother's favourite.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">16.</span> <i>my coach shouted, "keep running!"</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ My coach shouted, "keep running!"</span><span>◯ My Coach shouted, "Keep Running!"</span><span>◯ My coach shouted, "Keep running!"</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">17.</span> <i>siggi and i are flying to london in june.</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ Siggi and I are Flying to London in June.</span><span>◯ Siggi and i are flying to London in june.</span><span>◯ Siggi and I are flying to London in June.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">18.</span> <i>the prime minister of iceland met the king of norway.</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ The Prime Minister of Iceland met the King of Norway.</span><span>◯ The Prime Minister Of Iceland Met The King Of Norway.</span><span>◯ The prime minister of iceland met the king of norway.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">19.</span> <i>we learned about the treaty of versailles in history.</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ We learned about the treaty of Versailles in History.</span><span>◯ We learned about the Treaty of Versailles in history.</span><span>◯ We Learned about the Treaty of Versailles in History.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">20.</span> <i>ms. jensen works for the ministry of health.</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ Ms. Jensen works for the Ministry of Health.</span><span>◯ Ms. jensen works for the ministry of health.</span><span>◯ Ms. Jensen Works for the Ministry Of Health.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">21.</span> <i>have you watched the series stranger things?</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ Have you watched the series Stranger Things?</span><span>◯ Have You Watched The Series Stranger Things?</span><span>◯ Have you watched the series stranger things?</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">22.</span> <i>the members of the red cross helped after the flood.</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ The Members of the Red Cross helped after the Flood.</span><span>◯ The members of the Red Cross helped after the flood.</span><span>◯ The members of the red cross helped after the flood.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">23.</span> <i>during the middle ages, many castles were built.</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ During the Middle Ages, Many Castles were built.</span><span>◯ During the middle ages, many castles were built.</span><span>◯ During the Middle Ages, many castles were built.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">24.</span> <i>in religion class we read that christians celebrate easter.</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ In religion class we read that christians celebrate easter.</span><span>◯ In Religion Class we read that Christians celebrate Easter.</span><span>◯ In religion class we read that Christians celebrate Easter.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">25.</span> <i>professor olsen said, "this essay is the best i have read."</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ Professor Olsen said, "this essay is the best i have read."</span><span>◯ Professor olsen said, "This Essay is the best I have read."</span><span>◯ Professor Olsen said, "This essay is the best I have read."</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">26.</span> <i>the fbi opened an investigation last month.</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ The fbi opened an investigation last Month.</span><span>◯ The Fbi opened an investigation last month.</span><span>◯ The FBI opened an investigation last month.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">27.</span> <i>pablo is reading the lord of the rings for english class.</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ Pablo is reading the lord of the rings for English class.</span><span>◯ Pablo is reading The Lord of the Rings for English class.</span><span>◯ Pablo is reading The Lord of the Rings for english class.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">28.</span> <i>many people believe god answers their prayers.</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ Many people believe god answers their prayers.</span><span>◯ Many People Believe God answers their Prayers.</span><span>◯ Many people believe God answers their prayers.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">29.</span> <i>on saturday we visited the eiffel tower in paris.</i><br><br>Which one is correctly capitalized?</div><div class="opts"><span>◯ On Saturday we Visited the Eiffel Tower in paris.</span><span>◯ On saturday we visited the Eiffel tower in Paris.</span><span>◯ On Saturday we visited the Eiffel Tower in Paris.</span></div></div>
+<h2>4. Stór eða lítill stafur?</h2>
+<div class="question"><div class="prompt"><span class="q-num">30.</span> <i>last winter aron and i went to copenhagen with our class. our teacher, mr. nielsen, booked a hotel near tivoli gardens. on tuesday we visited the national museum, and pablo said, "this is better than any gallery in reykjavík." in the evening we watched the movie frozen at a cinema on strøget.</i><br><br>Raðaðu orðunum (1/4): stór eða lítill stafur?</div><div>i · and · went · last · class · winter · copenhagen · aron</div><table class='bins'><tr><th>Stór stafur</th><th>Lítill stafur</th></tr><tr><td></td><td></td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">31.</span> <i>last winter aron and i went to copenhagen with our class. our teacher, mr. nielsen, booked a hotel near tivoli gardens. on tuesday we visited the national museum, and pablo said, "this is better than any gallery in reykjavík." in the evening we watched the movie frozen at a cinema on strøget.</i><br><br>Raðaðu orðunum (2/4): stór eða lítill stafur?</div><div>tivoli · nielsen · gardens · booked · teacher · mr. · near · hotel</div><table class='bins'><tr><th>Stór stafur</th><th>Lítill stafur</th></tr><tr><td></td><td></td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">32.</span> <i>last winter aron and i went to copenhagen with our class. our teacher, mr. nielsen, booked a hotel near tivoli gardens. on tuesday we visited the national museum, and pablo said, "this is better than any gallery in reykjavík." in the evening we watched the movie frozen at a cinema on strøget.</i><br><br>Raðaðu orðunum (3/4): stór eða lítill stafur?</div><div>tuesday · reykjavík · better · museum · visited · gallery · this · national · said · pablo</div><table class='bins'><tr><th>Stór stafur</th><th>Lítill stafur</th></tr><tr><td></td><td></td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">33.</span> <i>last winter aron and i went to copenhagen with our class. our teacher, mr. nielsen, booked a hotel near tivoli gardens. on tuesday we visited the national museum, and pablo said, "this is better than any gallery in reykjavík." in the evening we watched the movie frozen at a cinema on strøget.</i><br><br>Raðaðu orðunum (4/4): stór eða lítill stafur?</div><div>frozen · at · evening · cinema · strøget · watched · movie</div><table class='bins'><tr><th>Stór stafur</th><th>Lítill stafur</th></tr><tr><td></td><td></td></tr></table></div>
+<h2>5. Reglur um stóra stafi</h2>
+<div class="question"><div class="prompt"><span class="q-num">34.</span> Paraðu saman regluna og dæmi úr textanum að ofan.</div><table class="m"><tr><td>the first word of a sentence ___</td><td>a) Tuesday</td></tr><tr><td>the pronoun I ___</td><td>b) Copenhagen</td></tr><tr><td>names of people ___</td><td>c) Frozen</td></tr><tr><td>a title before a name ___</td><td>d) Last winter …</td></tr><tr><td>cities and countries ___</td><td>e) Pablo</td></tr><tr><td>days of the week ___</td><td>f) Aron and I</td></tr><tr><td>titles of films and books ___</td><td>g) "This is better …"</td></tr><tr><td>the first word of a quotation ___</td><td>h) Mr. Nielsen</td></tr></table></div>
+<h2>6. Greinarmerki</h2>
+<div class="question"><div class="prompt"><span class="q-num">35.</span> Paraðu saman greinarmerkið og heitið.</div><table class="m"><tr><td>? ___</td><td>a) brackets (USA: parentheses)</td></tr><tr><td>! ___</td><td>b) quotation marks</td></tr><tr><td>' ___</td><td>c) comma</td></tr><tr><td>" " ___</td><td>d) question mark</td></tr><tr><td>. ___</td><td>e) full stop (USA: period)</td></tr><tr><td>: ___</td><td>f) exclamation mark</td></tr><tr><td>; ___</td><td>g) semicolon</td></tr><tr><td>, ___</td><td>h) apostrophe</td></tr><tr><td>( ) ___</td><td>i) colon</td></tr></table></div>
+<h2>7. Greinarmerki í setningum</h2>
+<div class="question"><div class="prompt"><span class="q-num">36.</span> <i>shes my best friend</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ She's my best friend.</span><span>◯ Shes my best friend.</span><span>◯ She's my best friend?</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">37.</span> <i>im sure he doesnt know where hes going</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ Im sure he doesn't know where he's going.</span><span>◯ I'm sure he doesn't know where he's going.</span><span>◯ I'm sure he doesnt know where hes going.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">38.</span> <i>is the shop still open she asked</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ "Is the shop still open." she asked?</span><span>◯ "Is the shop still open?" she asked.</span><span>◯ Is the shop still open? she asked.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">39.</span> <i>they moved to berlin so they speak german at home</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ They moved to berlin, so they speak german at home.</span><span>◯ They moved to Berlin, so they speak German at home.</span><span>◯ They moved to Berlin so, they speak German at home.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">40.</span> <i>wheres the nearest bus stop</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ Where's the nearest bus stop.</span><span>◯ Wheres the nearest bus stop?</span><span>◯ Where's the nearest bus stop?</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">41.</span> <i>youve broken my phone</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ Youv'e broken my phone!</span><span>◯ You've broken my phone!</span><span>◯ You've broken my phone?</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">42.</span> <i>aron hasnt finished his spanish essay</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ Aron hasnt finished his Spanish essay.</span><span>◯ Aron hasn't finished his Spanish essay.</span><span>◯ Aron hasn't finished his spanish essay.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">43.</span> <i>are you ready she shouted</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ "Are you ready" she shouted?</span><span>◯ "Are you ready?" she shouted.</span><span>◯ "Are you ready?" She shouted.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">44.</span> <i>we cant come because were busy on friday</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ We can't come because were busy on Friday.</span><span>◯ We can't come because we're busy on Friday.</span><span>◯ We cant come because we're busy on friday.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">45.</span> <i>siggi trains at the gym from monday to thursday in the autumn but in july he usually swims</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ Siggi trains at the gym from Monday to Thursday in the Autumn but, in July he usually swims.</span><span>◯ Siggi trains at the gym from monday to thursday in the autumn, but in july he usually swims.</span><span>◯ Siggi trains at the gym from Monday to Thursday in the autumn, but in July he usually swims.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">46.</span> <i>he wants to be a reporter for the guardian</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ He wants to be a reporter for The Guardian.</span><span>◯ He wants to be a reporter for the guardian.</span><span>◯ He wants to be a Reporter for The Guardian.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">47.</span> <i>have you seen romeo and juliet by shakespeare he asked</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ "Have you seen romeo and juliet by Shakespeare?" he asked.</span><span>◯ "Have you seen Romeo and Juliet by Shakespeare," he asked?</span><span>◯ "Have you seen Romeo and Juliet by Shakespeare?" he asked.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">48.</span> <i>watch out theres a car coming</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ Watch out! There's a car coming!</span><span>◯ Watch out, theres a car coming.</span><span>◯ Watch out? There's a car coming.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">49.</span> <i>my two cousins aron and bubbi live in akureyri</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ My two cousins Aron and Bubbi live in akureyri.</span><span>◯ My two cousins, Aron and Bubbi, live in Akureyri.</span><span>◯ My two Cousins, Aron and Bubbi, live in Akureyri.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">50.</span> <i>wheres pablo she asked me</i><br><br>Which one is correctly punctuated?</div><div class="opts"><span>◯ "Where's Pablo" she asked me?</span><span>◯ "Wheres Pablo?" she asked me.</span><span>◯ "Where's Pablo?" she asked me.</span></div></div>
+<h2>8. Settu inn greinarmerkin</h2>
+<div class="question"><div class="prompt"><span class="q-num">51.</span> <i>we went to spain for ten days which was great but it was too hot!</i> (TWO COMMAS)<br><br>Which one is correct?</div><div class="opts"><span>◯ We went to Spain, for ten days which was great, but it was too hot!</span><span>◯ We went to Spain for ten days, which was great, but it was too hot!</span><span>◯ We went to spain for ten days, which was great, but, it was too hot!</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">52.</span> <i>i met aron and his sister yesterday aron was friendly and she was funny.</i> (ONE FULL STOP, ONE COMMA)<br><br>Which one is correct?</div><div class="opts"><span>◯ I met Aron and his sister yesterday. Aron was friendly, and she was funny.</span><span>◯ I met aron and his sister yesterday. Aron was friendly, and she was funny.</span><span>◯ I met Aron, and his sister yesterday. Aron was friendly and she was funny.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">53.</span> <i>Bubbi was late as usual he always is so we started without him sadly we lost.</i> (BRACKETS, ONE FULL STOP, TWO COMMAS)<br><br>Which one is correct?</div><div class="opts"><span>◯ Bubbi was late as usual (he always is), so we started without him. Sadly, we lost.</span><span>◯ Bubbi was late (as usual he always is) so, we started without him, sadly we lost.</span><span>◯ Bubbi was late, as usual (he always is) so we started without him. Sadly we lost.</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">54.</span> <i>we wondered if you were coming did you get our message.</i> (ONE SEMI-COLON, ONE QUESTION MARK)<br><br>Which one is correct?</div><div class="opts"><span>◯ We wondered if you were coming? did you get our message;</span><span>◯ We wondered if you were coming; did you get our message?</span><span>◯ We wondered; if you were coming did you get our message?</span></div></div>
+<h2>9. Þolmynd í þátíð</h2>
+<div class="question"><div class="prompt"><span class="q-num">55.</span> The pyramids at Giza (build) <b>_____</b> more than 4,500 years ago.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">56.</span> The telephone (invent) <b>_____</b> by Alexander Graham Bell.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">57.</span> The first photo of Earth from space (take) <b>_____</b> in 1946.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">58.</span> Telegrams (send) <b>_____</b> to deliver urgent news before phones were common.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">59.</span> The first email (write) <b>_____</b> by Ray Tomlinson in 1971.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">60.</span> Penicillin (discover) <b>_____</b> by accident in a London laboratory.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">61.</span> The first video game consoles (sell) <b>_____</b> in the 1970s.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">62.</span> Mail (carry) <b>_____</b> by horse riders across the American West.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">63.</span> The Harry Potter books (translate) <b>_____</b> into more than 80 languages.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">64.</span> Halley's Comet (see) <b>_____</b> from Earth in 1986.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).</div><div>______________________</div></div>
+<h2>10. Hvernig brauð er bakað</h2>
+<div class="question"><div class="prompt"><span class="q-num">65.</span> <i>First, they mix flour, water and yeast in a big bowl.</i><br>First, flour, water and yeast <b>_____</b> in a big bowl.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">66.</span> <i>Then they leave the dough to rise for an hour.</i><br>Then the dough <b>_____</b> to rise for an hour.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">67.</span> <i>They shape the dough into loaves.</i><br>The dough <b>_____</b> into loaves.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">68.</span> <i>They bake the loaves at 220 degrees.</i><br>The loaves <b>_____</b> at 220 degrees.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">69.</span> <i>They cool the bread on metal racks.</i><br>The bread <b>_____</b> on metal racks.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">70.</span> <i>Then they slice the bread and wrap it in paper.</i><br>Then the bread <b>_____</b> and wrapped in paper.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">71.</span> <i>Finally, they deliver the bread to shops.</i><br>Finally, the bread <b>_____</b> to shops.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).</div><div>______________________</div></div>
+<h2>11. Sagnir sem eru oftast í þolmynd</h2>
+<div class="question"><div class="prompt"><span class="q-num">72.</span> My grandfather (bear) <b>_____</b> in Ísafjörður in 1950.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">73.</span> The next team meeting (schedule) <b>_____</b> for Friday at 4 pm.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">74.</span> For parking in the wrong place, the driver (fine) <b>_____</b> 10,000 krónur.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">75.</span> The thief (convict) <b>_____</b> last week.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">76.</span> Every summer, the new ice-cream shop (staff) <b>_____</b> by students.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">77.</span> After ten years apart, the two brothers (reunite) <b>_____</b> last spring.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">78.</span> Siggi (short-list) <b>_____</b> for young player of the year, but he didn't win.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">79.</span> Two soldiers (wound) <b>_____</b> in the attack yesterday.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">80.</span> During the war, food (ration) <b>_____</b> so that everyone got a fair share.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">81.</span> For thousands of years, the island (populate) <b>_____</b> only by birds.</div><div>______________________</div></div>
+<h2>12. Hjálparsögn + þolmynd</h2>
+<div class="question"><div class="prompt"><span class="q-num">82.</span> Tickets (can / buy) <b>_____</b> online or at the door.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">83.</span> Phones (should / switch) <b>_____</b> off during the exam.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">84.</span> The results (may / publish) <b>_____</b> later this week.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">85.</span> We were told that the new pool (would / open) <b>_____</b> in May.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">86.</span> This medicine (should / keep) <b>_____</b> in a cool place.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">87.</span> The northern lights (can / see) <b>_____</b> from Reykjavík in winter.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">88.</span> Be careful – the road (may / close) <b>_____</b> if it snows.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">89.</span> The coach promised that the new kit (would / deliver) <b>_____</b> before the first game.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">90.</span> Library books (should / return) <b>_____</b> within three weeks.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">91.</span> Spare keys (can / order) <b>_____</b> from the company's website.</div><div>______________________</div></div>
+<h2>13. Innbrotið</h2>
+<div class="question"><div class="prompt"><span class="q-num">92.</span> Aron <b>_____</b> (bear) in 2010.<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">93.</span> As a child he <b>_____</b> (live) in a small house in Hafnarfjörður.<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">94.</span> The house <b>_____</b> (build) in 1920.<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">95.</span> It <b>_____</b> (be) a lovely old house.<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">96.</span> He <b>_____</b> (grow) up there very happily.<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">97.</span> Last winter, while the family <b>_____</b> (be) on holiday in Spain …<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">98.</span> … their house <b>_____</b> (break) into.<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">99.</span> A neighbour <b>_____</b> (phone) them …<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">100.</span> … and <b>_____</b> (say): …<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">101.</span> "Your back door <b>_____</b> (force) open!"<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">102.</span> "The TV <b>_____</b> (take)!"<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">103.</span> "And your jewellery <b>_____</b> (steal)!"<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">104.</span> Two days later, a man <b>_____</b> (arrest).<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">105.</span> He <b>_____</b> (take) to the police station.<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">106.</span> There he <b>_____</b> (confess) to the break-in.<br><br>Germynd eða þolmynd, í réttri tíð.</div><div>______________________</div></div>
+<h2>14. Germynd eða þolmynd?</h2>
+<div class="question"><div class="prompt"><span class="q-num">107.</span> When the storm hit last year, our neighbour's roof <b>_____</b> (blow) off.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">108.</span> Luckily, nobody <b>_____</b> (hurt).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">109.</span> Bubbi <b>_____</b> (break) his arm skiing last winter.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">110.</span> He <b>_____</b> (take) to hospital by ambulance.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">111.</span> Every summer, thousands of tourists <b>_____</b> (bring) to the glacier by bus.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">112.</span> The old bridge <b>_____</b> (repair) at the moment, so we have to drive around.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">113.</span> Pablo can't find his keys. He thinks they <b>_____</b> (steal).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">114.</span> The match <b>_____</b> (cancel) because of the snow, so we went home.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">115.</span> I <b>_____</b> (not use) my laptop right now.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">116.</span> My laptop <b>_____</b> (send) away for repairs yesterday.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">117.</span> Siggi <b>_____</b> (leave) the club two years ago.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">118.</span> Since then he <b>_____</b> (not see) at any of the games.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">119.</span> Have you ever <b>_____</b> (sting) by a bee?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">120.</span> How many cars <b>_____</b> (sell) in Iceland last year?</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">121.</span> Everything you write on the internet <b>_____</b> (save) forever.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">122.</span> The letters <b>_____</b> (post) yesterday afternoon.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">123.</span> I <b>_____</b> (agree) with most of the rules at our school.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">124.</span> The rules <b>_____</b> (change) last year by the student council.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">125.</span> Football <b>_____</b> (play) in England for hundreds of years.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">126.</span> Today most people <b>_____</b> (watch) football on TV.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">127.</span> Skyr <b>_____</b> (eat) in Iceland since the Viking Age.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">128.</span> Shh! The baby <b>_____</b> (sleep).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">129.</span> The winner <b>_____</b> (announce) tomorrow morning.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">130.</span> Aron <b>_____</b> (feel) sick after the long bus ride yesterday.</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">131.</span> The teacher promised that our essays <b>_____</b> (mark) by Friday.</div><div>______________________</div></div>
+<h2>15. Óreglulegar sagnir</h2>
+<div class="question"><div class="prompt"><span class="q-num">132.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>awake</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">133.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>beat</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">134.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>begin</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">135.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>bite</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">136.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>bleed</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">137.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>break</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">138.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>catch</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">139.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>come</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">140.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>creep</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">141.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>drive</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">142.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>feed</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">143.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>find</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">144.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>hide</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">145.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>kneel</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">146.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>lead</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">147.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>learn</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">148.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>lend</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">149.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>lie</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">150.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>lose</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">151.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>mean</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">152.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>see</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">153.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>sing</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">154.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>sink</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">155.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>spit</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">156.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>stick</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">157.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>strike</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">158.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>swim</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">159.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>teach</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">160.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>tear</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">161.</span> Skrifaðu þátíð og lýsingarhátt þátíðar af <b>wear</b>, með kommu á milli (t.d. <i>go → went, gone</i>).</div><div>______________________</div></div>
+<h2>16. Sögn + forsetning</h2>
+<div class="question"><div class="prompt"><span class="q-num">162.</span> The players accused the referee <b>_____</b> cheating.</div><div class="opts"><span>◯ of</span><span>◯ for</span><span>◯ on</span><span>◯ with</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">163.</span> Bubbi apologized <b>_____</b> being late.</div><div class="opts"><span>◯ at</span><span>◯ about</span><span>◯ for</span><span>◯ to</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">164.</span> My parents don't approve <b>_____</b> me staying up all night.</div><div class="opts"><span>◯ for</span><span>◯ of</span><span>◯ at</span><span>◯ about</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">165.</span> The driver was charged <b>_____</b> speeding.</div><div class="opts"><span>◯ for</span><span>◯ like</span><span>◯ with</span><span>◯ from</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">166.</span> The neighbours complained <b>_____</b> the loud music.</div><div class="opts"><span>◯ of</span><span>◯ in</span><span>◯ about</span><span>◯ with</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">167.</span> We congratulated Aron <b>_____</b> winning the chess tournament.</div><div class="opts"><span>◯ on</span><span>◯ at</span><span>◯ in</span><span>◯ to</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">168.</span> You can always count <b>_____</b> Siggi to help.</div><div class="opts"><span>◯ of</span><span>◯ for</span><span>◯ on</span><span>◯ at</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">169.</span> The lawyer convinced the jury <b>_____</b> his innocence.</div><div class="opts"><span>◯ at</span><span>◯ of</span><span>◯ like</span><span>◯ about</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">170.</span> I don't feel <b>_____</b> going out tonight.</div><div class="opts"><span>◯ like</span><span>◯ to</span><span>◯ about</span><span>◯ in</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">171.</span> Dad insisted <b>_____</b> driving us to the airport.</div><div class="opts"><span>◯ in</span><span>◯ on</span><span>◯ for</span><span>◯ with</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">172.</span> The snow prevented us <b>_____</b> leaving the house.</div><div class="opts"><span>◯ at</span><span>◯ on</span><span>◯ from</span><span>◯ with</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">173.</span> Many people rely <b>_____</b> their phones to wake them up.</div><div class="opts"><span>◯ on</span><span>◯ at</span><span>◯ like</span><span>◯ about</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">174.</span> This song reminds me <b>_____</b> our trip to Spain.</div><div class="opts"><span>◯ of</span><span>◯ from</span><span>◯ like</span><span>◯ on</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">175.</span> Andri Fannar finally succeeded <b>_____</b> passing his driving test.</div><div class="opts"><span>◯ on</span><span>◯ with</span><span>◯ in</span><span>◯ at</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">176.</span> The police suspected the man <b>_____</b> stealing the car.</div><div class="opts"><span>◯ on</span><span>◯ in</span><span>◯ with</span><span>◯ of</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">177.</span> We talked <b>_____</b> going to the cinema.</div><div class="opts"><span>◯ about</span><span>◯ at</span><span>◯ against</span><span>◯ with</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">178.</span> The guide warned us <b>_____</b> walking too close to the edge.</div><div class="opts"><span>◯ on</span><span>◯ at</span><span>◯ against</span><span>◯ about</span></div></div>
+<h2>17. Þýddu á ensku</h2>
+<div class="question"><div class="prompt"><span class="q-num">179.</span> The boys <b>_____</b> to the beach after school. <i>(töluðu um að fara)</i></div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">180.</span> I <b>_____</b> my results next week. <i>(reikna með að fá)</i></div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">181.</span> Pablo <b>_____</b> the last slice of pizza. <i>(var grunaður um að taka)</i></div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">182.</span> Mum <b>_____</b> for everyone's dinner. <i>(krafðist þess að borga)</i></div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">183.</span> The rain <b>_____</b> the match. <i>(hindraði okkur í að spila)</i></div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">184.</span> We <b>_____</b> his exams. <i>(óskuðum honum til hamingju með að ná)</i></div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">185.</span> The teacher <b>_____</b> our phones during the test. <i>(varaði okkur við að nota)</i></div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">186.</span> I <b>_____</b> my cousins at Christmas. <i>(hlakka til að hitta)</i></div><div>______________________</div></div>
+<div class="question"><div class="prompt"><span class="q-num">187.</span> Siggi <b>_____</b> early for training. <i>(er vanur að vakna)</i></div><div>______________________</div></div>
+<h2>18. Sagnir + -ing</h2>
+<div class="question"><div class="prompt"><span class="q-num">188.</span> Paraðu saman upphaf og endi setninganna.</div><table class="m"><tr><td>Bubbi admitted … ___</td><td>a) walking for three hours.</td></tr><tr><td>I can't stand … ___</td><td>b) taking the last cookie.</td></tr><tr><td>We got lost and ended up … ___</td><td>c) playing the final because of the storm.</td></tr><tr><td>Would you mind … ___</td><td>d) hitting a sheep on the road.</td></tr><tr><td>They had to postpone … ___</td><td>e) turning the music down, please?</td></tr><tr><td>Pablo couldn't resist … ___</td><td>f) waiting in long queues.</td></tr><tr><td>Siggi is considering … ___</td><td>g) laughing at the joke.</td></tr><tr><td>The cyclist only just avoided … ___</td><td>h) moving to Akureyri.</td></tr></table></div>
+
+<section class="solutions"><h2>Lausnir</h2><h3>1. Aðalsetningar og aukasetningar</h3><ol start='1'>
+<li>Bubbi got to school on time</li>
+<li>We stayed inside</li>
+<li>everyone clapped</li>
+<li>Aron will lend you his bike</li>
+<li>we bought a cake</li>
+<li>The cat hid under the bed</li>
+<li>he finished his essay</li>
+<li>I can't come to the match</li>
+<li>we will order pizza instead</li>
+</ol>
+<h3>2. Setningar tengdar saman</h3><ol start='10'>
+<li>I was cold because I forgot my jacket.</li>
+<li>Aron missed the bus because he overslept.</li>
+<li>The game will start when the referee blows the whistle.</li>
+<li>Although she practised every day, she lost the final.</li>
+<li>You can borrow my charger if you give it back tomorrow.</li>
+</ol>
+<h3>3. Stórir stafir</h3><ol start='15'>
+<li>The book The Hunger Games is my brother's favourite.</li>
+<li>My coach shouted, "Keep running!"</li>
+<li>Siggi and I are flying to London in June.</li>
+<li>The Prime Minister of Iceland met the King of Norway.</li>
+<li>We learned about the Treaty of Versailles in history.</li>
+<li>Ms. Jensen works for the Ministry of Health.</li>
+<li>Have you watched the series Stranger Things?</li>
+<li>The members of the Red Cross helped after the flood.</li>
+<li>During the Middle Ages, many castles were built.</li>
+<li>In religion class we read that Christians celebrate Easter.</li>
+<li>Professor Olsen said, "This essay is the best I have read."</li>
+<li>The FBI opened an investigation last month.</li>
+<li>Pablo is reading The Lord of the Rings for English class.</li>
+<li>Many people believe God answers their prayers.</li>
+<li>On Saturday we visited the Eiffel Tower in Paris.</li>
+</ol>
+<h3>4. Stór eða lítill stafur?</h3><ol start='30'>
+<li>Stór stafur: last, aron, i, copenhagen | Lítill stafur: winter, and, went, class</li>
+<li>Stór stafur: mr., nielsen, tivoli, gardens | Lítill stafur: near, teacher, booked, hotel</li>
+<li>Stór stafur: tuesday, national, museum, pablo, this, reykjavík | Lítill stafur: gallery, visited, said, better</li>
+<li>Stór stafur: frozen, strøget | Lítill stafur: at, evening, watched, movie, cinema</li>
+</ol>
+<h3>5. Reglur um stóra stafi</h3><ol start='34'>
+<li>the first word of a sentence – d, the pronoun I – f, names of people – e, a title before a name – h, cities and countries – b, days of the week – a, titles of films and books – c, the first word of a quotation – g</li>
+</ol>
+<h3>6. Greinarmerki</h3><ol start='35'>
+<li>? – d, ! – f, ' – h, " " – b, . – e, : – i, ; – g, , – c, ( ) – a</li>
+</ol>
+<h3>7. Greinarmerki í setningum</h3><ol start='36'>
+<li>She's my best friend.</li>
+<li>I'm sure he doesn't know where he's going.</li>
+<li>"Is the shop still open?" she asked.</li>
+<li>They moved to Berlin, so they speak German at home.</li>
+<li>Where's the nearest bus stop?</li>
+<li>You've broken my phone!</li>
+<li>Aron hasn't finished his Spanish essay.</li>
+<li>"Are you ready?" she shouted.</li>
+<li>We can't come because we're busy on Friday.</li>
+<li>Siggi trains at the gym from Monday to Thursday in the autumn, but in July he usually swims.</li>
+<li>He wants to be a reporter for The Guardian.</li>
+<li>"Have you seen Romeo and Juliet by Shakespeare?" he asked.</li>
+<li>Watch out! There's a car coming!</li>
+<li>My two cousins, Aron and Bubbi, live in Akureyri.</li>
+<li>"Where's Pablo?" she asked me.</li>
+</ol>
+<h3>8. Settu inn greinarmerkin</h3><ol start='51'>
+<li>We went to Spain for ten days, which was great, but it was too hot!</li>
+<li>I met Aron and his sister yesterday. Aron was friendly, and she was funny.</li>
+<li>Bubbi was late as usual (he always is), so we started without him. Sadly, we lost.</li>
+<li>We wondered if you were coming; did you get our message?</li>
+</ol>
+<h3>9. Þolmynd í þátíð</h3><ol start='55'>
+<li>were built</li>
+<li>was invented</li>
+<li>was taken</li>
+<li>were sent</li>
+<li>was written</li>
+<li>was discovered</li>
+<li>were sold</li>
+<li>was carried</li>
+<li>were translated</li>
+<li>was seen</li>
+</ol>
+<h3>10. Hvernig brauð er bakað</h3><ol start='65'>
+<li>are mixed</li>
+<li>is left</li>
+<li>is shaped</li>
+<li>are baked</li>
+<li>is cooled</li>
+<li>is sliced</li>
+<li>is delivered</li>
+</ol>
+<h3>11. Sagnir sem eru oftast í þolmynd</h3><ol start='72'>
+<li>was born</li>
+<li>is scheduled</li>
+<li>was fined</li>
+<li>was convicted</li>
+<li>is staffed</li>
+<li>were reunited</li>
+<li>was short-listed</li>
+<li>were wounded</li>
+<li>was rationed</li>
+<li>was populated</li>
+</ol>
+<h3>12. Hjálparsögn + þolmynd</h3><ol start='82'>
+<li>can be bought</li>
+<li>should be switched</li>
+<li>may be published</li>
+<li>would be opened</li>
+<li>should be kept</li>
+<li>can be seen</li>
+<li>may be closed</li>
+<li>would be delivered</li>
+<li>should be returned</li>
+<li>can be ordered</li>
+</ol>
+<h3>13. Innbrotið</h3><ol start='92'>
+<li>was born</li>
+<li>lived</li>
+<li>was built</li>
+<li>was</li>
+<li>grew</li>
+<li>were</li>
+<li>was broken</li>
+<li>phoned</li>
+<li>said</li>
+<li>has been forced</li>
+<li>has been taken</li>
+<li>has been stolen</li>
+<li>was arrested</li>
+<li>was taken</li>
+<li>confessed</li>
+</ol>
+<h3>14. Germynd eða þolmynd?</h3><ol start='107'>
+<li>was blown</li>
+<li>was hurt</li>
+<li>broke</li>
+<li>was taken</li>
+<li>are brought</li>
+<li>is being repaired</li>
+<li>have been stolen</li>
+<li>was cancelled</li>
+<li>am not using</li>
+<li>was sent</li>
+<li>left</li>
+<li>has not been seen</li>
+<li>been stung</li>
+<li>were sold</li>
+<li>is saved</li>
+<li>were posted</li>
+<li>agree</li>
+<li>were changed</li>
+<li>has been played</li>
+<li>watch</li>
+<li>has been eaten</li>
+<li>is sleeping</li>
+<li>will be announced</li>
+<li>felt</li>
+<li>would be marked</li>
+</ol>
+<h3>15. Óreglulegar sagnir</h3><ol start='132'>
+<li>awoke, awoken</li>
+<li>beat, beaten</li>
+<li>began, begun</li>
+<li>bit, bitten</li>
+<li>bled, bled</li>
+<li>broke, broken</li>
+<li>caught, caught</li>
+<li>came, come</li>
+<li>crept, crept</li>
+<li>drove, driven</li>
+<li>fed, fed</li>
+<li>found, found</li>
+<li>hid, hidden</li>
+<li>knelt, knelt</li>
+<li>led, led</li>
+<li>learnt, learnt</li>
+<li>lent, lent</li>
+<li>lay, lain</li>
+<li>lost, lost</li>
+<li>meant, meant</li>
+<li>saw, seen</li>
+<li>sang, sung</li>
+<li>sank, sunk</li>
+<li>spat, spat</li>
+<li>stuck, stuck</li>
+<li>struck, struck</li>
+<li>swam, swum</li>
+<li>taught, taught</li>
+<li>tore, torn</li>
+<li>wore, worn</li>
+</ol>
+<h3>16. Sögn + forsetning</h3><ol start='162'>
+<li>of</li>
+<li>for</li>
+<li>of</li>
+<li>with</li>
+<li>about</li>
+<li>on</li>
+<li>on</li>
+<li>of</li>
+<li>like</li>
+<li>on</li>
+<li>from</li>
+<li>on</li>
+<li>of</li>
+<li>in</li>
+<li>of</li>
+<li>about</li>
+<li>against</li>
+</ol>
+<h3>17. Þýddu á ensku</h3><ol start='179'>
+<li>talked about going</li>
+<li>am counting on getting</li>
+<li>was suspected of taking</li>
+<li>insisted on paying</li>
+<li>prevented us from playing</li>
+<li>congratulated him on passing</li>
+<li>warned us against using</li>
+<li>look forward to meeting</li>
+<li>is used to waking up</li>
+</ol>
+<h3>18. Sagnir + -ing</h3><ol start='188'>
+<li>Bubbi admitted … – b, I can't stand … – f, We got lost and ended up … – a, Would you mind … – e, They had to postpone … – c, Pablo couldn't resist … – g, Siggi is considering … – h, The cyclist only just avoided … – d</li>
+</ol></section>
+
+</body>
+</html>
