@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENSKA 2204 – Málfræði (2)</title>
+<style>
+  :root {
+    --bg: #f6f4ef; --card: #fff; --ink: #222; --muted: #666; --line: #e2ddd2;
+    --good: #2e9e5b; --good-bg: #e3f6ea; --bad: #d64545; --bad-bg: #fde8e8;
+    --pick: #2f6fd6; --pick-bg: #e6efff; --note: #fff6d6; --note-line: #f0d77a;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 19px/1.45 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px 80px; }
+  header.top { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .top-in { max-width: 860px; margin: 0 auto; padding: 10px 16px 8px; }
+  .score { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+  .bar { flex: 1; height: 14px; background: #e6e1d6; border-radius: 7px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--good); transition: width .3s; }
+  .stars { display: inline-flex; align-items: center; gap: 4px; color: #c98a00; white-space: nowrap; }
+  .stars svg { width: 22px; height: 22px; fill: #f5b301; }
+  nav.secs { display: flex; gap: 6px; overflow-x: auto; padding-top: 8px; scrollbar-width: none; }
+  nav.secs a { flex: none; font-size: 14px; padding: 5px 10px; border-radius: 999px; background: #fff;
+               border: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  nav.secs a.done { background: var(--good-bg); border-color: var(--good); }
+  h1 { font-size: 30px; margin: 22px 0 4px; }
+  .subtitle { color: var(--muted); margin: 0 0 8px; }
+  .how { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; margin: 14px 0; }
+  .how b { color: var(--pick); }
+  section.sec { margin-top: 34px; scroll-margin-top: 110px; }
+  .sec-head { display: flex; align-items: center; gap: 12px; color: #fff; border-radius: 14px 14px 0 0;
+              padding: 12px 16px; }
+  .sec-head h2 { margin: 0; font-size: 24px; }
+  .sec-head .pg { margin-left: auto; font-size: 15px; opacity: .9; }
+  .sec-head .pg a { color: #fff; }
+  .mundu { background: var(--note); border: 2px solid var(--note-line); border-top: 0; border-radius: 0 0 14px 14px;
+           padding: 10px 16px 12px; }
+  .mundu h3 { margin: 0 0 4px; font-size: 18px; }
+  .mundu ul { margin: 0; padding-left: 22px; }
+  .mundu li { margin: 3px 0; }
+  .task { background: var(--card); border-radius: 14px; margin: 16px 0; padding: 14px 16px 16px;
+          box-shadow: 0 1px 3px rgba(0,0,0,.08); border-left: 6px solid #ccc; }
+  .task.ok { border-left-color: var(--good); }
+  .task.meh { border-left-color: #e0a800; }
+  .t-head { display: flex; gap: 8px; align-items: baseline; font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+  .t-head .hint { margin-left: auto; }
+  .q { font-size: 21px; font-weight: 600; margin: 2px 0 12px; }
+  .opts { display: grid; gap: 10px; }
+  @media (min-width: 640px) { .opts.two { grid-template-columns: 1fr 1fr; } }
+  button.opt, button.chip, button.slot, .bin, button.side {
+    font: inherit; color: inherit; background: #fff; border: 2px solid #cfc8b8; border-radius: 12px;
+    padding: 12px 14px; min-height: 52px; text-align: left; cursor: pointer; touch-action: manipulation; }
+  button.opt:active, button.chip:active { transform: scale(.98); }
+  .tf { display: flex; gap: 12px; }
+  .tf button { flex: 1; text-align: center; font-weight: 700; font-size: 22px; }
+  .picked { border-color: var(--pick) !important; background: var(--pick-bg) !important; box-shadow: 0 0 0 3px #b9d0fb; }
+  .good { border-color: var(--good) !important; background: var(--good-bg) !important; }
+  .bad { border-color: var(--bad) !important; background: var(--bad-bg) !important; animation: shake .35s; }
+  .gone { opacity: .35; pointer-events: none; }
+  @keyframes shake { 0%,100% { transform: none; } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 6px #ffd54a; } }
+  .pulse { animation: pulse .6s 3; }
+  .bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .bank button.chip { min-height: 46px; padding: 8px 14px; border-radius: 999px; }
+  .figure { text-align: center; }
+  svg.dia { width: 100%; max-width: 560px; height: auto; background: #fff; border-radius: 10px; }
+  svg.dia .bub { fill: #fff; stroke: #333; cursor: pointer; }
+  svg.dia text { font-weight: 800; fill: #222; pointer-events: none; font-family: inherit; }
+  svg.dia .ld { stroke: #333; }
+  svg.dia .dot { fill: #333; }
+  svg.dia .mk.on .bub { fill: #cfe0ff; stroke: var(--pick); }
+  svg.dia .mk.ok .bub { fill: #7fd39b; stroke: var(--good); }
+  svg.dia .mk.no .bub { fill: #f6a5a5; stroke: var(--bad); }
+  .slots { display: grid; gap: 8px; margin-top: 10px; }
+  @media (min-width: 640px) { .slots { grid-template-columns: 1fr 1fr; } }
+  button.slot { display: flex; gap: 10px; align-items: center; padding: 8px 12px; }
+  button.slot .n { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 2px solid #333;
+                   display: grid; place-items: center; font-weight: 800; }
+  button.slot .w { color: var(--muted); }
+  button.slot.good .w { color: var(--ink); font-weight: 700; }
+  .match { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+  .match .col { display: grid; gap: 10px; align-content: start; }
+  button.side { width: 100%; }
+  .bins { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin-top: 6px; }
+  .bin { cursor: pointer; min-height: 110px; background: #faf8f3; border-style: dashed; }
+  .bin h4 { margin: 0 0 6px; font-size: 17px; }
+  .bin .in { display: flex; flex-wrap: wrap; gap: 6px; }
+  .bin .in span { background: var(--good-bg); border: 1px solid var(--good); border-radius: 999px; padding: 2px 10px; font-size: 16px; }
+  ol.seq { margin: 8px 0; padding: 0; list-style: none; display: grid; gap: 6px; counter-reset: s; }
+  ol.seq li { counter-increment: s; border: 2px dashed #cfc8b8; border-radius: 12px; padding: 8px 12px; min-height: 46px; color: var(--muted); }
+  ol.seq li::before { content: counter(s) ". "; font-weight: 800; color: var(--ink); }
+  ol.seq li.good { border-style: solid; color: var(--ink); font-weight: 600; }
+  .typ { display: flex; gap: 10px; }
+  .typ input { flex: 1; min-width: 0; font: inherit; font-size: 22px; padding: 10px 14px; border: 2px solid #cfc8b8;
+               border-radius: 12px; background: #fff; color: var(--ink); }
+  .typ input:focus { outline: none; border-color: var(--pick); }
+  .typ button.go { flex: none; text-align: center; font-weight: 700; }
+  .fr { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .fr .stack { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; }
+  .fr .stack i { display: block; width: 84px; height: 3px; background: var(--ink); border-radius: 2px; }
+  .fr input { width: 84px; text-align: center; font: inherit; font-size: 24px; font-weight: 700; padding: 6px;
+              border: 2px solid #cfc8b8; border-radius: 10px; background: #fff; color: var(--ink); }
+  .fr input:focus { outline: none; border-color: var(--pick); }
+  .fr input.wide { width: 120px; }
+  .fr button.go { text-align: center; font-weight: 700; }
+  .q svg.pic { display: block; margin: 10px auto 2px; width: 100%; max-width: 250px; height: auto; }
+  .q svg.pic.wide { max-width: 560px; }
+  .q svg.pic text { font-weight: 800; font-family: inherit; }
+  .clue { margin-top: 10px; font-size: 22px; letter-spacing: .08em; font-family: ui-monospace, Menlo, monospace; }
+  .fb { margin-top: 12px; font-size: 17px; display: none; padding: 10px 12px; border-radius: 10px; }
+  .fb.show { display: block; }
+  .fb.yes { background: var(--good-bg); }
+  .fb.try { background: var(--bad-bg); }
+  .fb a { color: var(--pick); }
+  .end { background: #fff; border-radius: 14px; padding: 18px; margin-top: 30px; text-align: center; }
+  .end .big { font-size: 26px; font-weight: 800; }
+  .end button { font: inherit; font-weight: 700; padding: 12px 18px; margin: 8px; border-radius: 12px; border: 0;
+                background: var(--pick); color: #fff; cursor: pointer; }
+  .end button.alt { background: #888; }
+  footer { text-align: center; color: var(--muted); font-size: 14px; margin-top: 30px; }
+  .sec-head { border-radius: 14px; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<a id="back-to-list" href="../index.html" style="display:inline-block;margin:10px 0 0 12px;padding:6px 14px;border-radius:999px;background:#fff;border:1px solid #ccc;color:#c8102e;font:600 15px -apple-system,'Helvetica Neue',Arial,sans-serif;text-decoration:none;position:relative;z-index:50">← Öll prófin</a><style>@media print{#back-to-list{display:none!important}}</style>
+<header class="top"><div class="top-in">
+  <div class="score"><span id="prog">0 / 0</span><div class="bar"><i id="barfill"></i></div>
+    <span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3 7 7 .6-5.3 4.6 1.6 7-6.3-3.8L5.7 21l1.6-7L2 9.6 9 9z"/></svg><span id="stars">0</span></span></div>
+  <nav class="secs" id="nav"></nav>
+</div></header>
+<div class="wrap">
+  <h1>ENSKA 2204 – Málfræði (2)</h1>
+  <p class="subtitle">Önnur æfing úr Málfræðipakka 2, allar spurningar nýjar · aðal- og aukasetningar, stórir stafir, greinarmerki, þolmynd, óreglulegar sagnir og sögn + forsetning + -ing</p>
+  <div class="how">Pikkaðu á svörin.
+    Þegar þú átt að skrifa, skrifarðu svarið og ýtir á <b>Athuga</b>. Ef það er rangt færðu vísbendingu.
+    Þú færð <b>stjörnu</b> fyrir hvert verkefni sem þú klárar án villu.</div>
+  <div id="app"></div>
+  <div class="end" id="end"></div>
+  <footer>Byggt á Málfræðipakka 2 og verkefnablöðum kennarans · 188 verkefni</footer>
+</div>
+<script>
+const DATA = {"sections": [{"title": "Aðalsetningar og aukasetningar", "pages": "Málfræðipakki 2", "color": "#2f6fd6", "items": [{"t": "mc", "q": "Although it was raining, Siggi went for a run.<br><br>Hver hlutinn er <b>aðalsetningin<\/b> (independent clause)?", "a": "Siggi went for a run", "opts": ["Siggi went for a run", "Although it was raining"], "why": "Aukasetningin er <i>Although it was raining<\/i> – hún getur ekki staðið ein."}, {"t": "mc", "q": "Pablo was happy because his team won.<br><br>Hver hlutinn er <b>aðalsetningin<\/b> (independent clause)?", "a": "Pablo was happy", "opts": ["Pablo was happy", "because his team won"], "why": "Aukasetningin er <i>because his team won<\/i> – hún getur ekki staðið ein."}, {"t": "mc", "q": "When the bell rang, the students left the room.<br><br>Hver hlutinn er <b>aðalsetningin<\/b> (independent clause)?", "a": "the students left the room", "opts": ["the students left the room", "When the bell rang"], "why": "Aukasetningin er <i>When the bell rang<\/i> – hún getur ekki staðið ein."}, {"t": "mc", "q": "You can watch TV if you finish your homework.<br><br>Hver hlutinn er <b>aðalsetningin<\/b> (independent clause)?", "a": "You can watch TV", "opts": ["You can watch TV", "if you finish your homework"], "why": "Aukasetningin er <i>if you finish your homework<\/i> – hún getur ekki staðið ein."}, {"t": "mc", "q": "Since Bubbi had no money, Aron paid for the tickets.<br><br>Hver hlutinn er <b>aðalsetningin<\/b> (independent clause)?", "a": "Aron paid for the tickets", "opts": ["Aron paid for the tickets", "Since Bubbi had no money"], "why": "Aukasetningin er <i>Since Bubbi had no money<\/i> – hún getur ekki staðið ein."}, {"t": "mc", "q": "The dog started barking when the doorbell rang.<br><br>Hver hlutinn er <b>aðalsetningin<\/b> (independent clause)?", "a": "The dog started barking", "opts": ["The dog started barking", "when the doorbell rang"], "why": "Aukasetningin er <i>when the doorbell rang<\/i> – hún getur ekki staðið ein."}, {"t": "mc", "q": "Even though the test was hard, Andri Fannar got a good grade.<br><br>Hver hlutinn er <b>aðalsetningin<\/b> (independent clause)?", "a": "Andri Fannar got a good grade", "opts": ["Andri Fannar got a good grade", "Even though the test was hard"], "why": "Aukasetningin er <i>Even though the test was hard<\/i> – hún getur ekki staðið ein."}, {"t": "mc", "q": "We were late because the road was closed.<br><br>Hver hlutinn er <b>aðalsetningin<\/b> (independent clause)?", "a": "We were late", "opts": ["We were late", "because the road was closed"], "why": "Aukasetningin er <i>because the road was closed<\/i> – hún getur ekki staðið ein."}, {"t": "mc", "q": "If it snows tomorrow, we will go skiing.<br><br>Hver hlutinn er <b>aðalsetningin<\/b> (independent clause)?", "a": "we will go skiing", "opts": ["we will go skiing", "If it snows tomorrow"], "why": "Aukasetningin er <i>If it snows tomorrow<\/i> – hún getur ekki staðið ein."}], "mundu": []}, {"title": "Setningar tengdar saman", "pages": "although, because, when, if, since", "color": "#7b4fd6", "items": [{"t": "mc", "q": "<i>It was late. We kept playing.<\/i><br><br>Which is the best way to combine them?", "a": "Although it was late, we kept playing.", "opts": ["Although it was late, we kept playing.", "Because it was late, we kept playing.", "Although it was late we kept, playing."], "why": "Komma kemur á eftir aukasetningu þegar hún stendur fremst."}, {"t": "mc", "q": "<i>Siggi stayed at home. He had a fever.<\/i><br><br>Which is the best way to combine them?", "a": "Siggi stayed at home because he had a fever.", "opts": ["Siggi stayed at home because he had a fever.", "Siggi stayed at home although he had a fever.", "Because Siggi stayed at home, he had a fever."], "why": "Komma kemur á eftir aukasetningu þegar hún stendur fremst."}, {"t": "mc", "q": "<i>We will leave. The rain stops.<\/i><br><br>Which is the best way to combine them?", "a": "We will leave when the rain stops.", "opts": ["We will leave when the rain stops.", "We will leave although the rain stops.", "When we will leave the rain stops."], "why": "Komma kemur á eftir aukasetningu þegar hún stendur fremst."}, {"t": "mc", "q": "<i>You can come with us. You are ready in five minutes.<\/i><br><br>Which is the best way to combine them?", "a": "You can come with us if you are ready in five minutes.", "opts": ["You can come with us if you are ready in five minutes.", "You can come with us because you are ready in five minutes.", "If you can come with us, you are ready in five minutes."], "why": "Komma kemur á eftir aukasetningu þegar hún stendur fremst."}, {"t": "mc", "q": "<i>Aron knows the way. He has been there before.<\/i><br><br>Which is the best way to combine them?", "a": "Since he has been there before, Aron knows the way.", "opts": ["Since he has been there before, Aron knows the way.", "Since Aron knows the way, he has been there before.", "Although he has been there before, Aron knows the way."], "why": "Komma kemur á eftir aukasetningu þegar hún stendur fremst."}], "mundu": []}, {"title": "Stórir stafir", "pages": "Capital Letters", "color": "#c8102e", "items": [{"t": "mc", "q": "<i>my favourite book is the hobbit by j. r. r. tolkien.<\/i><br><br>Which one is correctly capitalized?", "a": "My favourite book is The Hobbit by J. R. R. Tolkien.", "opts": ["My favourite book is The Hobbit by J. R. R. Tolkien.", "My favourite book is the hobbit by J. R. R. Tolkien.", "My Favourite Book is The Hobbit by J. R. R. Tolkien."], "why": ""}, {"t": "mc", "q": "<i>aron whispered, \"we are almost there.\"<\/i><br><br>Which one is correctly capitalized?", "a": "Aron whispered, \"We are almost there.\"", "opts": ["Aron whispered, \"We are almost there.\"", "Aron whispered, \"we are almost there.\"", "Aron Whispered, \"We Are almost there.\""], "why": ""}, {"t": "mc", "q": "<i>bubbi and i are going to rome in august.<\/i><br><br>Which one is correctly capitalized?", "a": "Bubbi and I are going to Rome in August.", "opts": ["Bubbi and I are going to Rome in August.", "Bubbi and i are going to Rome in august.", "Bubbi and I are Going to Rome in August."], "why": ""}, {"t": "mc", "q": "<i>the president of france visited the queen of denmark.<\/i><br><br>Which one is correctly capitalized?", "a": "The President of France visited the Queen of Denmark.", "opts": ["The President of France visited the Queen of Denmark.", "The president of france visited the queen of denmark.", "The President Of France Visited The Queen Of Denmark."], "why": ""}, {"t": "mc", "q": "<i>we read about the battle of hastings in history class.<\/i><br><br>Which one is correctly capitalized?", "a": "We read about the Battle of Hastings in history class.", "opts": ["We read about the Battle of Hastings in history class.", "We read about the battle of Hastings in History class.", "We Read about the Battle of Hastings in History Class."], "why": ""}, {"t": "mc", "q": "<i>dr. hansen works at the university of iceland.<\/i><br><br>Which one is correctly capitalized?", "a": "Dr. Hansen works at the University of Iceland.", "opts": ["Dr. Hansen works at the University of Iceland.", "Dr. hansen works at the university of iceland.", "Dr. Hansen Works at the University Of Iceland."], "why": ""}, {"t": "mc", "q": "<i>did you see the film star wars last night?<\/i><br><br>Which one is correctly capitalized?", "a": "Did you see the film Star Wars last night?", "opts": ["Did you see the film Star Wars last night?", "Did you see the film star wars last night?", "Did You See The Film Star Wars Last Night?"], "why": ""}, {"t": "mc", "q": "<i>volunteers from unicef arrived after the earthquake.<\/i><br><br>Which one is correctly capitalized?", "a": "Volunteers from UNICEF arrived after the earthquake.", "opts": ["Volunteers from UNICEF arrived after the earthquake.", "Volunteers from Unicef arrived after the Earthquake.", "Volunteers from unicef arrived after the earthquake."], "why": ""}, {"t": "mc", "q": "<i>during world war ii, many cities were bombed.<\/i><br><br>Which one is correctly capitalized?", "a": "During World War II, many cities were bombed.", "opts": ["During World War II, many cities were bombed.", "During world war II, many cities were bombed.", "During World War II, Many Cities were bombed."], "why": ""}, {"t": "mc", "q": "<i>muslims fast during ramadan, our teacher explained.<\/i><br><br>Which one is correctly capitalized?", "a": "Muslims fast during Ramadan, our teacher explained.", "opts": ["Muslims fast during Ramadan, our teacher explained.", "Muslims fast during ramadan, our teacher explained.", "Muslims Fast during Ramadan, our Teacher explained."], "why": ""}, {"t": "mc", "q": "<i>coach berg said, \"you played really well today.\"<\/i><br><br>Which one is correctly capitalized?", "a": "Coach Berg said, \"You played really well today.\"", "opts": ["Coach Berg said, \"You played really well today.\"", "Coach berg said, \"you played really well today.\"", "coach Berg said, \"You Played really well today.\""], "why": ""}, {"t": "mc", "q": "<i>the bbc showed the match on tuesday.<\/i><br><br>Which one is correctly capitalized?", "a": "The BBC showed the match on Tuesday.", "opts": ["The BBC showed the match on Tuesday.", "The Bbc showed the match on tuesday.", "The bbc showed the Match on Tuesday."], "why": ""}, {"t": "mc", "q": "<i>siggi is reading harry potter for english class.<\/i><br><br>Which one is correctly capitalized?", "a": "Siggi is reading Harry Potter for English class.", "opts": ["Siggi is reading Harry Potter for English class.", "Siggi is reading harry potter for English class.", "Siggi is reading Harry Potter for english class."], "why": ""}, {"t": "mc", "q": "<i>in the bible, noah built an ark.<\/i><br><br>Which one is correctly capitalized?", "a": "In the Bible, Noah built an ark.", "opts": ["In the Bible, Noah built an ark.", "In the bible, noah built an ark.", "In The Bible, Noah Built An Ark."], "why": ""}, {"t": "mc", "q": "<i>next friday we are visiting big ben in london.<\/i><br><br>Which one is correctly capitalized?", "a": "Next Friday we are visiting Big Ben in London.", "opts": ["Next Friday we are visiting Big Ben in London.", "Next friday we are visiting Big ben in London.", "Next Friday we are Visiting Big Ben in london."], "why": ""}], "mundu": []}, {"title": "Stór eða lítill stafur?", "pages": "Capital Letters", "color": "#d67b2f", "items": [{"t": "sort", "q": "<i>last summer siggi and i travelled to edinburgh with our families. our guide, mrs. campbell, took us up to edinburgh castle. on friday we watched a concert in princes street gardens, and bubbi said, \"this is the best trip ever.\" in the evening we read the book treasure island at a hotel near the royal mile.<\/i><br><br>Raðaðu orðunum (1/4): stór eða lítill stafur?", "bins": ["Stór stafur", "Lítill stafur"], "items": [["last", 0], ["summer", 1], ["siggi", 0], ["and", 1], ["i", 0], ["travelled", 1], ["edinburgh", 0], ["families", 1]], "why": "Last summer Siggi and I travelled to Edinburgh with our families. Our guide, Mrs. Campbell, took us up to Edinburgh Castle. On Friday we watched a concert in Princes Street Gardens, and Bubbi said, \"This is the best trip ever.\" In the evening we read the book Treasure Island at a hotel near the Royal Mile."}, {"t": "sort", "q": "<i>last summer siggi and i travelled to edinburgh with our families. our guide, mrs. campbell, took us up to edinburgh castle. on friday we watched a concert in princes street gardens, and bubbi said, \"this is the best trip ever.\" in the evening we read the book treasure island at a hotel near the royal mile.<\/i><br><br>Raðaðu orðunum (2/4): stór eða lítill stafur?", "bins": ["Stór stafur", "Lítill stafur"], "items": [["guide", 1], ["mrs.", 0], ["campbell", 0], ["took", 1], ["us", 1], ["up", 1], ["castle", 0], ["with", 1]], "why": "Last summer Siggi and I travelled to Edinburgh with our families. Our guide, Mrs. Campbell, took us up to Edinburgh Castle. On Friday we watched a concert in Princes Street Gardens, and Bubbi said, \"This is the best trip ever.\" In the evening we read the book Treasure Island at a hotel near the Royal Mile."}, {"t": "sort", "q": "<i>last summer siggi and i travelled to edinburgh with our families. our guide, mrs. campbell, took us up to edinburgh castle. on friday we watched a concert in princes street gardens, and bubbi said, \"this is the best trip ever.\" in the evening we read the book treasure island at a hotel near the royal mile.<\/i><br><br>Raðaðu orðunum (3/4): stór eða lítill stafur?", "bins": ["Stór stafur", "Lítill stafur"], "items": [["friday", 0], ["watched", 1], ["concert", 1], ["princes", 0], ["street", 0], ["gardens", 0], ["bubbi", 0], ["said", 1], ["this", 0], ["best", 1]], "why": "Last summer Siggi and I travelled to Edinburgh with our families. Our guide, Mrs. Campbell, took us up to Edinburgh Castle. On Friday we watched a concert in Princes Street Gardens, and Bubbi said, \"This is the best trip ever.\" In the evening we read the book Treasure Island at a hotel near the Royal Mile."}, {"t": "sort", "q": "<i>last summer siggi and i travelled to edinburgh with our families. our guide, mrs. campbell, took us up to edinburgh castle. on friday we watched a concert in princes street gardens, and bubbi said, \"this is the best trip ever.\" in the evening we read the book treasure island at a hotel near the royal mile.<\/i><br><br>Raðaðu orðunum (4/4): stór eða lítill stafur?", "bins": ["Stór stafur", "Lítill stafur"], "items": [["evening", 1], ["read", 1], ["book", 1], ["treasure", 0], ["island", 0], ["hotel", 1], ["near", 1], ["royal", 0], ["mile", 0]], "why": "Last summer Siggi and I travelled to Edinburgh with our families. Our guide, Mrs. Campbell, took us up to Edinburgh Castle. On Friday we watched a concert in Princes Street Gardens, and Bubbi said, \"This is the best trip ever.\" In the evening we read the book Treasure Island at a hotel near the Royal Mile."}], "mundu": []}, {"title": "Reglur um stóra stafi", "pages": "Capital Letters", "color": "#2e9e5b", "items": [{"t": "match", "q": "Paraðu saman regluna og dæmi úr textanum að ofan.", "pairs": [["the first word of a sentence", "Last summer …"], ["the pronoun I", "Siggi and I"], ["names of people", "Bubbi"], ["a title before a name", "Mrs. Campbell"], ["cities and countries", "Edinburgh"], ["days of the week", "Friday"], ["titles of films and books", "Treasure Island"], ["the first word of a quotation", "\"This is the best …\""]], "why": ""}], "mundu": []}, {"title": "Greinarmerki", "pages": "bls. 169", "color": "#2f9ed6", "items": [{"t": "match", "q": "Paraðu saman greinarmerkið og til hvers það er notað.", "pairs": [["?", "ends a direct question"], ["!", "shows strong feeling or a shout"], ["'", "shows a missing letter or who owns something"], ["\" \"", "shows the exact words someone said"], [".", "ends an ordinary sentence"], [":", "introduces a list or an explanation"], [";", "joins two closely linked sentences"], [",", "separates items in a list or parts of a sentence"], ["( )", "adds extra information you could leave out"]], "why": "? = question mark; ! = exclamation mark; ' = apostrophe; \" \" = quotation marks; . = full stop (USA: period); : = colon; ; = semicolon; , = comma; ( ) = brackets (USA: parentheses)"}], "mundu": []}, {"title": "Greinarmerki í setningum", "pages": "bls. 169", "color": "#7b4fd6", "items": [{"t": "mc", "q": "<i>its raining again<\/i><br><br>Which one is correctly punctuated?", "a": "It's raining again.", "opts": ["It's raining again.", "Its raining again.", "It's raining again?"], "why": ""}, {"t": "mc", "q": "<i>theyre sure we wont be late<\/i><br><br>Which one is correctly punctuated?", "a": "They're sure we won't be late.", "opts": ["They're sure we won't be late.", "Theyre sure we won't be late.", "They're sure we wont be late."], "why": ""}, {"t": "mc", "q": "<i>can i borrow your pen he asked<\/i><br><br>Which one is correctly punctuated?", "a": "\"Can I borrow your pen?\" he asked.", "opts": ["\"Can I borrow your pen?\" he asked.", "\"Can I borrow your pen.\" he asked?", "Can I borrow your pen? he asked."], "why": ""}, {"t": "mc", "q": "<i>she grew up in paris so she speaks french<\/i><br><br>Which one is correctly punctuated?", "a": "She grew up in Paris, so she speaks French.", "opts": ["She grew up in Paris, so she speaks French.", "She grew up in paris, so she speaks french.", "She grew up in Paris so, she speaks French."], "why": ""}, {"t": "mc", "q": "<i>whats the time<\/i><br><br>Which one is correctly punctuated?", "a": "What's the time?", "opts": ["What's the time?", "Whats the time?", "What's the time."], "why": ""}, {"t": "mc", "q": "<i>weve won the cup<\/i><br><br>Which one is correctly punctuated?", "a": "We've won the cup!", "opts": ["We've won the cup!", "Wev'e won the cup!", "We've won the cup?"], "why": ""}, {"t": "mc", "q": "<i>siggi doesnt like his german teacher<\/i><br><br>Which one is correctly punctuated?", "a": "Siggi doesn't like his German teacher.", "opts": ["Siggi doesn't like his German teacher.", "Siggi doesnt like his German teacher.", "Siggi doesn't like his german teacher."], "why": ""}, {"t": "mc", "q": "<i>stop shouting she said<\/i><br><br>Which one is correctly punctuated?", "a": "\"Stop shouting!\" she said.", "opts": ["\"Stop shouting!\" she said.", "\"Stop shouting\" she said!", "\"Stop shouting!\" She said."], "why": ""}, {"t": "mc", "q": "<i>i wont go because theyre leaving on sunday<\/i><br><br>Which one is correctly punctuated?", "a": "I won't go because they're leaving on Sunday.", "opts": ["I won't go because they're leaving on Sunday.", "I won't go because theyre leaving on Sunday.", "I wont go because they're leaving on sunday."], "why": ""}, {"t": "mc", "q": "<i>pablo plays basketball on tuesdays and fridays in the winter but in june he goes hiking<\/i><br><br>Which one is correctly punctuated?", "a": "Pablo plays basketball on Tuesdays and Fridays in the winter, but in June he goes hiking.", "opts": ["Pablo plays basketball on Tuesdays and Fridays in the winter, but in June he goes hiking.", "Pablo plays basketball on tuesdays and fridays in the winter, but in june he goes hiking.", "Pablo plays basketball on Tuesdays and Fridays in the Winter but, in June he goes hiking."], "why": ""}, {"t": "mc", "q": "<i>she writes articles for the times<\/i><br><br>Which one is correctly punctuated?", "a": "She writes articles for The Times.", "opts": ["She writes articles for The Times.", "She writes articles for the times.", "She writes Articles for The Times."], "why": ""}, {"t": "mc", "q": "<i>did you read hamlet by shakespeare she asked<\/i><br><br>Which one is correctly punctuated?", "a": "\"Did you read Hamlet by Shakespeare?\" she asked.", "opts": ["\"Did you read Hamlet by Shakespeare?\" she asked.", "\"Did you read hamlet by Shakespeare?\" she asked.", "\"Did you read Hamlet by Shakespeare,\" she asked?"], "why": ""}, {"t": "mc", "q": "<i>help the boat is sinking<\/i><br><br>Which one is correctly punctuated?", "a": "Help! The boat is sinking!", "opts": ["Help! The boat is sinking!", "Help, the boat is sinking.", "Help? The boat is sinking!"], "why": ""}, {"t": "mc", "q": "<i>our neighbours siggi and pablo live in selfoss<\/i><br><br>Which one is correctly punctuated?", "a": "Our neighbours, Siggi and Pablo, live in Selfoss.", "opts": ["Our neighbours, Siggi and Pablo, live in Selfoss.", "Our neighbours Siggi and Pablo live in selfoss.", "Our Neighbours, Siggi and Pablo, live in Selfoss."], "why": ""}, {"t": "mc", "q": "<i>wheres my phone aron asked<\/i><br><br>Which one is correctly punctuated?", "a": "\"Where's my phone?\" Aron asked.", "opts": ["\"Where's my phone?\" Aron asked.", "\"Wheres my phone?\" Aron asked.", "\"Where's my phone\" Aron asked?"], "why": ""}], "mundu": []}, {"title": "Settu inn greinarmerkin", "pages": "bls. 169", "color": "#c8102e", "items": [{"t": "mc", "q": "<i>we stayed in rome for a week which was amazing but the food was expensive!<\/i> (TWO COMMAS)<br><br>Which one is correct?", "a": "We stayed in Rome for a week, which was amazing, but the food was expensive!", "opts": ["We stayed in Rome for a week, which was amazing, but the food was expensive!", "We stayed in Rome, for a week which was amazing, but the food was expensive!", "We stayed in rome for a week, which was amazing, but, the food was expensive!"], "why": ""}, {"t": "mc", "q": "<i>i saw bubbi and his brother at the pool bubbi was swimming and his brother was diving.<\/i> (ONE FULL STOP, ONE COMMA)<br><br>Which one is correct?", "a": "I saw Bubbi and his brother at the pool. Bubbi was swimming, and his brother was diving.", "opts": ["I saw Bubbi and his brother at the pool. Bubbi was swimming, and his brother was diving.", "I saw Bubbi, and his brother at the pool. Bubbi was swimming and his brother was diving.", "I saw bubbi and his brother at the pool. Bubbi was swimming, and his brother was diving."], "why": ""}, {"t": "mc", "q": "<i>Aron forgot his boots again he always does so he played in trainers luckily he scored.<\/i> (BRACKETS, ONE FULL STOP, TWO COMMAS)<br><br>Which one is correct?", "a": "Aron forgot his boots again (he always does), so he played in trainers. Luckily, he scored.", "opts": ["Aron forgot his boots again (he always does), so he played in trainers. Luckily, he scored.", "Aron forgot (his boots again he always does) so, he played in trainers, luckily he scored.", "Aron forgot his boots, again (he always does) so he played in trainers. Luckily he scored."], "why": ""}, {"t": "mc", "q": "<i>i asked if the match was still on is it cancelled.<\/i> (ONE SEMI-COLON, ONE QUESTION MARK)<br><br>Which one is correct?", "a": "I asked if the match was still on; is it cancelled?", "opts": ["I asked if the match was still on; is it cancelled?", "I asked if the match was still on? is it cancelled;", "I asked; if the match was still on is it cancelled?"], "why": ""}], "mundu": []}, {"title": "Þolmynd í þátíð", "pages": "bls. 78–79", "color": "#d67b2f", "items": [{"t": "type", "q": "The Great Wall of China (complete) <b>_____<\/b> during the Ming dynasty.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).", "a": ["was completed"], "why": ""}, {"t": "type", "q": "The first Harry Potter book (publish) <b>_____<\/b> in 1997.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).", "a": ["was published"], "why": ""}, {"t": "type", "q": "The Titanic (hit) <b>_____<\/b> by an iceberg in 1912.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).", "a": ["was hit"], "why": ""}, {"t": "type", "q": "Iceland's first parliament (found) <b>_____<\/b> in 930.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).", "a": ["was founded"], "why": ""}, {"t": "type", "q": "Thousands of messages (deliver) <b>_____<\/b> by pigeons during the war.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).", "a": ["were delivered"], "why": ""}, {"t": "type", "q": "The first modern Olympic Games (hold) <b>_____<\/b> in Athens in 1896.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).", "a": ["were held"], "why": ""}, {"t": "type", "q": "The first moon landing (watch) <b>_____<\/b> by millions of people on TV.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).", "a": ["was watched"], "why": ""}, {"t": "type", "q": "Coffee (bring) <b>_____<\/b> to Europe in the 1600s.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).", "a": ["was brought"], "why": ""}, {"t": "type", "q": "Two Viking ships (find) <b>_____<\/b> under the mud in Norway.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).", "a": ["were found"], "why": ""}, {"t": "type", "q": "The famous painting The Scream (steal) <b>_____<\/b> in 1994.<br><br>Skrifaðu sögnina í þátíð þolmyndar (past simple passive).", "a": ["was stolen"], "why": ""}], "mundu": []}, {"title": "Hvernig súkkulaði er búið til", "pages": "bls. 79", "color": "#2e9e5b", "items": [{"t": "type", "q": "<i>First, they pick the cocoa beans by hand.<\/i><br>First, the cocoa beans <b>_____<\/b> by hand.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).", "a": ["are picked"], "why": ""}, {"t": "type", "q": "<i>Then they dry the beans in the sun.<\/i><br>Then the beans <b>_____<\/b> in the sun.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).", "a": ["are dried"], "why": ""}, {"t": "type", "q": "<i>They roast the beans in big ovens.<\/i><br>The beans <b>_____<\/b> in big ovens.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).", "a": ["are roasted"], "why": ""}, {"t": "type", "q": "<i>They grind the beans into a thick paste.<\/i><br>The roasted beans <b>_____<\/b> into a thick paste.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).", "a": ["are ground"], "why": ""}, {"t": "type", "q": "<i>They mix the paste with sugar and milk.<\/i><br>The paste <b>_____<\/b> with sugar and milk.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).", "a": ["is mixed"], "why": ""}, {"t": "type", "q": "<i>They pour the chocolate into moulds.<\/i><br>The chocolate <b>_____<\/b> into moulds.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).", "a": ["is poured"], "why": ""}, {"t": "type", "q": "<i>Finally, they wrap the bars and send them to shops.<\/i><br>Finally, the bars <b>_____<\/b> and sent to shops.<br><br>Skrifaðu sögnina í nútíð þolmyndar (present simple passive).", "a": ["are wrapped"], "why": ""}], "mundu": []}, {"title": "Sagnir sem eru oftast í þolmynd", "pages": "bls. 66", "color": "#2f6fd6", "items": [{"t": "type", "q": "Both of my parents (bear) <b>_____<\/b> in Akureyri.", "a": ["were born"], "why": ""}, {"t": "type", "q": "The concert (schedule) <b>_____<\/b> to start at eight tomorrow.", "a": ["is scheduled", "has been scheduled"], "why": ""}, {"t": "type", "q": "Drivers who park on the pavement (fine) <b>_____<\/b> by the police.", "a": ["are fined"], "why": ""}, {"t": "type", "q": "The two men (convict) <b>_____<\/b> of robbery last month.", "a": ["were convicted"], "why": ""}, {"t": "type", "q": "The new hospital (staff) <b>_____<\/b> by more than 300 nurses.", "a": ["is staffed"], "why": ""}, {"t": "type", "q": "The lost dog (reunite) <b>_____<\/b> with its owner after three weeks.", "a": ["was reunited"], "why": ""}, {"t": "type", "q": "Three books (short-list) <b>_____<\/b> for this year's prize so far.", "a": ["have been short-listed", "have been shortlisted"], "why": ""}, {"t": "type", "q": "Luckily, nobody (wound) <b>_____<\/b> in the accident.", "a": ["was wounded"], "why": ""}, {"t": "type", "q": "Petrol (ration) <b>_____<\/b> in many countries during the oil crisis.", "a": ["was rationed"], "why": ""}, {"t": "type", "q": "Today, the valley (populate) <b>_____<\/b> by farmers and their sheep.", "a": ["is populated"], "why": ""}], "mundu": []}, {"title": "Hjálparsögn + þolmynd", "pages": "bls. 66", "color": "#7b4fd6", "items": [{"t": "type", "q": "Bikes (can / park) <b>_____<\/b> in front of the school.", "a": ["can be parked"], "why": ""}, {"t": "type", "q": "Homework (should / hand) <b>_____<\/b> in on Mondays.", "a": ["should be handed"], "why": ""}, {"t": "type", "q": "The flight (may / delay) <b>_____<\/b> because of the storm.", "a": ["may be delayed"], "why": ""}, {"t": "type", "q": "The headmaster said the gym (would / paint) <b>_____<\/b> during the summer.", "a": ["would be painted"], "why": ""}, {"t": "type", "q": "Raw chicken (should / cook) <b>_____<\/b> all the way through.", "a": ["should be cooked"], "why": ""}, {"t": "type", "q": "Whales (can / spot) <b>_____<\/b> off the coast of Húsavík in summer.", "a": ["can be spotted"], "why": ""}, {"t": "type", "q": "The test results (may / send) <b>_____<\/b> by email.", "a": ["may be sent"], "why": ""}, {"t": "type", "q": "Aron was told that his phone (would / repair) <b>_____<\/b> within a week.", "a": ["would be repaired"], "why": ""}, {"t": "type", "q": "Rubbish (should / sort) <b>_____<\/b> before it is thrown away.", "a": ["should be sorted"], "why": ""}, {"t": "type", "q": "Seats (can / book) <b>_____<\/b> up to a month in advance.", "a": ["can be booked"], "why": ""}], "mundu": []}, {"title": "Stolna hjólið", "pages": "bls. 66", "color": "#c8102e", "items": [{"t": "type", "q": "Pablo <b>_____<\/b> (give) a new bike for his birthday.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["was given"], "why": ""}, {"t": "type", "q": "He <b>_____<\/b> (ride) it to school every day.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["rode"], "why": ""}, {"t": "type", "q": "The bike <b>_____<\/b> (make) in Italy.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["was made"], "why": ""}, {"t": "type", "q": "It <b>_____<\/b> (be) bright red and very fast.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["was"], "why": ""}, {"t": "type", "q": "All his friends <b>_____<\/b> (love) it.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["loved"], "why": ""}, {"t": "type", "q": "One Monday, while Pablo <b>_____<\/b> (be) in a maths lesson …<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["was"], "why": ""}, {"t": "type", "q": "… his bike <b>_____<\/b> (steal) from outside the school.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["was stolen"], "why": ""}, {"t": "type", "q": "A teacher <b>_____<\/b> (see) a man with a red bike …<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["saw"], "why": ""}, {"t": "type", "q": "… and <b>_____<\/b> (call) the police.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["called"], "why": ""}, {"t": "type", "q": "\"A bike <b>_____<\/b> (take) from the bike rack!\" she told them.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["has been taken", "was taken"], "why": ""}, {"t": "type", "q": "\"It <b>_____<\/b> (not lock) to anything,\" she added.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["has not been locked", "hasn't been locked", "was not locked", "wasn't locked"], "why": ""}, {"t": "type", "q": "That evening the bike <b>_____<\/b> (find) in a park.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["was found"], "why": ""}, {"t": "type", "q": "The thief <b>_____<\/b> (catch) the next day.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["was caught"], "why": ""}, {"t": "type", "q": "He <b>_____<\/b> (say) that he was sorry.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["said"], "why": ""}, {"t": "type", "q": "Pablo <b>_____<\/b> (get) his bike back on Friday.<br><br>Germynd eða þolmynd, í réttri tíð.", "a": ["got"], "why": ""}], "mundu": []}, {"title": "Germynd eða þolmynd?", "pages": "bls. 67", "color": "#d67b2f", "items": [{"t": "type", "q": "Our school <b>_____<\/b> (build) in 1985.", "a": ["was built"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Siggi <b>_____<\/b> (win) the 100-metre race last Saturday.", "a": ["won"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "The prizes <b>_____<\/b> (give) out after the race.", "a": ["were given"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Right now the kitchen <b>_____<\/b> (clean), so please wait outside.", "a": ["is being cleaned"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Bubbi <b>_____<\/b> (lose) his wallet on the bus yesterday.", "a": ["lost"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Luckily, it <b>_____<\/b> (hand) in to the driver.", "a": ["was handed"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Millions of photos <b>_____<\/b> (upload) to the internet every day.", "a": ["are uploaded"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "My bike <b>_____<\/b> (move) – it isn't where I left it.", "a": ["has been moved"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "I <b>_____<\/b> (not watch) TV right now – I'm doing homework.", "a": ["am not watching", "'m not watching"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "The film <b>_____<\/b> (make) in New Zealand.", "a": ["was made"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Aron <b>_____<\/b> (read) three books during the holidays.", "a": ["read"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "The new rules <b>_____<\/b> (introduce) next term.", "a": ["will be introduced"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Have you ever <b>_____<\/b> (bite) by a dog?", "a": ["been bitten"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "How many goals <b>_____<\/b> (score) in the final?", "a": ["were scored"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Pablo <b>_____<\/b> (speak) Spanish at home.", "a": ["speaks"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Spanish <b>_____<\/b> (speak) in more than twenty countries.", "a": ["is spoken"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Two windows <b>_____<\/b> (break) during the storm last night.", "a": ["were broken"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "My grandmother <b>_____<\/b> (grow) her own vegetables.", "a": ["grows"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Rice <b>_____<\/b> (grow) in China for thousands of years.", "a": ["has been grown"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "The party <b>_____<\/b> (cancel) at the last minute.", "a": ["was cancelled", "was canceled"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Be quiet! Dad <b>_____<\/b> (talk) on the phone.", "a": ["is talking"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "The new library <b>_____<\/b> (open) next month.", "a": ["will be opened"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Everyone <b>_____<\/b> (enjoy) the concert last night.", "a": ["enjoyed"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "The teacher said our tests <b>_____<\/b> (return) on Monday.", "a": ["would be returned"], "why": "Sumar eru í germynd, aðrar í þolmynd."}, {"t": "type", "q": "Tea <b>_____<\/b> (drink) all over the world.", "a": ["is drunk"], "why": "Sumar eru í germynd, aðrar í þolmynd."}], "mundu": []}, {"title": "Óreglulegar sagnir", "pages": "bls. 128–130", "color": "#2e9e5b", "items": [{"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>bear<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["bore, born", "bore,born", "bore born", "bore-born", "bore/born", "bore, borne", "bore,borne", "bore borne", "bore-borne", "bore/borne"], "why": "bear – <b>bore<\/b> – <b>born<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>become<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["became, become", "became,become", "became become", "became-become", "became/become"], "why": "become – <b>became<\/b> – <b>become<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>blow<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["blew, blown", "blew,blown", "blew blown", "blew-blown", "blew/blown"], "why": "blow – <b>blew<\/b> – <b>blown<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>burst<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["burst, burst", "burst,burst", "burst burst", "burst-burst", "burst/burst"], "why": "burst – <b>burst<\/b> – <b>burst<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>choose<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["chose, chosen", "chose,chosen", "chose chosen", "chose-chosen", "chose/chosen"], "why": "choose – <b>chose<\/b> – <b>chosen<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>dig<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["dug, dug", "dug,dug", "dug dug", "dug-dug", "dug/dug"], "why": "dig – <b>dug<\/b> – <b>dug<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>draw<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["drew, drawn", "drew,drawn", "drew drawn", "drew-drawn", "drew/drawn"], "why": "draw – <b>drew<\/b> – <b>drawn<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>dream<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["dreamt, dreamt", "dreamt,dreamt", "dreamt dreamt", "dreamt-dreamt", "dreamt/dreamt", "dreamt, dreamed", "dreamt,dreamed", "dreamt dreamed", "dreamt-dreamed", "dreamt/dreamed", "dreamed, dreamt", "dreamed,dreamt", "dreamed dreamt", "dreamed-dreamt", "dreamed/dreamt", "dreamed, dreamed", "dreamed,dreamed", "dreamed dreamed", "dreamed-dreamed", "dreamed/dreamed"], "why": "dream – <b>dreamt<\/b> – <b>dreamt<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>drink<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["drank, drunk", "drank,drunk", "drank drunk", "drank-drunk", "drank/drunk"], "why": "drink – <b>drank<\/b> – <b>drunk<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>fall<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["fell, fallen", "fell,fallen", "fell fallen", "fell-fallen", "fell/fallen"], "why": "fall – <b>fell<\/b> – <b>fallen<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>fight<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["fought, fought", "fought,fought", "fought fought", "fought-fought", "fought/fought"], "why": "fight – <b>fought<\/b> – <b>fought<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>fly<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["flew, flown", "flew,flown", "flew flown", "flew-flown", "flew/flown"], "why": "fly – <b>flew<\/b> – <b>flown<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>forbid<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["forbade, forbidden", "forbade,forbidden", "forbade forbidden", "forbade-forbidden", "forbade/forbidden"], "why": "forbid – <b>forbade<\/b> – <b>forbidden<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>forgive<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["forgave, forgiven", "forgave,forgiven", "forgave forgiven", "forgave-forgiven", "forgave/forgiven"], "why": "forgive – <b>forgave<\/b> – <b>forgiven<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>freeze<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["froze, frozen", "froze,frozen", "froze frozen", "froze-frozen", "froze/frozen"], "why": "freeze – <b>froze<\/b> – <b>frozen<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>hang<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["hung, hung", "hung,hung", "hung hung", "hung-hung", "hung/hung"], "why": "hang – <b>hung<\/b> – <b>hung<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>hold<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["held, held", "held,held", "held held", "held-held", "held/held"], "why": "hold – <b>held<\/b> – <b>held<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>leap<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["leapt, leapt", "leapt,leapt", "leapt leapt", "leapt-leapt", "leapt/leapt", "leapt, leaped", "leapt,leaped", "leapt leaped", "leapt-leaped", "leapt/leaped", "leaped, leapt", "leaped,leapt", "leaped leapt", "leaped-leapt", "leaped/leapt", "leaped, leaped", "leaped,leaped", "leaped leaped", "leaped-leaped", "leaped/leaped"], "why": "leap – <b>leapt<\/b> – <b>leapt<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>light<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["lit, lit", "lit,lit", "lit lit", "lit-lit", "lit/lit"], "why": "light – <b>lit<\/b> – <b>lit<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>ride<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["rode, ridden", "rode,ridden", "rode ridden", "rode-ridden", "rode/ridden"], "why": "ride – <b>rode<\/b> – <b>ridden<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>ring<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["rang, rung", "rang,rung", "rang rung", "rang-rung", "rang/rung"], "why": "ring – <b>rang<\/b> – <b>rung<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>rise<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["rose, risen", "rose,risen", "rose risen", "rose-risen", "rose/risen"], "why": "rise – <b>rose<\/b> – <b>risen<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>shake<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["shook, shaken", "shook,shaken", "shook shaken", "shook-shaken", "shook/shaken"], "why": "shake – <b>shook<\/b> – <b>shaken<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>shine<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["shone, shone", "shone,shone", "shone shone", "shone-shone", "shone/shone"], "why": "shine – <b>shone<\/b> – <b>shone<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>slide<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["slid, slid", "slid,slid", "slid slid", "slid-slid", "slid/slid"], "why": "slide – <b>slid<\/b> – <b>slid<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>sling<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["slung, slung", "slung,slung", "slung slung", "slung-slung", "slung/slung"], "why": "sling – <b>slung<\/b> – <b>slung<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>spin<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["spun, spun", "spun,spun", "spun spun", "spun-spun", "spun/spun"], "why": "spin – <b>spun<\/b> – <b>spun<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>spread<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["spread, spread", "spread,spread", "spread spread", "spread-spread", "spread/spread"], "why": "spread – <b>spread<\/b> – <b>spread<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>sweep<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["swept, swept", "swept,swept", "swept swept", "swept-swept", "swept/swept"], "why": "sweep – <b>swept<\/b> – <b>swept<\/b>"}, {"t": "type", "q": "Skrifaðu þátíð og lýsingarhátt þátíðar af <b>throw<\/b>, með kommu á milli (t.d. <i>go → went, gone<\/i>).", "a": ["threw, thrown", "threw,thrown", "threw thrown", "threw-thrown", "threw/thrown"], "why": "throw – <b>threw<\/b> – <b>thrown<\/b>"}], "mundu": []}, {"title": "Sögn + forsetning", "pages": "Core 2 bls. 282", "color": "#2f9ed6", "items": [{"t": "mc", "q": "Pablo's sister accused him <b>_____<\/b> reading her diary.", "a": "of", "opts": ["of", "to", "in", "on"], "why": "<b>accuse of<\/b> + -ing"}, {"t": "mc", "q": "The airline apologized <b>_____<\/b> losing our bags.", "a": "for", "opts": ["for", "like", "on", "with"], "why": "<b>apologize for<\/b> + -ing"}, {"t": "mc", "q": "My grandmother doesn't approve <b>_____<\/b> people using phones at dinner.", "a": "of", "opts": ["of", "with", "from", "on"], "why": "<b>approve of<\/b> + -ing"}, {"t": "mc", "q": "The two men were charged <b>_____<\/b> robbing a bank.", "a": "with", "opts": ["with", "in", "from", "at"], "why": "<b>charge with<\/b> + -ing"}, {"t": "mc", "q": "Aron always complains <b>_____<\/b> having too much homework.", "a": "about", "opts": ["about", "for", "with", "like"], "why": "<b>complain about<\/b> + -ing"}, {"t": "mc", "q": "The coach congratulated the team <b>_____<\/b> reaching the final.", "a": "on", "opts": ["on", "of", "for", "about"], "why": "<b>congratulate on<\/b> + -ing"}, {"t": "mc", "q": "Don't count <b>_____<\/b> getting a lift home – my car is broken.", "a": "on", "opts": ["on", "with", "about", "against"], "why": "<b>count on<\/b> + -ing"}, {"t": "mc", "q": "Bubbi finally convinced his parents <b>_____<\/b> being old enough to travel alone.", "a": "of", "opts": ["of", "like", "about", "to"], "why": "<b>convince of<\/b> + -ing"}, {"t": "mc", "q": "Do you feel <b>_____<\/b> going for a swim?", "a": "like", "opts": ["like", "of", "to", "with"], "why": "<b>feel like<\/b> + -ing"}, {"t": "mc", "q": "Mum insisted <b>_____<\/b> checking my homework.", "a": "on", "opts": ["on", "at", "about", "to"], "why": "<b>insist on<\/b> + -ing"}, {"t": "mc", "q": "The fog prevented the plane <b>_____<\/b> landing.", "a": "from", "opts": ["from", "on", "to", "against"], "why": "<b>prevent from<\/b> + -ing"}, {"t": "mc", "q": "We can't rely <b>_____<\/b> the bus arriving on time.", "a": "on", "opts": ["on", "about", "against", "with"], "why": "<b>rely on<\/b> + -ing"}, {"t": "mc", "q": "The smell of pancakes reminds me <b>_____<\/b> visiting my grandparents.", "a": "of", "opts": ["of", "to", "at", "from"], "why": "<b>remind of<\/b> + -ing"}, {"t": "mc", "q": "Bubbi succeeded <b>_____<\/b> fixing the old computer.", "a": "in", "opts": ["in", "like", "on", "at"], "why": "<b>succeed in<\/b> + -ing"}, {"t": "mc", "q": "The teacher suspected Aron <b>_____<\/b> copying the answers.", "a": "of", "opts": ["of", "at", "to", "about"], "why": "<b>suspect of<\/b> + -ing"}, {"t": "mc", "q": "My friends are talking <b>_____<\/b> starting a band.", "a": "about", "opts": ["about", "like", "for", "on"], "why": "<b>talk about<\/b> + -ing"}, {"t": "mc", "q": "Signs warn visitors <b>_____<\/b> feeding the ducks.", "a": "against", "opts": ["against", "of", "for", "from"], "why": "<b>warn against<\/b> + -ing"}], "mundu": []}, {"title": "Þýddu á ensku", "pages": "Core 2 bls. 282", "color": "#7b4fd6", "items": [{"t": "type", "q": "Siggi <b>_____<\/b> the classroom window. <i>(var sakaður um að brjóta)<\/i>", "a": ["was accused of breaking"], "why": ""}, {"t": "type", "q": "Bubbi <b>_____<\/b> during the film. <i>(baðst afsökunar á að tala)<\/i>", "a": ["apologized for talking", "apologised for talking"], "why": ""}, {"t": "type", "q": "The driver <b>_____<\/b> through a red light. <i>(var ákærður fyrir að aka)<\/i>", "a": ["was charged with driving"], "why": ""}, {"t": "type", "q": "I don't <b>_____<\/b> pizza again tonight. <i>(langar (ekki) að borða)<\/i>", "a": ["feel like eating", "feel like having"], "why": ""}, {"t": "type", "q": "This photo <b>_____<\/b> in the lake every summer. <i>(minnir mig á að synda)<\/i>", "a": ["reminds me of swimming"], "why": ""}, {"t": "type", "q": "Pablo finally <b>_____<\/b> the ball over the wall. <i>(tókst að sparka)<\/i>", "a": ["succeeded in kicking"], "why": ""}, {"t": "type", "q": "The passengers <b>_____<\/b> so long for the plane. <i>(kvörtuðu yfir því að bíða)<\/i>", "a": ["complained about waiting"], "why": ""}, {"t": "type", "q": "Andri Fannar is slowly <b>_____<\/b> early for training. <i>(að venjast því að vakna)<\/i>", "a": ["getting used to waking up", "getting used to getting up", "getting used to waking"], "why": ""}, {"t": "type", "q": "Aron <b>_____<\/b> the dishes every evening. <i>(er á móti því að vaska upp)<\/i>", "a": ["objects to washing", "objects to doing"], "why": ""}], "mundu": []}, {"title": "Sagnir + -ing", "pages": "Core 2 bls. 284", "color": "#c8102e", "items": [{"t": "match", "q": "Paraðu saman upphaf og endi setninganna.", "pairs": [["Aron denied …", "breaking the window."], ["I can't help …", "laughing when he tells that joke."], ["Do you fancy …", "going to the cinema tonight?"], ["Can you imagine …", "living on the moon?"], ["Siggi kept …", "talking all through the film."], ["Pablo really misses …", "playing football in Spain."], ["Stop putting off …", "doing your homework!"], ["The teacher suggested …", "reading the book twice."]], "why": "Á eftir þessum sögnum kemur -ing."}], "mundu": []}]};
+const $ = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const HINTS = { mc: "Pikkaðu á rétta svarið", tf: "Rétt eða rangt?", label: "Orð → númer á myndinni",
+  match: "Pikkaðu á eitt í hvorum dálki", sort: "Pikkaðu á orð, svo á körfu", order: "Pikkaðu í réttri röð", type: "Skrifaðu svarið",
+  frac: "Skrifaðu almennt brot", num: "Skrifaðu töluna" };
+const tasks = [];  // {el, sec, state: null|'ok'|'meh', reset}
+
+function flash(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls);
+  setTimeout(() => el.classList.remove(cls), 700); }
+
+function feedback(box, it, clean) {
+  const fb = box.querySelector('.fb');
+  fb.className = 'fb show yes';
+  fb.innerHTML = (clean ? '<b>Vel gert!</b> ' : '<b>Komið!</b> ') + (it.why || '') +
+    (it.link ? ` <a href="${it.link}" target="_blank" rel="noopener">Skoða í bókinni (${it.linkText})</a>` : '');
+}
+function tryAgain(box, msg) { const fb = box.querySelector('.fb'); fb.className = 'fb show try'; fb.innerHTML = msg; }
+
+function finish(t, clean) {
+  t.state = clean ? 'ok' : 'meh';
+  t.el.classList.add(clean ? 'ok' : 'meh');
+  feedback(t.el, t.it, clean);
+  update();
+}
+
+function build(t) {
+  const it = t.it, box = t.el;
+  box.className = 'task'; box.innerHTML = '';
+  box.append($('div', 't-head', `<span>Verkefni ${t.no}</span><span class="hint">${HINTS[it.t]}</span>`));
+  box.append($('div', 'q', it.q));
+  const body = $('div'); box.append(body); box.append($('div', 'fb'));
+  let miss = 0;
+  const done = () => finish(t, miss === 0);
+
+  if (it.t === 'mc' || it.t === 'tf') {
+    const opts = it.t === 'tf' ? [['Rétt', true], ['Rangt', false]] : shuffle(it.opts).map(o => [o, o]);
+    const wrap = $('div', it.t === 'tf' ? 'tf' : 'opts' + (opts.length === 4 ? ' two' : ''));
+    const btns = opts.map(([txt, val]) => {
+      const b = $('button', 'opt', txt);
+      b.onclick = () => {
+        if (t.state) return;
+        if (val === it.a) {
+          b.classList.add('good'); btns.forEach(x => x !== b && x.classList.add('gone')); done();
+        } else {
+          miss++; b.classList.add('bad', 'gone');
+          if (it.t === 'tf' || miss >= 2) {
+            btns.forEach(x => { if (x.dataset.v === String(it.a)) x.classList.add('good'); else x.classList.add('gone'); });
+            done();
+          } else tryAgain(box, 'Ekki alveg – reyndu aftur!');
+        }
+      };
+      b.dataset.v = String(val); wrap.append(b); return b;
+    });
+    body.append(wrap);
+  }
+
+  if (it.t === 'label') {
+    const fig = $('div', 'figure', it.svg); body.append(fig);
+    const bank = $('div', 'bank'); const slots = $('div', 'slots');
+    let chip = null, slot = null; const left = new Set(it.slots.map((_, i) => i));
+    const tries = it.slots.map(() => 0);
+    const chips = shuffle(it.slots.concat(it.extra)).map(w => {
+      const c = $('button', 'chip', w); c.dataset.w = w;
+      c.onclick = () => { if (c.classList.contains('gone')) return;
+        if (slot !== null) return attempt(c, slot);
+        chips.forEach(x => x.classList.remove('picked')); chip = c; c.classList.add('picked'); };
+      bank.append(c); return c; });
+    const sbtn = it.slots.map((w, i) => {
+      const s = $('button', 'slot', `<span class="n">${i + 1}</span><span class="w">…</span>`);
+      s.onclick = () => pick(i); slots.append(s); return s; });
+    fig.querySelectorAll('.mk').forEach(g => g.addEventListener('click', () => pick(+g.dataset.n - 1)));
+    const mk = i => fig.querySelector(`.mk[data-n="${i + 1}"]`);
+    function pick(i) {
+      if (!left.has(i)) return;
+      if (chip) return attempt(chip, i);
+      sbtn.forEach(x => x.classList.remove('picked')); fig.querySelectorAll('.mk').forEach(g => g.classList.remove('on'));
+      slot = i; sbtn[i].classList.add('picked'); mk(i).classList.add('on');
+    }
+    function attempt(c, i) {
+      sbtn.forEach(x => x.classList.remove('picked')); fig.querySelectorAll('.mk').forEach(g => g.classList.remove('on'));
+      chips.forEach(x => x.classList.remove('picked')); chip = null; slot = null;
+      if (c.dataset.w === it.slots[i]) {
+        left.delete(i); c.classList.add('gone'); sbtn[i].classList.add('good');
+        sbtn[i].querySelector('.w').textContent = it.slots[i]; mk(i).classList.add('ok');
+        box.querySelector('.fb').className = 'fb';
+        if (!left.size) done();
+      } else {
+        miss++; tries[i]++; flash(sbtn[i], 'bad'); flash(c, 'bad');
+        mk(i).classList.add('no'); setTimeout(() => mk(i).classList.remove('no'), 600);
+        if (tries[i] >= 2) {
+          const right = chips.find(x => x.dataset.w === it.slots[i] && !x.classList.contains('gone'));
+          if (right) flash(right, 'pulse');
+          tryAgain(box, `Vísbending: rétta orðið fyrir númer ${i + 1} blikkar.`);
+        } else tryAgain(box, 'Ekki alveg – reyndu annað orð!');
+      }
+    }
+    body.append(bank, slots);
+  }
+
+  if (it.t === 'match') {
+    const m = $('div', 'match'), L = $('div', 'col'), R = $('div', 'col');
+    let a = null, b = null, left = it.pairs.length;
+    const mk = (txt, key, side) => { const x = $('button', 'side', txt); x.dataset.k = key;
+      x.onclick = () => { if (x.classList.contains('good')) return;
+        const cur = side === 'L' ? a : b; if (cur) cur.classList.remove('picked');
+        if (side === 'L') a = x; else b = x; x.classList.add('picked'); check(); }; return x; };
+    shuffle(it.pairs.map((p, i) => [p[0], i])).forEach(([t0, i]) => L.append(mk(t0, i, 'L')));
+    shuffle(it.pairs.map((p, i) => [p[1], i])).forEach(([t1, i]) => R.append(mk(t1, i, 'R')));
+    function check() {
+      if (!a || !b) return;
+      const x = a, y = b; a = b = null; x.classList.remove('picked'); y.classList.remove('picked');
+      if (x.dataset.k === y.dataset.k) { x.classList.add('good'); y.classList.add('good'); box.querySelector('.fb').className = 'fb'; if (!--left) done(); }
+      else { miss++; flash(x, 'bad'); flash(y, 'bad'); tryAgain(box, 'Þetta passar ekki saman – reyndu aftur!'); }
+    }
+    m.append(L, R); body.append(m);
+  }
+
+  if (it.t === 'sort') {
+    const bank = $('div', 'bank'), bins = $('div', 'bins');
+    let chip = null, left = it.items.length;
+    const chips = shuffle(it.items).map(([w, k]) => { const c = $('button', 'chip', w); c.dataset.k = k;
+      c.onclick = () => { if (c.classList.contains('gone')) return; chips.forEach(x => x.classList.remove('picked')); chip = c; c.classList.add('picked'); };
+      bank.append(c); return c; });
+    it.bins.forEach((name, k) => { const bn = $('div', 'bin', `<h4>${name}</h4><div class="in"></div>`);
+      bn.onclick = () => { if (!chip) { tryAgain(box, 'Pikkaðu fyrst á orð, svo á körfuna.'); return; }
+        const c = chip; chip = null; c.classList.remove('picked');
+        if (+c.dataset.k === k) { c.classList.add('gone'); c.style.display = 'none';
+          bn.querySelector('.in').append($('span', '', c.textContent)); box.querySelector('.fb').className = 'fb'; if (!--left) done(); }
+        else { miss++; flash(c, 'bad'); flash(bn, 'bad'); tryAgain(box, 'Ekki þessi karfa – reyndu hina!'); } };
+      bins.append(bn); });
+    body.append(bank, bins);
+  }
+
+  if (it.t === 'order') {
+    const seq = $('ol', 'seq'), bank = $('div', 'bank'); let next = 0;
+    const lis = it.steps.map(() => { const li = $('li', '', '…'); seq.append(li); return li; });
+    shuffle(it.steps).forEach(w => { const c = $('button', 'chip', w);
+      c.onclick = () => { if (c.classList.contains('gone')) return;
+        if (w === it.steps[next]) { c.classList.add('gone'); c.style.display = 'none'; lis[next].textContent = w; lis[next].classList.add('good');
+          box.querySelector('.fb').className = 'fb'; if (++next === it.steps.length) done(); }
+        else { miss++; flash(c, 'bad'); tryAgain(box, `Ekki alveg – hvað kemur nr. ${next + 1}?`); } };
+      bank.append(c); });
+    body.append(seq, bank);
+  }
+
+  if (it.t === 'type') {
+    // Misses reveal the answer step by step, but he always has to type it himself to finish.
+    const row = $('div', 'typ'), inp = $('input'), go = $('button', 'opt go', 'Athuga'), clue = $('div', 'clue');
+    inp.type = 'text'; inp.autocomplete = 'off'; inp.spellcheck = false;
+    inp.setAttribute('autocapitalize', 'off'); inp.setAttribute('autocorrect', 'off');
+    row.append(inp, go); body.append(row, clue);
+    const norm = s => s.toLowerCase().replace(/[‐-—]/g, '-').replace(/\s*-\s*/g, '-')
+      .replace(/[.!?]+$/, '').replace(/\s+/g, ' ').trim();
+    const ok = it.a.map(norm), main = it.a[0];
+    const close = (x, y) => { if (Math.abs(x.length - y.length) > 1) return false;
+      const d = Array.from({ length: x.length + 1 }, (_, i) => [i]);
+      for (let j = 1; j <= y.length; j++) d[0][j] = j;
+      for (let i = 1; i <= x.length; i++) for (let j = 1; j <= y.length; j++)
+        d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (x[i - 1] === y[j - 1] ? 0 : 1));
+      return d[x.length][y.length] <= 1; };
+    const letters = [...main].filter(c => /[a-z]/i.test(c)).length;
+    const mask = k => { let n = 0; return [...main].map(c => c === ' ' ? ' ' : !/[a-z]/i.test(c) ? c : (n++ < k ? c : '_')).join(' '); };
+    function check() {
+      if (t.state) return;
+      const v = norm(inp.value);
+      if (!v) return;
+      if (ok.includes(v)) { inp.value = main; inp.disabled = true; inp.classList.add('good'); go.classList.add('gone'); clue.textContent = ''; done(); return; }
+      miss++; flash(inp, 'bad');
+      const near = ok.some(o => close(v, o)) ? 'Næstum því – athugaðu stafsetninguna! ' : 'Ekki alveg. ';
+      if (miss === 1) { clue.textContent = mask(1); tryAgain(box, `${near}Vísbending: byrjar á <b>${main[0]}</b> og er ${letters} stafir.`); }
+      else if (miss === 2) { clue.textContent = mask(Math.ceil(letters / 2)); tryAgain(box, `${near}Hér er helmingurinn af stöfunum.`); }
+      else { clue.textContent = mask(letters); tryAgain(box, 'Svona er það skrifað. Skrifaðu það núna sjálfur.'); }
+      inp.select();
+    }
+    go.onclick = check;
+    inp.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); check(); } };
+  }
+
+  if (it.t === 'frac' || it.t === 'num') {
+    // frac: any equivalent fraction counts (6/12 = 1/2), as in the book's answers. Misses give
+    // it.hint, then the denominator, then the whole answer, which he still has to type.
+    const row = $('div', 'fr'), go = $('button', 'opt go', 'Athuga'), clue = $('div', 'clue');
+    const box2 = () => { const i = $('input'); i.type = 'text'; i.inputMode = 'numeric'; i.autocomplete = 'off'; return i; };
+    const top = box2(), bot = it.t === 'frac' ? box2() : null;
+    if (bot) { const st = $('span', 'stack'); st.append(top, $('i'), bot); row.append(st); }
+    else { top.classList.add('wide'); row.append(top); if (it.unit) row.append($('span', '', it.unit)); }
+    row.append(go); body.append(row, clue);
+    const n = s => s.value.trim() === '' ? NaN : Number(s.value.trim().replace(',', '.'));
+    const show = it.t === 'frac' ? `${it.a[0]}/${it.a[1]}` : String(it.a);
+    function check() {
+      if (t.state) return;
+      const x = n(top), y = bot ? n(bot) : 1;
+      if (isNaN(x) || isNaN(y)) return;
+      const right = bot ? (y > 0 && x * it.a[1] === y * it.a[0]) : x === it.a;
+      if (right) { [top, bot].forEach(i => i && (i.disabled = true, i.classList.add('good'))); go.classList.add('gone'); clue.textContent = ''; done(); return; }
+      miss++; flash(row, 'bad');
+      if (miss === 1) tryAgain(box, 'Ekki alveg. ' + (it.hint || ''));
+      else if (miss === 2 && bot) tryAgain(box, `Vísbending: neðri talan (allir möguleikarnir) er <b>${it.a[1]}</b>.`);
+      else { clue.textContent = show; tryAgain(box, 'Svona er svarið. Skrifaðu það núna sjálfur.'); }
+    }
+    go.onclick = check;
+    [top, bot].forEach(i => i && (i.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); check(); } }));
+  }
+}
+
+function update() {
+  const n = tasks.length, d = tasks.filter(t => t.state).length, s = tasks.filter(t => t.state === 'ok').length;
+  document.getElementById('prog').textContent = `${d} / ${n}`;
+  document.getElementById('stars').textContent = s;
+  document.getElementById('barfill').style.width = (100 * d / n) + '%';
+  DATA.sections.forEach((sec, i) => { const all = tasks.filter(t => t.sec === i);
+    document.getElementById('nav-' + i).classList.toggle('done', all.every(t => t.state)); });
+  const end = document.getElementById('end');
+  if (d < n) { end.innerHTML = `<div>Þú ert búinn með <b>${d}</b> af <b>${n}</b> verkefnum.</div>`; return; }
+  const hard = tasks.filter(t => t.state === 'meh').length;
+  const star = s % 10 === 1 && s % 100 !== 11 ? 'stjarna' : 'stjörnur';
+  const msg = hard === 1 ? 'Eitt verkefni var erfitt. Æfðu það aftur þangað til þú færð stjörnu fyrir það.'
+    : hard ? `${hard} verkefni voru erfið. Æfðu þau aftur þangað til þú færð stjörnu fyrir þau öll.` : 'Fullkomið – þú kannt þetta!';
+  end.innerHTML = `<div class="big">Búið! ${s} ${star} af ${n}</div><p>${msg}</p>`;
+  if (hard) { const b = $('button', '', 'Æfa erfiðu verkefnin aftur'); b.onclick = () => redo(t => t.state === 'meh'); end.append(b); }
+  const all = $('button', 'alt', 'Byrja upp á nýtt'); all.onclick = () => redo(() => true); end.append(all);
+}
+
+function redo(which) {
+  const list = tasks.filter(which);
+  list.forEach(t => { t.state = null; build(t); });
+  update();
+  if (list[0]) list[0].el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+(function init() {
+  const app = document.getElementById('app'), nav = document.getElementById('nav');
+  let no = 0;
+  DATA.sections.forEach((sec, i) => {
+    const s = $('section', 'sec'); s.id = 'k' + i;
+    s.append($('div', 'sec-head', `<h2>${i + 1}. ${sec.title}</h2><span class="pg">${sec.pages}</span>`));
+    s.lastChild.style.background = sec.color;
+    sec.items.forEach(it => { const el = $('div'); s.append(el); const t = { it, el, sec: i, no: ++no, state: null }; tasks.push(t); build(t); });
+    app.append(s);
+    const a = $('a', '', sec.title); a.href = '#k' + i; a.id = 'nav-' + i; nav.append(a);
+  });
+  update();
+})();
+</script>
+</body>
+</html>
