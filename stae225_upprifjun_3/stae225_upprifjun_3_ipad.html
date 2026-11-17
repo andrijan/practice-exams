@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STÆ 225 – Upprifjun fyrir próf (3)</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  :root {
+    --accent: #c8102e;
+    --accent-soft: #f6eb61;
+    --ink: #1a1a1a;
+    --paper: #fdfcf7;
+    --line: #d8d4c5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  h1 { text-align: center; color: var(--accent); margin-bottom: 0.2rem; font-size: 2rem; }
+  .subtitle { text-align: center; color: #666; margin-top: 0; font-style: italic; margin-bottom: 2rem; }
+  h2 {
+    color: white; background: var(--accent);
+    padding: 0.6rem 1rem; border-radius: 4px;
+    margin-top: 3rem; border-bottom: 4px solid var(--accent-soft);
+  }
+  h3 { color: var(--accent); margin-top: 1.6rem; border-bottom: 1px solid var(--line); padding-bottom: 0.25rem; }
+  .question {
+    margin: 1.4rem 0; padding: 1rem 1.2rem;
+    background: white;
+    border-left: 4px solid var(--accent-soft);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .q-num { font-weight: 700; color: var(--accent); margin-right: 0.4rem; }
+  .prompt { margin-bottom: 0.6rem; }
+  .subq { margin: 0.4rem 0 0.4rem 1.2rem; }
+  .subq-label { font-weight: 600; margin-right: 0.3rem; }
+  .figure { margin: 0.5rem 0 0.8rem; text-align: center; }
+  .figure svg { max-width: 380px; width: 100%; height: auto; display: inline-block; }
+  .figure svg text {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px; fill: var(--ink);
+  }
+  .figure svg .stroke { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linejoin: round; }
+  .figure svg .dashed { fill: none; stroke: var(--ink); stroke-width: 1.3; stroke-dasharray: 4 3; }
+  .figure svg .fill-light { fill: #fff8d9; stroke: var(--ink); stroke-width: 1.5; }
+  .figure svg .arc { fill: none; stroke: var(--accent); stroke-width: 1.5; }
+  .figure svg .red { fill: var(--accent); }
+  .figure svg .pt { fill: var(--ink); }
+  button.toggle {
+    background: var(--accent); color: white; border: none;
+    padding: 0.4rem 0.9rem; border-radius: 4px;
+    font-size: 0.85rem; cursor: pointer; margin-top: 0.5rem; font-weight: 600;
+  }
+  button.toggle:hover { background: #a00d24; }
+  .answer {
+    display: none; margin-top: 0.8rem; padding: 0.8rem 1rem;
+    background: #fff8d9; border-left: 3px solid var(--accent-soft);
+    border-radius: 0 4px 4px 0;
+  }
+  .answer.show { display: block; }
+  .answer .label { font-weight: 700; color: var(--accent); margin-right: 0.4rem; }
+  .explanation { margin-top: 0.5rem; color: #444; font-size: 0.93rem; }
+  .controls {
+    text-align: center; margin: 1rem 0 2rem;
+    position: sticky; top: 0; background: var(--paper);
+    padding: 0.6rem 0; z-index: 10;
+  }
+  .controls button {
+    background: white; color: var(--accent);
+    border: 2px solid var(--accent);
+    padding: 0.5rem 1.1rem; border-radius: 4px;
+    cursor: pointer; margin: 0 0.3rem; font-weight: 600;
+  }
+  .controls button:hover { background: var(--accent); color: white; }
+  .note { font-style: italic; color: #777; font-size: 0.88rem; }
+  hr { border: none; border-top: 1px solid var(--line); margin: 2rem 0; }
+  .toc {
+    background: white; border-left: 4px solid var(--accent-soft);
+    padding: 0.8rem 1.2rem; margin: 1rem 0 2rem;
+    border-radius: 0 4px 4px 0;
+  }
+  .toc a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  .toc a:hover { text-decoration: underline; }
+</style><style>
+  .formulas div{margin:.35rem 0}
+  .part{margin:.7rem 0 .2rem .6rem}
+  .part .sub{margin-bottom:.3rem}
+  .part .lab{font-weight:700;margin-right:.35rem}
+  .solutions h3{margin-top:1rem}
+  .working{display:block;margin:.5rem 0 .2rem}
+  .step{margin:.28rem 0;padding-left:.2rem;line-height:1.5;overflow-x:auto}
+  .step .pre{color:#555;font-size:.92em;margin-right:.45rem}
+  .step .post{color:#555;font-size:.92em;margin-left:.45rem}
+  .step .prose{font-style:italic}
+  .final{margin-top:.5rem;font-weight:600}
+  table.syn,table.chart{border-collapse:collapse;margin:.3rem 0 .3rem 1rem;font-size:.95em}
+  table.syn td{padding:.15rem .55rem;text-align:right}
+  table.syn td.a{border-right:1.5px solid currentColor}
+  table.syn tr.sum td{border-top:1.5px solid currentColor}
+  table.syn td.rem{border-left:1px dashed currentColor}
+  .syn-note{margin-left:1rem;font-size:.95em}
+  table.chart th,table.chart td{padding:.15rem .5rem;text-align:center;border-bottom:1px solid rgba(0,0,0,.15)}
+  table.chart td.f,table.chart th.f{text-align:left;border-right:1.5px solid currentColor}
+  table.chart tr.tot td{font-weight:700;border-top:1.5px solid currentColor}
+  .solutions li{margin-bottom:.9rem}
+  .solutions .sp{margin:.5rem 0 .8rem .6rem}
+</style>
+
+</head>
+<body>
+<a id="back-to-list" href="../index.html" style="display:inline-block;margin:10px 0 0 12px;padding:6px 14px;border-radius:999px;background:#fff;border:1px solid #ccc;color:#c8102e;font:600 15px -apple-system,'Helvetica Neue',Arial,sans-serif;text-decoration:none;position:relative;z-index:50">← Öll prófin</a><style>@media print{#back-to-list{display:none!important}}</style>
+
+<h1>STÆ 225 – Upprifjun fyrir próf (3)</h1>
+<p class="subtitle">Annars stigs jöfnur · Margliðudeiling · Fleygbogar · Ójöfnur — speglað af upprifjunarblaði kennarans, nýjar tölur</p>
+
+<div class="toc"><a href="#q1">1</a> · <a href="#q2">2</a> · <a href="#q3">3</a> · <a href="#q4">4</a> · <a href="#q5">5</a> · <a href="#q6">6</a> · <a href="#q7">7</a> · <a href="#q8">8</a> · <a href="#q9">9</a> · <a href="#q10">10</a> · <a href="#q11">11</a> · <a href="#q12">12</a></div>
+
+<div class="controls">
+  <button onclick="document.querySelectorAll('.answer').forEach(a=>a.classList.add('show'));document.querySelectorAll('button.toggle').forEach(b=>b.textContent='Fela lausn')">Sýna allar lausnir</button>
+  <button onclick="document.querySelectorAll('.answer').forEach(a=>a.classList.remove('show'));document.querySelectorAll('button.toggle').forEach(b=>b.textContent='Sýna lausn')">Fela allar lausnir</button>
+</div>
+
+
+<section class="exercise" id="formulur"><h2>Formúlur</h2>
+<div class="question formulas">
+<div>Núllþáttareglan: ef $a \cdot b = 0$ þá er $a = 0$ eða $b = 0$.</div>
+<div>Lausnarformúlan: $ax^2 + bx + c = 0$ hefur lausnirnar $x = \dfrac{-b \pm \sqrt{d}}{2a}$ þar sem $d = b^2 - 4ac$.
+Ef $d > 0$ eru lausnirnar tvær, ef $d = 0$ ein og ef $d < 0$ engin.</div>
+<div>Fleygboginn $y = ax^2 + bx + c$: samhverfuás $x = -\dfrac{b}{2a}$; opnast upp ef $a > 0$, niður ef $a < 0$.</div>
+<div>Leifareglan: leifin þegar $f(x)$ er deilt með $x - a$ er $f(a)$.</div>
+<div>Þáttunarreglan: ef $f(a) = 0$ þá er $x - a$ þáttur í $f(x)$.</div>
+<div>Biltákn: $[a,\ b]$ tekur endapunktana með, $]a,\ b[$ ekki; $[a,\ \infty[$ er allt frá $a$ og upp úr.</div>
+</div></section>
+
+<section class="exercise" id="daemi"><h2>Dæmi</h2>
+<div class="question" id="q1">
+<div class="prompt"><span class="q-num">1.</span> Leystu jöfnurnar nákvæmt og strikaðu undir lokasvarið.</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">a.</span> $(x + 2)(1 - x) = 0$</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step">$\displaystyle (x + 2)(1 - x) = 0$</div><div class="step"><span class="pre">Núllþáttareglan gefur</span>$\displaystyle x + 2 = 0 \quad\text{eða}\quad 1 - x = 0$</div><div class="step"><span class="pre">svo að</span>$\displaystyle x = -2 \quad\text{eða}\quad x = 1$</div></div><div class="final">Svar: $x = -2$ eða $x = 1$</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">b.</span> $5x^2 - 5x + 5 = 0$</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Jafnan er á staðlaða forminu $ax^2 + bx + c = 0$ með</span>$\displaystyle 5x^{2} - 5x + 5 = 0$</div><div class="step">$\displaystyle a = 5,\quad b = -5,\quad c = 5$</div><div class="step"><span class="pre">Aðgreinirinn:</span>$\displaystyle d = (-5)^{2} - 4\cdot 5\cdot 5 = 25 - 100 = -75$</div><div class="step"><span class='prose'>$d = -75 < 0$: það er engin rauntala sem hefur neikvæðan ferning, svo jafnan hefur enga lausn.</span></div></div><div class="final">Svar: Engin lausn (í mengi rauntalna).</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">c.</span> $x^2 = -8x$</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step">$\displaystyle x^{2} = -8x$</div><div class="step"><span class="pre">Flytjum $-8x$ yfir á vinstri hlið (deilum <em>ekki</em> með $x$, þá týnist lausnin $x = 0$):</span>$\displaystyle x^{2} + 8x = 0$</div><div class="step"><span class="pre">Tökum $x$ út fyrir sviga:</span>$\displaystyle x^{2} + 8x = x(x + 8)$</div><div class="step"><span class="pre">Núllþáttareglan gefur</span>$\displaystyle x = 0 \quad\text{eða}\quad x + 8 = 0$</div><div class="step"><span class="pre">svo að</span>$\displaystyle x = 0 \quad\text{eða}\quad x = -8$</div></div><div class="final">Svar: $x = 0$ eða $x = -8$</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">d.</span> $\sqrt{x + 5} = x - 1$</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step">$\displaystyle \sqrt{x + 5} = x - 1$</div><div class="step"><span class="pre">Hefjum báðar hliðar í annað veldi (þetta getur búið til falskar lausnir):</span>$\displaystyle x + 5 = (x - 1)^{2}$</div><div class="step"><span class="pre">Margföldum upp úr sviganum:</span>$\displaystyle (x - 1)^{2} = x^{2} - 2x + 1$</div><div class="step"><span class="pre">svo að</span>$\displaystyle x + 5 = x^{2} - 2x + 1$</div><div class="step"><span class="pre">Flytjum allt yfir á eina hlið:</span>$\displaystyle x^{2} - 3x - 4 = 0$</div><div class="step"><span class="pre">Þáttum:</span>$\displaystyle x^{2} - 3x - 4 = (x - 4)(x + 1)$</div><div class="step"><span class="pre">Núllþáttareglan gefur</span>$\displaystyle x = 4 \quad\text{eða}\quad x = -1$</div><div class="step"><span class="pre">Prófun, $x = 4$:</span>$\displaystyle \text{vinstri hlið: } \sqrt{4 + 5} = 3, \quad \text{hægri hlið: } 4 - 1 = 3, \quad 3 = 3$<span class="post">✓ lausnin stenst.</span></div><div class="step"><span class="pre">Prófun, $x = -1$:</span>$\displaystyle \text{vinstri hlið: } \sqrt{-1 + 5} = 2, \quad \text{hægri hlið: } -1 - 1 = -2, \quad 2 \neq -2$<span class="post">✗ fölsk lausn — höfnum henni.</span></div></div><div class="final">Svar: $x = 4$ ($x = -1$ er fölsk lausn)</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">e.</span> $x^4 - 22x^2 - 75 = 0$</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Setjum $u = x^2$. Þá er $x^4 = u^2$ og jafnan verður</span>$\displaystyle u^{2} - 22u - 75 = 0$</div><div class="step"><span class="pre">Tölurnar $-25$ og $3$ hafa margfeldið $-75$ og summuna $-22$:</span>$\displaystyle u^{2} - 22u - 75 = (u - 25)(u + 3)$</div><div class="step"><span class="pre">Núllþáttareglan gefur</span>$\displaystyle u = 25 \quad\text{eða}\quad u = -3$</div><div class="step"><span class='prose'>$u = x^2$ getur ekki verið neikvætt, svo $u = -3$ gefur enga lausn.</span></div><div class="step"><span class="pre">Skiptum $u$ út fyrir $x^2$:</span>$\displaystyle x^{2} = 25$</div><div class="step"><span class="pre">Drögum ferningsrót af báðum hliðum:</span>$\displaystyle x = \pm \sqrt{25} = \pm 5$</div></div><div class="final">Svar: $x = \pm 5$</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">f.</span> $2x^2 + 7 = 169$</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step">$\displaystyle 2x^{2} + 7 = 169$</div><div class="step"><span class="pre">Drögum $7$ frá báðum hliðum:</span>$\displaystyle 2x^{2} = 162$</div><div class="step"><span class="pre">Deilum með $2$:</span>$\displaystyle x^{2} = \dfrac{162}{2} = 81$</div><div class="step"><span class="pre">Drögum ferningsrót af báðum hliðum:</span>$\displaystyle x = \pm \sqrt{81} = \pm 9$</div></div><div class="final">Svar: $x = \pm 9$</div></div>
+</div>
+</div>
+<div class="question" id="q2">
+<div class="prompt"><span class="q-num">2.</span> Notaðu aðferðina „að fylla í ferninginn“ til að leysa jöfnuna $x^2 - 10x + 2 = 0$.</div>
+<div class="part">
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step">$\displaystyle x^{2} - 10x + 2 = 0$</div><div class="step"><span class="pre">Flytjum fastaliðinn yfir á hægri hlið:</span>$\displaystyle x^{2} - 10x = -2$</div><div class="step"><span class="pre">Helmingurinn af stuðli $x$ er $-5$. Bætum $(-5)^2 = 25$ við báðar hliðar:</span>$\displaystyle x^{2} - 10x + 25 = -2 + 25$</div><div class="step"><span class="pre">Vinstri hliðin er fullkominn ferningur, $(x - 5)^2$:</span>$\displaystyle (x - 5)^{2} = 23$</div><div class="step"><span class="pre">Drögum ferningsrót af báðum hliðum:</span>$\displaystyle x - 5 = \pm \sqrt{23}$</div><div class="step"><span class="pre">Leggjum $5$ við báðar hliðar:</span>$\displaystyle x = 5 \pm \sqrt{23}$</div></div><div class="final">Svar: $x = 5 \pm \sqrt{23}$</div></div>
+</div>
+</div>
+<div class="question" id="q3">
+<div class="prompt"><span class="q-num">3.</span> Deildu með margliðudeilingu.</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">a.</span> $(4x^3 - x^2 + 3) : (x - 1)$</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Deilum fremsta lið með fremsta lið deilisins:</span>$\displaystyle \dfrac{4x^{3}}{x} = 4x^{2}$</div><div class="step"><span class="pre">Margföldum deilinn með því:</span>$\displaystyle 4x^{2}(x - 1) = 4x^{3} - 4x^{2}$</div><div class="step"><span class="pre">Drögum frá:</span>$\displaystyle \left(4x^{3} - x^{2} + 3\right) - (4x^{3} - 4x^{2}) = 3x^{2} + 3$</div><div class="step"><span class="pre">Deilum fremsta lið með fremsta lið deilisins:</span>$\displaystyle \dfrac{3x^{2}}{x} = 3x$</div><div class="step"><span class="pre">Margföldum deilinn með því:</span>$\displaystyle 3x(x - 1) = 3x^{2} - 3x$</div><div class="step"><span class="pre">Drögum frá:</span>$\displaystyle \left(3x^{2} + 3\right) - (3x^{2} - 3x) = 3x + 3$</div><div class="step"><span class="pre">Deilum fremsta lið með fremsta lið deilisins:</span>$\displaystyle \dfrac{3x}{x} = 3$</div><div class="step"><span class="pre">Margföldum deilinn með því:</span>$\displaystyle 3(x - 1) = 3x - 3$</div><div class="step"><span class="pre">Drögum frá:</span>$\displaystyle \left(3x + 3\right) - (3x - 3) = 6$</div><div class="step"><span class="pre">Leifin $6$ er af lægra stigi en deilirinn, svo</span>$\displaystyle \dfrac{4x^{3} - x^{2} + 3}{x - 1} = 4x^{2} + 3x + 3 + \dfrac{6}{x - 1}$</div></div><div class="final">Svar: $4x^2 + 3x + 3 + \dfrac{6}{x - 1}$</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">b.</span> $(5x^3 - 7x^2 - x + 3) : (x - 1)$</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Deilum fremsta lið með fremsta lið deilisins:</span>$\displaystyle \dfrac{5x^{3}}{x} = 5x^{2}$</div><div class="step"><span class="pre">Margföldum deilinn með því:</span>$\displaystyle 5x^{2}(x - 1) = 5x^{3} - 5x^{2}$</div><div class="step"><span class="pre">Drögum frá:</span>$\displaystyle \left(5x^{3} - 7x^{2} - x + 3\right) - (5x^{3} - 5x^{2}) = -2x^{2} - x + 3$</div><div class="step"><span class="pre">Deilum fremsta lið með fremsta lið deilisins:</span>$\displaystyle \dfrac{-2x^{2}}{x} = -2x$</div><div class="step"><span class="pre">Margföldum deilinn með því:</span>$\displaystyle -2x(x - 1) = -2x^{2} + 2x$</div><div class="step"><span class="pre">Drögum frá:</span>$\displaystyle \left(-2x^{2} - x + 3\right) - (-2x^{2} + 2x) = -3x + 3$</div><div class="step"><span class="pre">Deilum fremsta lið með fremsta lið deilisins:</span>$\displaystyle \dfrac{-3x}{x} = -3$</div><div class="step"><span class="pre">Margföldum deilinn með því:</span>$\displaystyle -3(x - 1) = -3x + 3$</div><div class="step"><span class="pre">Drögum frá:</span>$\displaystyle \left(-3x + 3\right) - (-3x + 3) = 0$</div><div class="step"><span class="pre">Leifin $0$ er af lægra stigi en deilirinn, svo</span>$\displaystyle \dfrac{5x^{3} - 7x^{2} - x + 3}{x - 1} = 5x^{2} - 2x - 3$</div></div><div class="final">Svar: $5x^2 - 2x - 3$</div></div>
+</div>
+</div>
+<div class="question" id="q4">
+<div class="prompt"><span class="q-num">4.</span> Gefinn er fleygboginn $f(x) = 2x^2 - 14x + 12$.</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">a.</span> Finndu jöfnu samhverfuássins (sýndu útreikninga).</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Samhverfuásinn er $x = -\dfrac{b}{2a}$ með $a = 2$ og $b = -14$:</span>$\displaystyle x = \dfrac{-(-14)}{2\cdot 2} = \dfrac{14}{4} = \tfrac{7}{2}$</div></div><div class="final">Svar: $x = 3{,}5$</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">b.</span> Finndu topppunktinn (sýndu útreikninga).</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Topppunkturinn er á samhverfuásnum. Setjum $x = 3{,}5$ inn:</span>$\displaystyle y = 2\cdot (\tfrac{7}{2})^{2} - 14\cdot \tfrac{7}{2} + 12 = \tfrac{49}{2} - 49 + 12 = -\tfrac{25}{2}$</div><div class="step"><span class='prose'>$a = 2 > 0$, svo fleygboginn opnast upp og topppunkturinn er lægsti punkturinn.</span></div></div><div class="final">Svar: $(3{,}5;\ -12{,}5)$</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">c.</span> Finndu skurðpunktana við $x$-ás (sýndu útreikninga).</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Á $x$-ás er $y = 0$:</span>$\displaystyle 2x^{2} - 14x + 12 = 0$</div><div class="step"><span class="pre">Tökum $2$ út fyrir sviga:</span>$\displaystyle 2x^{2} - 14x + 12 = 2(x^{2} - 7x + 6)$</div><div class="step"><span class="pre">Tölurnar $-6$ og $-1$ hafa margfeldið $6$ og summuna $-7$:</span>$\displaystyle x^{2} - 7x + 6 = (x - 6)(x - 1)$</div><div class="step"><span class="pre">svo jafnan er</span>$\displaystyle 2(x - 6)(x - 1) = 0$</div><div class="step"><span class="pre">Núllþáttareglan gefur</span>$\displaystyle x - 6 = 0 \quad\text{eða}\quad x - 1 = 0$</div><div class="step"><span class="pre">svo að</span>$\displaystyle x = 6 \quad\text{eða}\quad x = 1$</div></div><div class="final">Svar: $(1, 0)$ og $(6, 0)$</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">d.</span> Finndu skurðpunktinn við $y$-ás.</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Á $y$-ás er $x = 0$:</span>$\displaystyle y = 2\cdot 0^{2} - 14\cdot 0 + 12 = 12$</div></div><div class="final">Svar: $(0, 12)$</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">e.</span> Teiknaðu fleygbogann eins nákvæmlega og þú getur (finndu aukapunkta).</div>
+<div class="figure"><svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg"><line x1="26.0" y1="234.0" x2="26.0" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="55.8" y1="234.0" x2="55.8" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="85.6" y1="234.0" x2="85.6" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="115.3" y1="234.0" x2="115.3" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="145.1" y1="234.0" x2="145.1" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="174.9" y1="234.0" x2="174.9" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="204.7" y1="234.0" x2="204.7" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="234.4" y1="234.0" x2="234.4" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="264.2" y1="234.0" x2="264.2" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="294.0" y1="234.0" x2="294.0" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="234.0" x2="294.0" y2="234.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="219.1" x2="294.0" y2="219.1" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="204.3" x2="294.0" y2="204.3" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="189.4" x2="294.0" y2="189.4" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="174.6" x2="294.0" y2="174.6" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="159.7" x2="294.0" y2="159.7" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="144.9" x2="294.0" y2="144.9" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="130.0" x2="294.0" y2="130.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="115.1" x2="294.0" y2="115.1" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="100.3" x2="294.0" y2="100.3" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="85.4" x2="294.0" y2="85.4" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="70.6" x2="294.0" y2="70.6" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="55.7" x2="294.0" y2="55.7" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="40.9" x2="294.0" y2="40.9" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="26.0" x2="294.0" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="130.0" x2="294.0" y2="130.0" stroke="#1a1a1a" stroke-width="1.2"/><line x1="55.8" y1="234.0" x2="55.8" y2="26.0" stroke="#1a1a1a" stroke-width="1.2"/><text x="290.0" y="125.0" text-anchor="end" font-size="12" font-style="italic">x</text><text x="61.8" y="38.0" font-size="12" font-style="italic">y</text><text x="26.0" y="143.0" text-anchor="middle" font-size="9" fill="#666">−1</text><text x="85.6" y="143.0" text-anchor="middle" font-size="9" fill="#666">1</text><text x="115.3" y="143.0" text-anchor="middle" font-size="9" fill="#666">2</text><text x="145.1" y="143.0" text-anchor="middle" font-size="9" fill="#666">3</text><text x="174.9" y="143.0" text-anchor="middle" font-size="9" fill="#666">4</text><text x="204.7" y="143.0" text-anchor="middle" font-size="9" fill="#666">5</text><text x="234.4" y="143.0" text-anchor="middle" font-size="9" fill="#666">6</text><text x="264.2" y="143.0" text-anchor="middle" font-size="9" fill="#666">7</text><text x="294.0" y="143.0" text-anchor="middle" font-size="9" fill="#666">8</text><text x="51.8" y="237.0" text-anchor="end" font-size="9" fill="#666">−14</text><text x="51.8" y="222.1" text-anchor="end" font-size="9" fill="#666">−12</text><text x="51.8" y="207.3" text-anchor="end" font-size="9" fill="#666">−10</text><text x="51.8" y="192.4" text-anchor="end" font-size="9" fill="#666">−8</text><text x="51.8" y="177.6" text-anchor="end" font-size="9" fill="#666">−6</text><text x="51.8" y="162.7" text-anchor="end" font-size="9" fill="#666">−4</text><text x="51.8" y="147.9" text-anchor="end" font-size="9" fill="#666">−2</text><text x="51.8" y="118.1" text-anchor="end" font-size="9" fill="#666">2</text><text x="51.8" y="103.3" text-anchor="end" font-size="9" fill="#666">4</text><text x="51.8" y="88.4" text-anchor="end" font-size="9" fill="#666">6</text><text x="51.8" y="73.6" text-anchor="end" font-size="9" fill="#666">8</text><text x="51.8" y="58.7" text-anchor="end" font-size="9" fill="#666">10</text><text x="51.8" y="43.9" text-anchor="end" font-size="9" fill="#666">12</text><text x="51.8" y="29.0" text-anchor="end" font-size="9" fill="#666">14</text></svg></div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class='prose'>Merkjum skurðpunktana og topppunktinn úr a–d lið. Reiknum nokkra aukapunkta:</span></div><div class="step">$\displaystyle f(3) = 2\cdot 3^{2} - 14\cdot 3 + 12 = 18 - 42 + 12 = -12$</div><div class="step">$\displaystyle f(4) = 2\cdot 4^{2} - 14\cdot 4 + 12 = 32 - 56 + 12 = -12$</div><div class="step">$\displaystyle f(7) = 2\cdot 7^{2} - 14\cdot 7 + 12 = 98 - 98 + 12 = 12$</div><div class="step"><span class='prose'>Fleygboginn er samhverfur um $x = 3{,}5$, svo hver punktur á sér spegilmynd hinum megin við ásinn. Teiknum slétta sveigju í gegnum alla punktana.</span></div></div><div class="final">Svar: Sjá mynd.</div><div class="figure"><svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg"><line x1="26.0" y1="234.0" x2="26.0" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="55.8" y1="234.0" x2="55.8" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="85.6" y1="234.0" x2="85.6" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="115.3" y1="234.0" x2="115.3" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="145.1" y1="234.0" x2="145.1" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="174.9" y1="234.0" x2="174.9" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="204.7" y1="234.0" x2="204.7" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="234.4" y1="234.0" x2="234.4" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="264.2" y1="234.0" x2="264.2" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="294.0" y1="234.0" x2="294.0" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="234.0" x2="294.0" y2="234.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="219.1" x2="294.0" y2="219.1" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="204.3" x2="294.0" y2="204.3" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="189.4" x2="294.0" y2="189.4" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="174.6" x2="294.0" y2="174.6" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="159.7" x2="294.0" y2="159.7" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="144.9" x2="294.0" y2="144.9" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="130.0" x2="294.0" y2="130.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="115.1" x2="294.0" y2="115.1" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="100.3" x2="294.0" y2="100.3" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="85.4" x2="294.0" y2="85.4" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="70.6" x2="294.0" y2="70.6" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="55.7" x2="294.0" y2="55.7" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="40.9" x2="294.0" y2="40.9" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="26.0" x2="294.0" y2="26.0" stroke="#e6e1d3" stroke-width="0.6"/><line x1="26.0" y1="130.0" x2="294.0" y2="130.0" stroke="#1a1a1a" stroke-width="1.2"/><line x1="55.8" y1="234.0" x2="55.8" y2="26.0" stroke="#1a1a1a" stroke-width="1.2"/><text x="290.0" y="125.0" text-anchor="end" font-size="12" font-style="italic">x</text><text x="61.8" y="38.0" font-size="12" font-style="italic">y</text><text x="26.0" y="143.0" text-anchor="middle" font-size="9" fill="#666">−1</text><text x="85.6" y="143.0" text-anchor="middle" font-size="9" fill="#666">1</text><text x="115.3" y="143.0" text-anchor="middle" font-size="9" fill="#666">2</text><text x="145.1" y="143.0" text-anchor="middle" font-size="9" fill="#666">3</text><text x="174.9" y="143.0" text-anchor="middle" font-size="9" fill="#666">4</text><text x="204.7" y="143.0" text-anchor="middle" font-size="9" fill="#666">5</text><text x="234.4" y="143.0" text-anchor="middle" font-size="9" fill="#666">6</text><text x="264.2" y="143.0" text-anchor="middle" font-size="9" fill="#666">7</text><text x="294.0" y="143.0" text-anchor="middle" font-size="9" fill="#666">8</text><text x="51.8" y="237.0" text-anchor="end" font-size="9" fill="#666">−14</text><text x="51.8" y="222.1" text-anchor="end" font-size="9" fill="#666">−12</text><text x="51.8" y="207.3" text-anchor="end" font-size="9" fill="#666">−10</text><text x="51.8" y="192.4" text-anchor="end" font-size="9" fill="#666">−8</text><text x="51.8" y="177.6" text-anchor="end" font-size="9" fill="#666">−6</text><text x="51.8" y="162.7" text-anchor="end" font-size="9" fill="#666">−4</text><text x="51.8" y="147.9" text-anchor="end" font-size="9" fill="#666">−2</text><text x="51.8" y="118.1" text-anchor="end" font-size="9" fill="#666">2</text><text x="51.8" y="103.3" text-anchor="end" font-size="9" fill="#666">4</text><text x="51.8" y="88.4" text-anchor="end" font-size="9" fill="#666">6</text><text x="51.8" y="73.6" text-anchor="end" font-size="9" fill="#666">8</text><text x="51.8" y="58.7" text-anchor="end" font-size="9" fill="#666">10</text><text x="51.8" y="43.9" text-anchor="end" font-size="9" fill="#666">12</text><text x="51.8" y="29.0" text-anchor="end" font-size="9" fill="#666">14</text><polyline points="50.6,26.0 51.7,26.3 52.8,30.3 53.9,34.3 55.0,38.2 56.1,42.2 57.3,46.0 58.4,49.8 59.5,53.6 60.6,57.4 61.7,61.1 62.9,64.7 64.0,68.3 65.1,71.9 66.2,75.4 67.3,78.9 68.4,82.4 69.5,85.8 70.7,89.1 71.8,92.5 72.9,95.7 74.0,99.0 75.1,102.2 76.2,105.3 77.4,108.4 78.5,111.5 79.6,114.5 80.7,117.5 81.8,120.5 83.0,123.4 84.1,126.2 85.2,129.1 86.3,131.8 87.4,134.6 88.5,137.3 89.7,139.9 90.8,142.5 91.9,145.1 93.0,147.6 94.1,150.1 95.2,152.6 96.3,155.0 97.5,157.3 98.6,159.7 99.7,161.9 100.8,164.2 101.9,166.4 103.0,168.5 104.2,170.6 105.3,172.7 106.4,174.7 107.5,176.7 108.6,178.6 109.8,180.5 110.9,182.4 112.0,184.2 113.1,186.0 114.2,187.7 115.3,189.4 116.5,191.1 117.6,192.7 118.7,194.3 119.8,195.8 120.9,197.3 122.0,198.7 123.2,200.1 124.3,201.5 125.4,202.8 126.5,204.1 127.6,205.3 128.7,206.5 129.8,207.6 131.0,208.7 132.1,209.8 133.2,210.8 134.3,211.8 135.4,212.7 136.6,213.6 137.7,214.5 138.8,215.3 139.9,216.1 141.0,216.8 142.1,217.5 143.2,218.2 144.4,218.8 145.5,219.3 146.6,219.8 147.7,220.3 148.8,220.8 149.9,221.2 151.1,221.5 152.2,221.8 153.3,222.1 154.4,222.3 155.5,222.5 156.7,222.7 157.8,222.8 158.9,222.8 160.0,222.9 161.1,222.8 162.2,222.8 163.3,222.7 164.5,222.5 165.6,222.3 166.7,222.1 167.8,221.8 168.9,221.5 170.1,221.2 171.2,220.8 172.3,220.3 173.4,219.8 174.5,219.3 175.6,218.8 176.8,218.2 177.9,217.5 179.0,216.8 180.1,216.1 181.2,215.3 182.3,214.5 183.4,213.6 184.6,212.7 185.7,211.8 186.8,210.8 187.9,209.8 189.0,208.7 190.2,207.6 191.3,206.5 192.4,205.3 193.5,204.1 194.6,202.8 195.7,201.5 196.8,200.1 198.0,198.7 199.1,197.3 200.2,195.8 201.3,194.3 202.4,192.7 203.6,191.1 204.7,189.4 205.8,187.7 206.9,186.0 208.0,184.2 209.1,182.4 210.2,180.5 211.4,178.6 212.5,176.7 213.6,174.7 214.7,172.7 215.8,170.6 216.9,168.5 218.1,166.4 219.2,164.2 220.3,161.9 221.4,159.7 222.5,157.3 223.7,155.0 224.8,152.6 225.9,150.1 227.0,147.6 228.1,145.1 229.2,142.5 230.3,139.9 231.5,137.3 232.6,134.6 233.7,131.8 234.8,129.1 235.9,126.2 237.1,123.4 238.2,120.5 239.3,117.5 240.4,114.5 241.5,111.5 242.6,108.4 243.8,105.3 244.9,102.2 246.0,99.0 247.1,95.7 248.2,92.5 249.3,89.1 250.4,85.8 251.6,82.4 252.7,78.9 253.8,75.4 254.9,71.9 256.0,68.3 257.1,64.7 258.3,61.1 259.4,57.4 260.5,53.6 261.6,49.8 262.7,46.0 263.9,42.2 265.0,38.2 266.1,34.3 267.2,30.3 268.3,26.3 269.4,26.0" fill="none" stroke="#c8102e" stroke-width="2"/><circle cx="160.0" cy="222.9" r="3.2" fill="#1a1a1a"/><text x="166.0" y="216.9" text-anchor="start" font-size="11">(3,5; −12,5)</text><circle cx="145.1" cy="219.1" r="3.2" fill="#1a1a1a"/><text x="151.1" y="213.1" text-anchor="start" font-size="11"></text><circle cx="174.9" cy="219.1" r="3.2" fill="#1a1a1a"/><text x="180.9" y="213.1" text-anchor="start" font-size="11"></text><circle cx="264.2" cy="40.9" r="3.2" fill="#1a1a1a"/><text x="258.2" y="34.9" text-anchor="end" font-size="11">(7, 12)</text><circle cx="234.4" cy="130.0" r="3.2" fill="#1a1a1a"/><text x="228.4" y="124.0" text-anchor="end" font-size="11">(6, 0)</text><circle cx="85.6" cy="130.0" r="3.2" fill="#1a1a1a"/><text x="91.6" y="124.0" text-anchor="start" font-size="11">(1, 0)</text><circle cx="55.8" cy="40.9" r="3.2" fill="#1a1a1a"/><text x="61.8" y="34.9" text-anchor="start" font-size="11">(0, 12)</text></svg></div></div>
+</div>
+</div>
+<div class="question" id="q5">
+<div class="prompt"><span class="q-num">5.</span> Leirdúfu er skotið af palli. Leirdúfan flýgur eftir ferlinum $$y = 4 + 5x - 0{,}5x^2$$ þar sem $x$ er fjarlægð frá skotstað og $y$ er hæð leirdúfunnar, hvort tveggja í metrum.</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">a.</span> Úr hvaða hæð er leirdúfunni skotið?</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Skotið er þar sem $x = 0$:</span>$\displaystyle y = 4 + 5\cdot 0 - 0{,}5\cdot 0^{2} = 4$</div></div><div class="final">Svar: $4$ m</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">b.</span> Hver er mesta hæðin sem leirdúfan nær?</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Hæsta staðan er á samhverfuásnum $x = -\dfrac{b}{2a}$, hér með $a = -0{,}5$ og $b = 5$:</span>$\displaystyle x = \dfrac{-5}{2\cdot (-0{,}5)} = \dfrac{-5}{-1} = 5$</div><div class="step"><span class="pre">Hæðin þar:</span>$\displaystyle y = 4 + 5\cdot 5 - 0{,}5\cdot 5^{2} = 4 + 25 - 12{,}5 = 16{,}5$</div><div class="step"><span class='prose'>$a = -0{,}5 < 0$, svo fleygboginn opnast niður og þetta er hæsti punkturinn.</span></div></div><div class="final">Svar: $16{,}5$ m</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">c.</span> Hve langt frá pallinum er leirdúfan þegar hún lendir á jörðinni?</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Leirdúfan lendir þegar $y = 0$:</span>$\displaystyle 4 + 5x - 0{,}5x^{2} = 0$</div><div class="step"><span class="pre">Margföldum báðar hliðar með $-2$:</span>$\displaystyle x^{2} - 10x - 8 = 0$</div><div class="step">$\displaystyle a = 1,\quad b = -10,\quad c = -8$</div><div class="step"><span class="pre">Aðgreinirinn:</span>$\displaystyle d = (-10)^{2} - 4\cdot 1\cdot (-8) = 100 + 32 = 132$</div><div class="step"><span class="pre">Lausnarformúlan gefur</span>$\displaystyle x = \dfrac{10 \pm \sqrt{132}}{2}$</div><div class="step"><span class="pre">Einföldum rótina:</span>$\displaystyle \sqrt{132} = \sqrt{4\cdot 33} = 2\sqrt{33}$</div><div class="step"><span class="pre">Styttum með $2$:</span>$\displaystyle x = 5 \pm \sqrt{33}$</div><div class="step"><span class='prose'>$x = 5 - \sqrt{33} \approx -0{,}74$ er neikvæð og kemur ekki til greina sem fjarlægð. Því er $x = 5 + \sqrt{33} \approx 10{,}74$.</span></div></div><div class="final">Svar: $x \approx 10{,}74$ m</div></div>
+</div>
+</div>
+<div class="question" id="q6">
+<div class="prompt"><span class="q-num">6.</span> Fyrir hvaða gildi á $c$ hefur jafnan $x^2 - 9x + c = 0$ tvær rauntölulausnir?</div>
+<div class="part">
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Hér er $a = 1$, $b = -9$ og fastaliðurinn $c$. Aðgreinirinn $d = b^2 - 4ac$ er</span>$\displaystyle d = (-9)^{2} - 4c = 81 - 4c$</div><div class="step"><span class="pre">Jafnan hefur tvær rauntölulausnir þegar $d > 0$:</span>$\displaystyle 81 - 4c > 0$</div><div class="step"><span class="pre">Leggjum $4c$ við báðar hliðar:</span>$\displaystyle 81 > 4c$</div><div class="step"><span class="pre">Deilum með $4$:</span>$\displaystyle c < 20{,}25$</div></div><div class="final">Svar: $c < 20{,}25$</div></div>
+</div>
+</div>
+<div class="question" id="q7">
+<div class="prompt"><span class="q-num">7.</span> Gefið er að $f(x) = x^2 + bx + c$ hefur núllstöðvarnar $x = -2$ og $x = 9$. Hver er margliðan?</div>
+<div class="part">
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class='prose'>Fyrst $x = -2$ og $x = 9$ eru núllstöðvar, eru $x + 2$ og $x - 9$ þættir í $f(x)$, og stuðull $x^2$ er $1$:</span></div><div class="step">$\displaystyle f(x) = (x + 2)(x - 9)$</div><div class="step"><span class="pre">Margföldum upp úr svigunum:</span>$\displaystyle (x + 2)(x - 9) = x^{2} - 9x + 2x - 18 = x^{2} - 7x - 18$</div><div class="step"><span class='prose'>Þá er $b = -7$ og $c = -18$.</span></div></div><div class="final">Svar: $f(x) = x^2 - 7x - 18$</div></div>
+</div>
+</div>
+<div class="question" id="q8">
+<div class="prompt"><span class="q-num">8.</span> Finndu afganginn (leifina) þegar $(x + 6)$ er deilt upp í margliðuna $2x^3 + 5x^2 - 3x + 4$.</div>
+<div class="part">
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class='prose'>Leifareglan: leifin þegar $f(x)$ er deilt með $x - a$ er $f(a)$. Deilirinn er $x + 6 = x - (-6)$, svo $a = -6$.</span></div><div class="step">$\displaystyle f(-6) = 2\cdot (-6)^{3} + 5\cdot (-6)^{2} - 3\cdot (-6) + 4 = -432 + 180 + 18 + 4 = -230$</div></div><div class="final">Svar: $-230$</div></div>
+</div>
+</div>
+<div class="question" id="q9">
+<div class="prompt"><span class="q-num">9.</span> Leystu ójöfnuna $(x + 6)(x - 1)(x + 2) \geq 0$. Svaraðu bæði með lausnargrafi og biltáknum.</div>
+<div class="part">
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Núllstöðvar þáttanna:</span>$\displaystyle x + 6 = 0 \quad\text{eða}\quad x - 1 = 0 \quad\text{eða}\quad x + 2 = 0$</div><div class="step"><span class="pre">þ.e.</span>$\displaystyle x = -6 \quad\text{eða}\quad x = -2 \quad\text{eða}\quad x = 1$</div><div class="step"><span class="pre">Formerkjamynd:</span><table class='chart'><tr><th class='f'>$x$</th><th></th><th>$-6$</th><th></th><th>$-2$</th><th></th><th>$1$</th><th></th></tr><tr><td class='f'>$x + 6$</td><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr><tr><td class='f'>$x - 1$</td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td></tr><tr><td class='f'>$x + 2$</td><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td></tr><tr class='tot'><td class='f'>$f(x)$</td><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td></tr></table></div><div class="step"><span class="pre">$\geq 0$: þar sem neðsta línan sýnir $+$ eða $0$:</span>$\displaystyle -6 \leq x \leq -2 \quad\text{eða}\quad x \geq 1$</div></div><div class="final">Svar: $\mathopen{[}{-6},\ {-2}\mathclose{]}$ eða $\mathopen{[}{1},\ \infty\mathclose{[}$</div><div class="figure"><svg viewBox="0 0 340 64" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="30" x2="326" y2="30" stroke="#000" stroke-width="1.2"/><polygon points="332,30 324,26 324,34" fill="#000"/><text x="328" y="48" font-size="12" font-style="italic">x</text><line x1="66.4" y1="30" x2="184.8" y2="30" stroke="#c8102e" stroke-width="7" stroke-linecap="butt"/><line x1="273.6" y1="30" x2="324.0" y2="30" stroke="#c8102e" stroke-width="7" stroke-linecap="butt"/><line x1="66.4" y1="21" x2="66.4" y2="39" stroke="#000" stroke-width="1"/><text x="66.4" y="54" text-anchor="middle" font-size="12">−6</text><line x1="184.8" y1="21" x2="184.8" y2="39" stroke="#000" stroke-width="1"/><text x="184.8" y="54" text-anchor="middle" font-size="12">−2</text><line x1="273.6" y1="21" x2="273.6" y2="39" stroke="#000" stroke-width="1"/><text x="273.6" y="54" text-anchor="middle" font-size="12">1</text><circle cx="66.4" cy="30" r="6" fill="#c8102e" stroke="#000" stroke-width="1.5"/><circle cx="184.8" cy="30" r="6" fill="#c8102e" stroke="#000" stroke-width="1.5"/><circle cx="273.6" cy="30" r="6" fill="#c8102e" stroke="#000" stroke-width="1.5"/></svg></div></div>
+</div>
+</div>
+<div class="question" id="q10">
+<div class="prompt"><span class="q-num">10.</span> Leystu ójöfnuna $(x + 3)^2(x - 1)^3(x + 6) \leq 0$. Svaraðu bæði með lausnargrafi og biltáknum.</div>
+<div class="part">
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Núllstöðvar þáttanna:</span>$\displaystyle (x + 3)^{2} = 0 \quad\text{eða}\quad (x - 1)^{3} = 0 \quad\text{eða}\quad x + 6 = 0$</div><div class="step"><span class="pre">þ.e.</span>$\displaystyle x = -6 \quad\text{eða}\quad x = -3 \quad\text{eða}\quad x = 1$</div><div class="step"><span class="pre">Formerkjamynd:</span><table class='chart'><tr><th class='f'>$x$</th><th></th><th>$-6$</th><th></th><th>$-3$</th><th></th><th>$1$</th><th></th></tr><tr><td class='f'>$(x + 3)^{2}$</td><td>+</td><td>+</td><td>+</td><td>0</td><td>+</td><td>+</td><td>+</td></tr><tr><td class='f'>$(x - 1)^{3}$</td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td></tr><tr><td class='f'>$x + 6$</td><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr><tr class='tot'><td class='f'>$f(x)$</td><td>+</td><td>0</td><td>−</td><td>0</td><td>−</td><td>0</td><td>+</td></tr></table></div><div class="step"><span class='prose'>Þátturinn $(x + 3)^2$ er aldrei neikvæður (slétt veldi), svo formerkið skiptir ekki um við $x = -3$; $(x - 1)^3$ hefur sama formerki og $x - 1$.</span></div><div class="step"><span class="pre">$\leq 0$: þar sem neðsta línan sýnir $-$ eða $0$:</span>$\displaystyle -6 \leq x \leq 1$</div></div><div class="final">Svar: $\mathopen{[}{-6},\ {1}\mathclose{]}$</div><div class="figure"><svg viewBox="0 0 340 64" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="30" x2="326" y2="30" stroke="#000" stroke-width="1.2"/><polygon points="332,30 324,26 324,34" fill="#000"/><text x="328" y="48" font-size="12" font-style="italic">x</text><line x1="66.4" y1="30" x2="273.6" y2="30" stroke="#c8102e" stroke-width="7" stroke-linecap="butt"/><line x1="66.4" y1="21" x2="66.4" y2="39" stroke="#000" stroke-width="1"/><text x="66.4" y="54" text-anchor="middle" font-size="12">−6</text><line x1="155.2" y1="21" x2="155.2" y2="39" stroke="#000" stroke-width="1"/><text x="155.2" y="54" text-anchor="middle" font-size="12">−3</text><line x1="273.6" y1="21" x2="273.6" y2="39" stroke="#000" stroke-width="1"/><text x="273.6" y="54" text-anchor="middle" font-size="12">1</text><circle cx="66.4" cy="30" r="6" fill="#c8102e" stroke="#000" stroke-width="1.5"/><circle cx="273.6" cy="30" r="6" fill="#c8102e" stroke="#000" stroke-width="1.5"/></svg></div></div>
+</div>
+</div>
+<div class="question" id="q11">
+<div class="prompt"><span class="q-num">11.</span> Leystu jöfnuna $x^3 + 3x^2 - 13x - 15 = 0$.</div>
+<div class="part">
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class='prose'>Köllum vinstri hliðina $f(x)$. Heiltölulausnir eru deilar fastaliðarins $-15$: $\pm1, \pm3, \pm5, \pm15$. Prófum:</span></div><div class="step">$\displaystyle f(1) = 1^{3} + 3\cdot 1^{2} - 13\cdot 1 - 15 = -24$<span class="post">$\neq 0$</span></div><div class="step">$\displaystyle f(-1) = (-1)^{3} + 3\cdot (-1)^{2} - 13\cdot (-1) - 15 = 0$<span class="post">svo $x + 1$ er þáttur.</span></div><div class="step"><span class="pre">Deilum með $x + 1$ (stuðlaaðferð, $a = -1$):</span><table class='syn'><tr><td class='a'>$-1$</td><td>$1$</td><td>$3$</td><td>$-13$</td><td>$-15$</td></tr><tr><td></td><td></td><td>$-1$</td><td>$-2$</td><td>$15$</td></tr><tr class='sum'><td></td><td class='res'>$1$</td><td class='res'>$2$</td><td class='res'>$-15$</td><td class='rem'>$0$</td></tr></table><div class='syn-note'>Kvóti $x^2 + 2x - 15$, leif $0$.</div></div><div class="step"><span class="pre">svo að</span>$\displaystyle x^{3} + 3x^{2} - 13x - 15 = (x + 1)(x^{2} + 2x - 15)$</div><div class="step"><span class="pre">Þáttum annars stigs þáttinn: tölurnar $-3$ og $5$ hafa margfeldið $-15$ og summuna $2$:</span>$\displaystyle x^{2} + 2x - 15 = (x - 3)(x + 5)$</div><div class="step"><span class="pre">Jafnan er því</span>$\displaystyle (x + 1)(x - 3)(x + 5) = 0$</div><div class="step"><span class="pre">Núllþáttareglan gefur</span>$\displaystyle x = -1 \quad\text{eða}\quad x = 3 \quad\text{eða}\quad x = -5$</div></div><div class="final">Svar: $x = -5$ eða $x = -1$ eða $x = 3$</div></div>
+</div>
+</div>
+<div class="question" id="q12">
+<div class="prompt"><span class="q-num">12.</span> Gefin er margliðan $f(x) = x^3 - x^2 - 10x - 8$.</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">a.</span> Finndu leifina (afganginn) ef deilt er í margliðuna með $x + 1$.</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Deilum með $x + 1$ (stuðlaaðferð, $a = -1$):</span><table class='syn'><tr><td class='a'>$-1$</td><td>$1$</td><td>$-1$</td><td>$-10$</td><td>$-8$</td></tr><tr><td></td><td></td><td>$-1$</td><td>$2$</td><td>$8$</td></tr><tr class='sum'><td></td><td class='res'>$1$</td><td class='res'>$-2$</td><td class='res'>$-8$</td><td class='rem'>$0$</td></tr></table><div class='syn-note'>Kvóti $x^2 - 2x - 8$, leif $0$.</div></div><div class="step"><span class="pre">Til staðfestingar, með leifareglunni:</span>$\displaystyle f(-1) = (-1)^{3} - (-1)^{2} - 10\cdot (-1) - 8 = -1 - 1 + 10 - 8 = 0$</div></div><div class="final">Svar: $0$</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">b.</span> Fullþáttaðu margliðuna.</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Leifin í a-lið er $0$, svo $x + 1$ er þáttur og kvótinn er hinn þátturinn:</span>$\displaystyle x^{3} - x^{2} - 10x - 8 = (x + 1)(x^{2} - 2x - 8)$</div><div class="step"><span class="pre">Tölurnar $2$ og $-4$ hafa margfeldið $-8$ og summuna $-2$:</span>$\displaystyle x^{2} - 2x - 8 = (x + 2)(x - 4)$</div><div class="step"><span class="pre">svo að</span>$\displaystyle x^{3} - x^{2} - 10x - 8 = (x + 1)(x + 2)(x - 4)$</div></div><div class="final">Svar: $f(x) = (x + 1)(x + 2)(x - 4)$</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">c.</span> Leystu jöfnuna $x^3 - x^2 - 10x - 8 = 0$ (notaðu þáttunina í b-lið).</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Með þáttuninni úr b-lið verður jafnan</span>$\displaystyle (x + 1)(x + 2)(x - 4) = 0$</div><div class="step"><span class="pre">Núllþáttareglan gefur</span>$\displaystyle x + 1 = 0 \quad\text{eða}\quad x + 2 = 0 \quad\text{eða}\quad x - 4 = 0$</div><div class="step"><span class="pre">svo að</span>$\displaystyle x = -2 \quad\text{eða}\quad x = -1 \quad\text{eða}\quad x = 4$</div></div><div class="final">Svar: $x = -2$ eða $x = -1$ eða $x = 4$</div></div>
+</div>
+<div class="part">
+<div class="prompt sub"><span class="lab">d.</span> Leystu ójöfnuna $x^3 - x^2 - 10x - 8 > 0$ (notaðu núllstöðvarnar úr c-lið) og svaraðu í biltáknum.</div>
+<button class="toggle" onclick="toggle(this)">Sýna lausn</button>
+<div class="answer"><div class="working"><div class="step"><span class="pre">Núllstöðvar þáttanna:</span>$\displaystyle x + 1 = 0 \quad\text{eða}\quad x + 2 = 0 \quad\text{eða}\quad x - 4 = 0$</div><div class="step"><span class="pre">þ.e.</span>$\displaystyle x = -2 \quad\text{eða}\quad x = -1 \quad\text{eða}\quad x = 4$</div><div class="step"><span class="pre">Formerkjamynd:</span><table class='chart'><tr><th class='f'>$x$</th><th></th><th>$-2$</th><th></th><th>$-1$</th><th></th><th>$4$</th><th></th></tr><tr><td class='f'>$x + 1$</td><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td></tr><tr><td class='f'>$x + 2$</td><td>−</td><td>0</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr><tr><td class='f'>$x - 4$</td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>0</td><td>+</td></tr><tr class='tot'><td class='f'>$f(x)$</td><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td></tr></table></div><div class="step"><span class="pre">$> 0$: þar sem neðsta línan sýnir $+$:</span>$\displaystyle -2 < x < -1 \quad\text{eða}\quad x > 4$</div></div><div class="final">Svar: $\mathopen{]}{-2},\ {-1}\mathclose{[}$ eða $\mathopen{]}{4},\ \infty\mathclose{[}$</div><div class="figure"><svg viewBox="0 0 340 64" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="30" x2="326" y2="30" stroke="#000" stroke-width="1.2"/><polygon points="332,30 324,26 324,34" fill="#000"/><text x="328" y="48" font-size="12" font-style="italic">x</text><line x1="71.3" y1="30" x2="104.2" y2="30" stroke="#c8102e" stroke-width="7" stroke-linecap="butt"/><line x1="268.7" y1="30" x2="324.0" y2="30" stroke="#c8102e" stroke-width="7" stroke-linecap="butt"/><line x1="71.3" y1="21" x2="71.3" y2="39" stroke="#000" stroke-width="1"/><text x="71.3" y="54" text-anchor="middle" font-size="12">−2</text><line x1="104.2" y1="21" x2="104.2" y2="39" stroke="#000" stroke-width="1"/><text x="104.2" y="54" text-anchor="middle" font-size="12">−1</text><line x1="268.7" y1="21" x2="268.7" y2="39" stroke="#000" stroke-width="1"/><text x="268.7" y="54" text-anchor="middle" font-size="12">4</text><circle cx="71.3" cy="30" r="6" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="104.2" cy="30" r="6" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="268.7" cy="30" r="6" fill="#fff" stroke="#000" stroke-width="1.5"/></svg></div></div>
+</div>
+</div>
+</section>
+
+<hr>
+<p class="note" style="text-align:center">Æfingapróf speglað af upprifjunarblaði STÆ 225 fyrir prófið 19. nóvember · 12 dæmi með fullum lausnum</p>
+
+<script>
+function toggle(btn) {
+  const ans = btn.nextElementSibling;
+  const isShown = ans.classList.toggle('show');
+  btn.textContent = isShown ? 'Fela lausn' : 'Sýna lausn';
+}
+</script>
+
+</body>
+</html>
