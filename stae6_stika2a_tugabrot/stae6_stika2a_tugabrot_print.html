@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="UTF-8">
+<title>STÆRÐFRÆÐI 6. bekkur – Tugabrot</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 16mm;
+  }
+  :root {
+    --ink: #000;
+    --paper: #fff;
+    --rule: #000;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 12pt;
+    line-height: 1.45;
+  }
+  body {
+    max-width: 170mm;
+    margin: 0 auto;
+    padding: 0;
+  }
+  h1 {
+    text-align: center;
+    font-size: 18pt;
+    margin: 0 0 0.3rem;
+    font-weight: 700;
+  }
+  .subtitle {
+    text-align: center;
+    font-style: italic;
+    margin: 0 0 1.5rem;
+    font-size: 11pt;
+  }
+  h2 {
+    font-size: 14pt;
+    margin: 1.4rem 0 0.6rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1.5px solid var(--rule);
+  }
+  h3 {
+    font-size: 12pt;
+    margin: 1rem 0 0.4rem;
+    font-style: italic;
+  }
+  .question {
+    margin: 0.8rem 0;
+    padding: 0.4rem 0 0.4rem 0.6rem;
+    border-left: 1.5px solid var(--rule);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .q-num { font-weight: 700; margin-right: 0.3rem; }
+  .prompt { margin-bottom: 0.4rem; }
+  .subq { margin: 0.3rem 0 0.3rem 1.2rem; }
+  .subq-label { font-weight: 700; margin-right: 0.3rem; }
+  .figure {
+    margin: 0.4rem 0 0.6rem;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .figure svg {
+    max-width: 360px;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+  }
+  .figure svg text {
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 11pt;
+    fill: #000;
+  }
+  .figure svg .stroke { fill: none; stroke: #000; stroke-width: 1.2; stroke-linejoin: round; }
+  .figure svg .dashed { fill: none; stroke: #000; stroke-width: 1; stroke-dasharray: 3 2; }
+  .figure svg .fill-light { fill: #f0f0f0; stroke: #000; stroke-width: 1.2; }
+  .figure svg .arc { fill: none; stroke: #000; stroke-width: 1.5; }
+  .figure svg .red { fill: #000; }
+  .figure svg .pt { fill: #000; }
+
+  .note { font-style: italic; font-size: 10.5pt; }
+  hr { border: none; border-top: 1px solid var(--rule); margin: 1.2rem 0; }
+
+  .answerline {
+    margin-top: 0.6rem;
+    border-top: 1px dotted #000;
+    padding-top: 0.4rem;
+    font-size: 11pt;
+  }
+  .answerline-blank {
+    margin-top: 0.4rem;
+    border-bottom: 1px solid #000;
+    height: 1.2rem;
+  }
+
+  .solutions {
+    page-break-before: always;
+    break-before: page;
+  }
+  .solutions h2 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 16pt;
+  }
+  .solutions ol { padding-left: 1.4rem; }
+  .solutions li {
+    margin: 0.3rem 0;
+    page-break-inside: avoid;
+  }
+  .solutions .working {
+    color: #000;
+    font-size: 10.5pt;
+    font-style: italic;
+    margin-left: 0.4rem;
+  }
+
+  /* hide anything explicitly marked as on-screen-only */
+  .screen-only { display: none !important; }
+
+  @media screen {
+    body {
+      max-width: 800px;
+      padding: 2rem 1rem 4rem;
+      background: #fafaf7;
+    }
+  }
+</style>
+</head>
+<body>
+<a id="back-to-list" href="../index.html" style="display:inline-block;margin:10px 0 0 12px;padding:6px 14px;border-radius:999px;background:#fff;border:1px solid #ccc;color:#c8102e;font:600 15px -apple-system,'Helvetica Neue',Arial,sans-serif;text-decoration:none;position:relative;z-index:50">← Öll prófin</a><style>@media print{#back-to-list{display:none!important}}</style>
+
+<h1>STÆRÐFRÆÐI 6. bekkur – Tugabrot</h1>
+<p class="subtitle">Æfing fyrir prófið mánudaginn 30. nóvember · Stika 2a, kafli 3, nemendabók bls. 60–89</p>
+
+<p class="note">Nafn: ______________________________</p>
+
+<style>
+  .opts span { display: inline-block; margin: .15rem 1.2rem .15rem 0; }
+  table.m { border-collapse: collapse; width: 100%; } table.m td { padding: .25rem .4rem; vertical-align: top; }
+  .mundu { border: 1px dashed #000; padding: .3rem .6rem; margin: .4rem 0 .6rem; font-size: 10.5pt; }
+  .mundu ul { margin: .2rem 0; padding-left: 1.1rem; }
+  .prompt svg.pic { display: block; margin: .4rem auto; max-width: 200px; width: 100%; height: auto; }
+  .prompt svg text, .figure svg text { font-family: Helvetica, Arial, sans-serif; }
+  .figure svg.dia .bub { fill: #fff; stroke: #000; } .figure svg.dia .ld { stroke: #000; }
+  .order span { display: inline-block; border: 1px solid #000; padding: .1rem .5rem; margin: .15rem .4rem .15rem 0; }
+</style>
+<h2>1. Tugabrot á talnalínu <small>(bls. 61–63, 66)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Fyrsti aukastafurinn eftir kommuna er <b>tíundu hlutar</b> (0,1), næsti <b>hundraðshlutar</b> (0,01) og þriðji <b>þúsundustu hlutar</b> (0,001).</li><li>Á talnalínu: teldu strikin frá tölunni vinstra megin. Hvert strik er jafn stórt skref.</li><li>10 hundraðshlutar = 1 tíundi hluti. 0,40 og 0,4 eru sama talan.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">1.</span> Hvaða tugabrot á heima við hvert númer á talnalínunni?</div><div class="figure"><svg class="dia" viewBox="0 0 560 160" xmlns="http://www.w3.org/2000/svg"><line x1="40" y1="110" x2="520" y2="110" stroke="#333" stroke-width="3"/><line x1="40.0" y1="98" x2="40.0" y2="122" stroke="#333" stroke-width="3"/><line x1="88.0" y1="103" x2="88.0" y2="117" stroke="#333" stroke-width="2"/><line x1="136.0" y1="103" x2="136.0" y2="117" stroke="#333" stroke-width="2"/><line x1="184.0" y1="103" x2="184.0" y2="117" stroke="#333" stroke-width="2"/><line x1="232.0" y1="103" x2="232.0" y2="117" stroke="#333" stroke-width="2"/><line x1="280.0" y1="98" x2="280.0" y2="122" stroke="#333" stroke-width="3"/><line x1="328.0" y1="103" x2="328.0" y2="117" stroke="#333" stroke-width="2"/><line x1="376.0" y1="103" x2="376.0" y2="117" stroke="#333" stroke-width="2"/><line x1="424.0" y1="103" x2="424.0" y2="117" stroke="#333" stroke-width="2"/><line x1="472.0" y1="103" x2="472.0" y2="117" stroke="#333" stroke-width="2"/><line x1="520.0" y1="98" x2="520.0" y2="122" stroke="#333" stroke-width="3"/><text x="40.0" y="148" text-anchor="middle" font-size="20">0</text><text x="280.0" y="148" text-anchor="middle" font-size="20">0,5</text><text x="520.0" y="148" text-anchor="middle" font-size="20">1</text><g class="mk" data-n="1"><line class="ld" x1="136.0" y1="100" x2="136.0" y2="70" stroke-width="2"/><circle class="bub" cx="136.0" cy="52" r="18" stroke-width="2.5"/><text x="136.0" y="59" text-anchor="middle" font-size="20">1</text></g><g class="mk" data-n="2"><line class="ld" x1="328.0" y1="100" x2="328.0" y2="70" stroke-width="2"/><circle class="bub" cx="328.0" cy="52" r="18" stroke-width="2.5"/><text x="328.0" y="59" text-anchor="middle" font-size="20">2</text></g><g class="mk" data-n="3"><line class="ld" x1="472.0" y1="100" x2="472.0" y2="70" stroke-width="2"/><circle class="bub" cx="472.0" cy="52" r="18" stroke-width="2.5"/><text x="472.0" y="59" text-anchor="middle" font-size="20">3</text></g></svg></div><div>Veldu úr: 0,9 · 0,6 · 0,06 · 0,2 · 9,0</div><div>1 = ______ &nbsp; 2 = ______ &nbsp; 3 = ______</div></div>
+<div class="question"><div class="prompt"><span class="q-num">2.</span> Nú er búið að stækka bilið frá 0,4 upp í 0,5. Hvaða tala á heima við hvert númer?</div><div class="figure"><svg class="dia" viewBox="0 0 560 160" xmlns="http://www.w3.org/2000/svg"><line x1="40" y1="110" x2="520" y2="110" stroke="#333" stroke-width="3"/><line x1="40.0" y1="98" x2="40.0" y2="122" stroke="#333" stroke-width="3"/><line x1="88.0" y1="103" x2="88.0" y2="117" stroke="#333" stroke-width="2"/><line x1="136.0" y1="103" x2="136.0" y2="117" stroke="#333" stroke-width="2"/><line x1="184.0" y1="103" x2="184.0" y2="117" stroke="#333" stroke-width="2"/><line x1="232.0" y1="103" x2="232.0" y2="117" stroke="#333" stroke-width="2"/><line x1="280.0" y1="98" x2="280.0" y2="122" stroke="#333" stroke-width="3"/><line x1="328.0" y1="103" x2="328.0" y2="117" stroke="#333" stroke-width="2"/><line x1="376.0" y1="103" x2="376.0" y2="117" stroke="#333" stroke-width="2"/><line x1="424.0" y1="103" x2="424.0" y2="117" stroke="#333" stroke-width="2"/><line x1="472.0" y1="103" x2="472.0" y2="117" stroke="#333" stroke-width="2"/><line x1="520.0" y1="98" x2="520.0" y2="122" stroke="#333" stroke-width="3"/><text x="40.0" y="148" text-anchor="middle" font-size="20">0,4</text><text x="280.0" y="148" text-anchor="middle" font-size="20">0,45</text><text x="520.0" y="148" text-anchor="middle" font-size="20">0,5</text><g class="mk" data-n="1"><line class="ld" x1="136.0" y1="100" x2="136.0" y2="70" stroke-width="2"/><circle class="bub" cx="136.0" cy="52" r="18" stroke-width="2.5"/><text x="136.0" y="59" text-anchor="middle" font-size="20">1</text></g><g class="mk" data-n="2"><line class="ld" x1="328.0" y1="100" x2="328.0" y2="70" stroke-width="2"/><circle class="bub" cx="328.0" cy="52" r="18" stroke-width="2.5"/><text x="328.0" y="59" text-anchor="middle" font-size="20">2</text></g><g class="mk" data-n="3"><line class="ld" x1="472.0" y1="100" x2="472.0" y2="70" stroke-width="2"/><circle class="bub" cx="472.0" cy="52" r="18" stroke-width="2.5"/><text x="472.0" y="59" text-anchor="middle" font-size="20">3</text></g></svg></div><div>Veldu úr: 4,6 · 0,49 · 0,46 · 0,42 · 0,049</div><div>1 = ______ &nbsp; 2 = ______ &nbsp; 3 = ______</div></div>
+<div class="question"><div class="prompt"><span class="q-num">3.</span> Hér er bilið frá 0,05 upp í 0,06 stækkað enn meira. Hvaða tala á heima við hvert númer?</div><div class="figure"><svg class="dia" viewBox="0 0 560 160" xmlns="http://www.w3.org/2000/svg"><line x1="40" y1="110" x2="520" y2="110" stroke="#333" stroke-width="3"/><line x1="40.0" y1="98" x2="40.0" y2="122" stroke="#333" stroke-width="3"/><line x1="88.0" y1="103" x2="88.0" y2="117" stroke="#333" stroke-width="2"/><line x1="136.0" y1="103" x2="136.0" y2="117" stroke="#333" stroke-width="2"/><line x1="184.0" y1="103" x2="184.0" y2="117" stroke="#333" stroke-width="2"/><line x1="232.0" y1="103" x2="232.0" y2="117" stroke="#333" stroke-width="2"/><line x1="280.0" y1="98" x2="280.0" y2="122" stroke="#333" stroke-width="3"/><line x1="328.0" y1="103" x2="328.0" y2="117" stroke="#333" stroke-width="2"/><line x1="376.0" y1="103" x2="376.0" y2="117" stroke="#333" stroke-width="2"/><line x1="424.0" y1="103" x2="424.0" y2="117" stroke="#333" stroke-width="2"/><line x1="472.0" y1="103" x2="472.0" y2="117" stroke="#333" stroke-width="2"/><line x1="520.0" y1="98" x2="520.0" y2="122" stroke="#333" stroke-width="3"/><text x="40.0" y="148" text-anchor="middle" font-size="20">0,05</text><text x="280.0" y="148" text-anchor="middle" font-size="20">0,055</text><text x="520.0" y="148" text-anchor="middle" font-size="20">0,06</text><g class="mk" data-n="1"><line class="ld" x1="136.0" y1="100" x2="136.0" y2="70" stroke-width="2"/><circle class="bub" cx="136.0" cy="52" r="18" stroke-width="2.5"/><text x="136.0" y="59" text-anchor="middle" font-size="20">1</text></g><g class="mk" data-n="2"><line class="ld" x1="376.0" y1="100" x2="376.0" y2="70" stroke-width="2"/><circle class="bub" cx="376.0" cy="52" r="18" stroke-width="2.5"/><text x="376.0" y="59" text-anchor="middle" font-size="20">2</text></g><g class="mk" data-n="3"><line class="ld" x1="472.0" y1="100" x2="472.0" y2="70" stroke-width="2"/><circle class="bub" cx="472.0" cy="52" r="18" stroke-width="2.5"/><text x="472.0" y="59" text-anchor="middle" font-size="20">3</text></g></svg></div><div>Veldu úr: 0,57 · 0,059 · 0,052 · 0,057 · 0,0057</div><div>1 = ______ &nbsp; 2 = ______ &nbsp; 3 = ______</div></div>
+<div class="question"><div class="prompt"><span class="q-num">4.</span> Hvaða tala er mitt á milli 0,4 og 0,5?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">5.</span> Hvaða tala er stærri en 0,6 en minni en 0,7?</div><div class="opts"><span>◯ 0,71</span><span>◯ 6,5</span><span>◯ 0,59</span><span>◯ 0,64</span></div></div>
+<h2>2. Stærra eða minna? <small>(bls. 63–65)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Berðu fyrst saman heilu tölurnar, svo tíundu hlutana, svo hundraðshlutana.</li><li>Bættu við núllum svo tölurnar hafi jafn marga aukastafi: 0,4 = 0,40 og 0,15 → 0,40 er stærri.</li><li>Fleiri tölustafir þýða <b>ekki</b> stærri tala: 0,09 er minni en 0,1.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">6.</span> Pikkaðu á tölurnar frá þeirri <b>minnstu</b> til þeirrar <b>stærstu</b>.</div><div class="order"><span>0,15</span><span>0,8</span><span>0,4</span><span>0,09</span><span>1,2</span><span>1,05</span></div><div>Röð: ______ &lt; ______ &lt; ______ &lt; ______ &lt; ______ &lt; ______</div></div>
+<div class="question"><div class="prompt"><span class="q-num">7.</span> Pikkaðu á tölurnar frá þeirri <b>minnstu</b> til þeirrar <b>stærstu</b>.</div><div class="order"><span>0,35</span><span>0,305</span><span>0,053</span><span>0,5</span><span>0,035</span></div><div>Röð: ______ &lt; ______ &lt; ______ &lt; ______ &lt; ______</div></div>
+<div class="question"><div class="prompt"><span class="q-num">8.</span> Hvor talan er stærri?</div><div class="opts"><span>◯ 0,65</span><span>◯ 0,7</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">9.</span> 0,50 og 0,5 eru jafn stórar.</div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">10.</span> 0,09 er stærri en 0,1.</div><div class="opts"><span>◯ Rétt</span><span>◯ Rangt</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">11.</span> Hvaða tala er <b>stærst</b>?</div><div class="opts"><span>◯ 0,099</span><span>◯ 0,019</span><span>◯ 0,09</span><span>◯ 0,1</span></div></div>
+<h2>3. Sætisgildi <small>(bls. 67, 70–71)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Í 342,63 er 3 hundruð, 4 tugir, 2 einingar, 6 tíundu hlutar og 3 hundraðshlutar.</li><li>Sundurliðun: 342,63 = 300 + 40 + 2 + 0,6 + 0,03.</li><li>Aukastafirnir eru lesnir einn í einu: 4,06 = „fjórir komma núll sex“.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">12.</span> Hvert er gildi tölustafsins <b>4</b> í tölunni 27,48?</div><div class="opts"><span>◯ 0,4</span><span>◯ 4</span><span>◯ 0,04</span><span>◯ 40</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">13.</span> Hvert er gildi tölustafsins <b>6</b> í tölunni 3,056?</div><div class="opts"><span>◯ 6</span><span>◯ 0,6</span><span>◯ 0,06</span><span>◯ 0,006</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">14.</span> Skrifaðu sem eina tölu: 300 + 40 + 2 + 0,6 + 0,03</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">15.</span> Skrifaðu töluna með tölustöfum: <i>sjötíu og fimm komma núll fjórir</i></div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">16.</span> Hvernig er 508,27 sundurliðað?</div><div class="opts"><span>◯ 50 + 8 + 0,2 + 0,07</span><span>◯ 500 + 8 + 0,2 + 0,07</span><span>◯ 500 + 80 + 0,2 + 0,07</span><span>◯ 500 + 8 + 2 + 0,7</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">17.</span> Paraðu saman töluna og hvernig hún er lesin.</div><table class="m"><tr><td>4,06 ___</td><td>a) fjörutíu komma sex</td></tr><tr><td>4,6 ___</td><td>b) núll komma fjórir sex</td></tr><tr><td>40,6 ___</td><td>c) fjórir komma sex</td></tr><tr><td>0,46 ___</td><td>d) fjórir komma núll sex</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">18.</span> Hvaða tala vantar? 0,26 + ? = 1</div><div>Svar: ______________ </div></div>
+<h2>4. Grömm og kíló <small>(bls. 64–66)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li><b>1 kg = 1000 g</b>. Þrír aukastafir í kílóum eru grömmin: 0,620 kg = 620 g.</li><li>100 g = 0,1 kg · 10 g = 0,01 kg · 1 g = 0,001 kg.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">19.</span> Paraðu saman grömm og kíló sem eru jafn þung.</div><table class="m"><tr><td>300 g ___</td><td>a) 0,3 kg</td></tr><tr><td>30 g ___</td><td>b) 0,003 kg</td></tr><tr><td>3 g ___</td><td>c) 0,03 kg</td></tr><tr><td>3000 g ___</td><td>d) 3 kg</td></tr></table></div>
+<div class="question"><div class="prompt"><span class="q-num">20.</span> 0,620 kg = ? g</div><div>Svar: ______________ g</div></div>
+<div class="question"><div class="prompt"><span class="q-num">21.</span> 85 g = ? kg</div><div>Svar: ______________ kg</div></div>
+<div class="question"><div class="prompt"><span class="q-num">22.</span> 1,25 kg = ? g</div><div>Svar: ______________ g</div></div>
+<div class="question"><div class="prompt"><span class="q-num">23.</span> Ýmir kaupir 0,4 kg af vínberjum og 0,35 kg af jarðarberjum. Hve mörg kíló eru það samtals?</div><div>Svar: ______________ kg</div></div>
+<h2>5. Talnamynstur <small>(bls. 68–69)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Finndu hvað gerist á milli talnanna: bætist eitthvað við, er eitthvað dregið frá eða tvöfaldast talan?</li><li>Skrifaðu tölurnar með jafn mörgum aukastöfum, þá sést mynstrið betur: 0,5 – 0,75 → 0,50 – 0,75.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">24.</span> Hvaða tala kemur næst? 0,6 – 1,0 – 1,4 – 1,8 – ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">25.</span> Hvaða tala kemur næst? 0,07 – 0,14 – 0,21 – 0,28 – ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">26.</span> Hvaða tala kemur næst? 3,2 – 2,9 – 2,6 – 2,3 – ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">27.</span> Hvaða tala kemur næst? 0,15 – 0,3 – 0,6 – 1,2 – ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">28.</span> Hvernig breytist mynstrið 0,5 – 0,75 – 1,0 – 1,25 – 1,5?</div><div class="opts"><span>◯ Tvöfaldast</span><span>◯ Stækkar um 0,2</span><span>◯ Stækkar um 0,25</span><span>◯ Stækkar um 0,5</span></div></div>
+<h2>6. Sinnum og deilt með 10, 100, 1000 <small>(bls. 71, 86)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li><b>· 10</b>: kommunni er ýtt eitt sæti til hægri. <b>· 100</b>: tvö sæti. <b>· 1000</b>: þrjú sæti.</li><li><b>: 10</b>: kommunni er ýtt eitt sæti til vinstri.</li><li>Ef það vantar tölustafi fylla núll upp í: 2,5 · 1000 = 2500 og 0,9 : 10 = 0,09.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">29.</span> 4,7 · 10 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">30.</span> 0,83 · 100 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">31.</span> 2,5 · 1000 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">32.</span> 56 : 10 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">33.</span> 0,9 : 10 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">34.</span> 0,36 varð að 36. Með hverju var margfaldað?</div><div class="opts"><span>◯ 10</span><span>◯ 1000</span><span>◯ 36</span><span>◯ 100</span></div></div>
+<h2>7. Samlagning og frádráttur <small>(bls. 72–79)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Skrifaðu <b>kommu undir kommu</b> þegar þú setur dæmið upp.</li><li>Bættu við núllum ef aukastafirnir eru ekki jafn margir: 12,75 + 4,6 → 12,75 + 4,60.</li><li>Heil tala hefur kommu aftast: 15 = 15,0 og 5 = 5,00.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">35.</span> 3,4 + 2,9 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">36.</span> 12,75 + 4,6 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">37.</span> 8,2 − 3,7 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">38.</span> 15 − 6,4 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">39.</span> 7,99 + 0,01 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">40.</span> 6,05 − 0,1 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">41.</span> Í töfraferningnum er summan alltaf <b>6,0</b>: í hverri línu, hverjum dálki og á ská. Hvaða tala á að vera í gula reitnum?<svg class="pic" viewBox="0 0 262 262" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="86" height="86" fill="#fff" stroke="#333" stroke-width="3"/><text x="45.0" y="55.0" text-anchor="middle" font-size="28">0,8</text><rect x="88" y="2" width="86" height="86" fill="#fff" stroke="#333" stroke-width="3"/><text x="131.0" y="55.0" text-anchor="middle" font-size="28">2,8</text><rect x="174" y="2" width="86" height="86" fill="#fff" stroke="#333" stroke-width="3"/><text x="217.0" y="55.0" text-anchor="middle" font-size="28">?</text><rect x="2" y="88" width="86" height="86" fill="#fff" stroke="#333" stroke-width="3"/><text x="45.0" y="141.0" text-anchor="middle" font-size="28">3,6</text><rect x="88" y="88" width="86" height="86" fill="#fff" stroke="#333" stroke-width="3"/><text x="131.0" y="141.0" text-anchor="middle" font-size="28">2,0</text><rect x="174" y="88" width="86" height="86" fill="#fff" stroke="#333" stroke-width="3"/><text x="217.0" y="141.0" text-anchor="middle" font-size="28">0,4</text><rect x="2" y="174" width="86" height="86" fill="#fff" stroke="#333" stroke-width="3"/><text x="45.0" y="227.0" text-anchor="middle" font-size="28">1,6</text><rect x="88" y="174" width="86" height="86" fill="#fff" stroke="#333" stroke-width="3"/><text x="131.0" y="227.0" text-anchor="middle" font-size="28">1,2</text><rect x="174" y="174" width="86" height="86" fill="#fff" stroke="#333" stroke-width="3"/><text x="217.0" y="227.0" text-anchor="middle" font-size="28">3,2</text></svg></div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">42.</span> Haukur hjólar 2,6 km í skólann og svo 1,8 km á fótboltaæfingu. Hve marga km hjólar hann alls?</div><div>Svar: ______________ km</div></div>
+<div class="question"><div class="prompt"><span class="q-num">43.</span> Ásgeir ætlar að hlaupa 5 km. Hann er búinn með 3,25 km. Hve margir km eru eftir?</div><div>Svar: ______________ km</div></div>
+<h2>8. Margföldun <small>(bls. 80–82)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Reiknaðu eins og kommurnar væru ekki til, og settu svo kommuna inn: 3 · 14 = 42, svo 3 · 1,4 = 4,2.</li><li>Svarið hefur jafn marga aukastafi og tugabrotið í dæminu.</li><li>Athugaðu svarið með því að námunda: 7 · 4,9 er nálægt 7 · 5 = 35.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">44.</span> 3 · 1,4 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">45.</span> 9 · 0,6 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">46.</span> 4 · 2,35 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">47.</span> 5 · 3,6 = ?</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">48.</span> Hvaða svar er rétt? 7 · 4,9 = ?</div><div class="opts"><span>◯ 3,43</span><span>◯ 34,3</span><span>◯ 343</span></div></div>
+<div class="question"><div class="prompt"><span class="q-num">49.</span> Hvaða svar er rétt? 6 · 8,05 = ?</div><div class="opts"><span>◯ 48,3</span><span>◯ 483</span><span>◯ 4,83</span></div></div>
+<h2>9. Peningar <small>(bls. 83–86)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Í gömlu dæmunum eru krónur með aurum: 2,45 kr. = 2 krónur og 45 aurar.</li><li>Til baka = það sem þú áttir − það sem þú borgaðir.</li><li>Um það bil? Námundaðu fyrst og reiknaðu svo.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">50.</span> Í gömlu dæmi kostar sleikipinni 2,45 kr. Grétar kaupir 4 sleikipinna. Hvað borgar hann?</div><div>Svar: ______________ kr.</div></div>
+<div class="question"><div class="prompt"><span class="q-num">51.</span> Haukur á 50 kr. Hann kaupir bók á 32,75 kr. Hvað fær hann til baka?</div><div>Svar: ______________ kr.</div></div>
+<div class="question"><div class="prompt"><span class="q-num">52.</span> 5 karamellur kosta samtals 3,50 kr. Hvað kostar ein karamella?</div><div>Svar: ______________ kr.</div></div>
+<div class="question"><div class="prompt"><span class="q-num">53.</span> Ýmir kaupir þrennt: á 19,90 kr., 30,10 kr. og 49,95 kr. Um það bil hvað kostar þetta samtals?</div><div class="opts"><span>◯ 1000 kr.</span><span>◯ 120 kr.</span><span>◯ 100 kr.</span><span>◯ 80 kr.</span></div></div>
+<h2>10. Námundun <small>(verkefnablöð 6.36–6.37)</small></h2>
+<div class="mundu"><b>Mundu!</b><ul><li>Skoðaðu tölustafinn <b>á eftir</b> sætinu sem þú námundar að.</li><li>0, 1, 2, 3 eða 4: niður. 5, 6, 7, 8 eða 9: upp.</li><li>3,47 að næsta tíunda hluta: 7 er á eftir 4, svo upp í 3,5.</li></ul></div>
+<div class="question"><div class="prompt"><span class="q-num">54.</span> Námundaðu 3,47 að næsta tíunda hluta.</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">55.</span> Námundaðu 6,51 að næstu heilu tölu.</div><div>Svar: ______________ </div></div>
+<div class="question"><div class="prompt"><span class="q-num">56.</span> Hvaða tala verður <b>2,4</b> þegar hún er námunduð að næsta tíunda hluta?</div><div class="opts"><span>◯ 2,45</span><span>◯ 2,36</span><span>◯ 2,31</span><span>◯ 2,49</span></div></div>
+
+<section class="solutions"><h2>Lausnir</h2><h3>1. Tugabrot á talnalínu</h3><ol start='1'>
+<li>1 = 0,2, 2 = 0,6, 3 = 0,9</li>
+<li>1 = 0,42, 2 = 0,46, 3 = 0,49</li>
+<li>1 = 0,052, 2 = 0,057, 3 = 0,059</li>
+<li>0,45</li>
+<li>0,64</li>
+</ol>
+<h3>2. Stærra eða minna?</h3><ol start='6'>
+<li>0,09 &lt; 0,15 &lt; 0,4 &lt; 0,8 &lt; 1,05 &lt; 1,2</li>
+<li>0,035 &lt; 0,053 &lt; 0,305 &lt; 0,35 &lt; 0,5</li>
+<li>0,7</li>
+<li>Rétt</li>
+<li>Rangt</li>
+<li>0,1</li>
+</ol>
+<h3>3. Sætisgildi</h3><ol start='12'>
+<li>0,4</li>
+<li>0,006</li>
+<li>342,63</li>
+<li>75,04</li>
+<li>500 + 8 + 0,2 + 0,07</li>
+<li>4,06 – fjórir komma núll sex, 4,6 – fjórir komma sex, 40,6 – fjörutíu komma sex, 0,46 – núll komma fjórir sex</li>
+<li>0,74</li>
+</ol>
+<h3>4. Grömm og kíló</h3><ol start='19'>
+<li>300 g – 0,3 kg, 30 g – 0,03 kg, 3 g – 0,003 kg, 3000 g – 3 kg</li>
+<li>620 g</li>
+<li>0,085 kg</li>
+<li>1250 g</li>
+<li>0,75 kg</li>
+</ol>
+<h3>5. Talnamynstur</h3><ol start='24'>
+<li>2,2</li>
+<li>0,35</li>
+<li>2,0</li>
+<li>2,4</li>
+<li>Stækkar um 0,25</li>
+</ol>
+<h3>6. Sinnum og deilt með 10, 100, 1000</h3><ol start='29'>
+<li>47</li>
+<li>83</li>
+<li>2500</li>
+<li>5,6</li>
+<li>0,09</li>
+<li>100</li>
+</ol>
+<h3>7. Samlagning og frádráttur</h3><ol start='35'>
+<li>6,3</li>
+<li>17,35</li>
+<li>4,5</li>
+<li>8,6</li>
+<li>8</li>
+<li>5,95</li>
+<li>2,4</li>
+<li>4,4 km</li>
+<li>1,75 km</li>
+</ol>
+<h3>8. Margföldun</h3><ol start='44'>
+<li>4,2</li>
+<li>5,4</li>
+<li>9,4</li>
+<li>18</li>
+<li>34,3</li>
+<li>48,3</li>
+</ol>
+<h3>9. Peningar</h3><ol start='50'>
+<li>9,80 kr.</li>
+<li>17,25 kr.</li>
+<li>0,70 kr.</li>
+<li>100 kr.</li>
+</ol>
+<h3>10. Námundun</h3><ol start='54'>
+<li>3,5</li>
+<li>7</li>
+<li>2,36</li>
+</ol></section>
+
+</body>
+</html>
